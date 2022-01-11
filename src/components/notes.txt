@@ -1,0 +1,47 @@
+for(let j = 0; j < 3; j++)
+      { 
+      for(let i = 0; i < 10; i++)
+        { 
+        //pair ex. USD/ETH
+        const pairAddress = await factContract[j].methods.allPairs(i).call()
+        const pairContract = await bsChain.Contract(pairABI, pairAddress);
+        let pairToken0 = await pairContract.methods.token0.call() 
+        pairToken0 = web3.utils.toChecksumAddress(pairToken0)
+        let pairToken1 = await pairContract.methods.token1.call() 
+        pairToken1 = web3.utils.toChecksumAddress(pairToken1)
+        if (pairToken0 === bUsdAddress)
+          {
+          //console.log("token 0 Address- ", pairToken0, " token 1 Address- ", pairToken1)
+          //let token0 = await bsChain.Contract(tokenABI, pairToken0);
+          //let name0 = await token0.methods.name().call();
+          //console.log("Token 0 name - ", name0.toString())
+          let pairReserves = await pairContract.methods.getReserves().call() 
+          let Price = (pairReserves._reserve0.toString() / (10 ** 18)) / (pairReserves._reserve1.toString()  / (10 ** 18));
+          if (Price < 1000)
+            {
+            console.log(pairToken1, "1 Pair #",i, " $", parseFloat(Price).toFixed(18));  
+            }
+          //console.log("Reserve0 - ", pairReserves._reserve0.toString()," Reserve1 - ", pairReserves._reserve1.toString());
+          }
+        else if(pairToken1 === bUsdAddress)
+          {
+          let pairReserves = await pairContract.methods.getReserves().call() 
+          let Price = (pairReserves._reserve1.toString() / (10 ** 18))  / (pairReserves._reserve0.toString() / (10 ** 18))  ;
+          //console.log("Reserve0 - ", pairReserves._reserve1.toString()," Reserve1 - ", pairReserves._reserve0.toString());
+          //console.log("token 0 Address- ", pairToken0, " token 1 Address- ", pairToken1)
+          if (Price < 1000)
+            {
+            console.log(pairToken0, "0 Pair #",i, " $", parseFloat(Price).toFixed(18));  
+            }
+          //console.log("token 0 Address- ", pairToken0, " token 1 Address- ", pairToken1)
+          }
+        //TAG
+        //let p0 = await pairContract.methods.price0CumulativeLast().call();
+        //let p1 = await pairContract.methods.price1CumulativeLast().call();
+        //console.log("token 0 Price- ", p0.toNumber(), " token 1 Price- ", p1.toNumber())
+        //const token0Contract = await bsChain.Contract(tokenABI, pairToken0 );
+        //const token0Symbol = await token0Contract.methods.symbol().call()
+        //const token1Contract = await bsChain.Contract(tokenABI, pairToken1 );
+        //const token1Symbol = ''//await token1Contract.methods.symbol().call()
+        }
+    }
