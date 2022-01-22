@@ -13,12 +13,15 @@ import LotteryForm from './LotteryForm'
 import GameForm from './GameForm'
 import AboutForm from './AboutForm'
 //import BlackjackForm from './BlackjackForm'
+//TAG remove later
+import InvestorForm from './InvestorForm'
+
 
 class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentForm: 'games'
+      currentForm: 'presale'
     }
   }
 
@@ -55,7 +58,7 @@ class Main extends Component {
         adaBalance={this.props.adaBalance}
         dogeBalance={this.props.dogeBalance}
         ltcBalance={this.props.ltcBalance}
-        afswBalance={this.props.afswBalance}
+        sibmBalance={this.props.sibmBalance}
 
       ///>
     } */
@@ -78,7 +81,7 @@ class Main extends Component {
         adaBalance={this.props.adaBalance}
         dogeBalance={this.props.dogeBalance}
         ltcBalance={this.props.ltcBalance}
-        afswBalance={this.props.afswBalance}
+        sibmBalance={this.props.sibmBalance}
 
       />
     }*/
@@ -122,14 +125,42 @@ class Main extends Component {
      }
      else if (this.state.currentForm === 'about') {
       content = 
-       <AboutForm
-       />
+       <AboutForm/>
       /*<BlackjackForm
       //bnbBalance={this.props.bnbBalance}
       //account={this.props.account} 
-      />*/
-     
+      />*/ 
      }
+     else if(this.state.currentForm === 'presale') {
+      content = <InvestorForm
+        account={this.props.account}
+       updateBasePrice = {this.props.updateBaseTokenPrice}
+        swapPairPrice = {this.props.swapPairPrice}
+        setSwapPair= {this.props.setSwapPair}    
+        swapTokens = {this.props.swapTokens}
+        //buyTokens={this.props.buyTokens}
+        //ethPrice = {this.props.ethPrice}
+        gasPrice = {this.props.gasPrice}
+
+        //
+        //PancakeArbPrice ={this.props.PancakeArbPrice}
+        //BiswapArbPrice ={this.props.BiswapArbPrice}
+        //BabyArbPrice ={this.props.BabyArbPrice}
+        //eth
+        //PancakeEthArbPrice ={this.props.PancakeEthArbPrice}
+        //BiswapEthArbPrice ={this.props.BiswapEthArbPrice}
+        //btcb
+        //PancakeBtcbArbPrice ={this.props.PancakeBtcbArbPrice}
+        //BiswapBtcbArbPrice ={this.props.BiswapBtcbArbPrice}
+        //
+        busdBalance={this.props.busdBalance}
+        sibmBalance={this.props.sibmBalance}
+        //
+        busdAddress={this.props.busdAddress}
+        sibmAddress={this.props.sibmAddress}
+
+      />
+    }
    /* else if (this.state.currentForm === 'dashboard') {
       content = <DashboardForm
       account={this.props.account} 
@@ -163,7 +194,7 @@ class Main extends Component {
       adaBalance={this.props.adaBalance}
       dogeBalance={this.props.dogeBalance}
       ltcBalance={this.props.ltcBalance}
-      afswBalance={this.props.afswBalance}
+      sibmBalance={this.props.sibmBalance}
       />
     }*/
    /* else if (this.state.currentForm === 'bot') {
@@ -188,12 +219,12 @@ class Main extends Component {
       PancakeBtcbArbPrice ={this.props.PancakeBtcbArbPrice}
       BiswapBtcbArbPrice ={this.props.BiswapBtcbArbPrice}
       />
-    }
+    }*/
     else if (this.state.currentForm === 'nft') {
      content = <NFTForm
       account={this.props.account}
       />
-    }*/
+    }
     /*else if (this.state.currentForm === 'sniper') {
       content = <SniperForm
       account={this.props.account}
@@ -229,6 +260,14 @@ class Main extends Component {
     return (
       <div id="content" className="mt-3">
     <div className="d-flex justify-content-between mb-3">
+            <button
+                className="btn btn-outline-dark"
+                onClick={(event) => {
+                  this.setState({ currentForm: 'presale' })
+                }}
+              >
+              Presale
+            </button>
           <button
                 className="btn btn-outline-dark"
                 onClick={(event) => {
@@ -244,6 +283,14 @@ class Main extends Component {
                 }}
               >
               Games
+          </button>
+          <button
+              className="btn btn-outline-dark"
+              onClick={(event) => {
+                this.setState({ currentForm: 'nft' })
+              }}
+            >
+            NFT
           </button>
           <button
                 className="btn btn-outline-dark"

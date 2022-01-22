@@ -1,10 +1,25 @@
 import React, { Component } from 'react'
+//import { useState } from 'react'
+import FormData from 'form-data';
 import './App.css'
 
 import Switch from 'react-ios-switch';
 
-import Identicon from 'identicon.js';
-var QRCode = require('qrcode.react');
+//import Identicon from 'identicon.js';
+//var QRCode = require('qrcode.react');
+
+//Exhange contract v0
+//0x8B68984546d5BE5089eBf791533a10267df8D107
+//exchange contract v0.1
+//0x26a0f03E7A43C1cd77029e0B902DcBfFB5e1E9Fa
+//0x26a0f03E7A43C1cd77029e0B902DcBfFB5e1E9Fa
+
+const pinataSDK = require('@pinata/sdk');
+const pinata = pinataSDK('0f3f630bec73946940bd', 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9');
+
+const axios = require('axios');
+const userApiKey = `0f3f630bec73946940bd`;
+const userApiSecret = `c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9`;
 
 //ADD QR code.
 
@@ -50,14 +65,21 @@ class NFTForm extends Component {
           super(props);
           this.state = { 
             seconds : 0,
+            imgBuffer : "",
             revealImg: false,
             revealImg2: false,
             image: null,
-            mint_market : true
+            imageName: null,
+            mint_market : true,
+            pinataConnection : false,
+            file : "",
+            setFile : "",
+            myipfsHash : "", 
+            setIPFSHASH : ""
           };//localStorage.getItem("Timer")  };
-          this.onImageChange = this.onImageChange.bind(this);
+          //this.onImageChange = this.onImageChange.bind(this);
+          //this.handleFile = this.handleFile.bind(this);
         }
-        
         tick() {
             localStorage.setItem('Timer', 0)
             //console.log('time tick ',parseInt(localStorage.getItem("Timer").toString()))
@@ -99,6 +121,16 @@ class NFTForm extends Component {
           this.interval = setInterval(() => this.tick(), 1000);
           this.reveal = this.reveal.bind(this);
           this.reveal2 = this.reveal2.bind(this);
+          pinata.testAuthentication().then((result) => {
+            //handle successful authentication here
+              console.log(result);
+              this.setState({pinataConnection : true});
+            }).catch((err) => {
+              //handle error here
+              console.log(err);
+              this.setState({pinataConnection : false});
+          });
+          
           //this.reveal = setInterval(() => this.tick(), 0);
         }
       
@@ -109,19 +141,61 @@ class NFTForm extends Component {
         onImageChange = event => {
           if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
+            console.log("IMG - ", img.name);
+            
+            this.setState({imageName : img.name})
+            
+            
+            console.log("File location ", './'+img.name)  //this.state.setFile) 
+            this.setState({setFile : './'+img.name})
             this.setState({
               image: URL.createObjectURL(img)
             });
+            console.log("image - ", this.state.image);
           }
-        };
+                     
+       };
+
+       async handleFile() {
+        console.log("image - ", this.state.image);
+        console.log('starting')
+        const fileToHandle = this.state.setFile;
+        // initialize the form data
+        const formData = new FormData()
+        // append the file form data to 
+        formData.append("file", this.state.image)
+        
+        // call the keys from .env    
+        // the endpoint needed to upload the file
+        const url =  'https://api.pinata.cloud/pinning/pinFileToIPFS'
+    
+        const response = await axios.post(
+          url,
+          formData,
+          {
+              maxContentLength: "Infinity",
+              headers:
+                  {
+                  "Content-Type": `multipart/form-data;boundary=${formData._boundary}`, 
+                  'pinata_api_key': userApiKey,
+                  'pinata_secret_api_key': userApiSecret
+                  }
+          }
+        )
+      console.log(response)
+      // get the hash
+      //setIPFSHASH(response.data.IpfsHash)
+      this.setState({setIPFSHASH : response.data.IpfsHash});
+    }
       
         render() {
           return (
             <form className="mb-0" onSubmit={(event) => {
-                event.preventDefault()
-                this.setState(state => ({
-                    seconds: localStorage.getItem("Timer")
-                  }));
+                event.preventDefault()                
+                //let ipfs = pinata.pinFileToIPFS(this.state.imageName)//, options)
+                //console.log("ipfs pin ", ipfs);
+                //this.state.IpfsPostImg();
+                
                 }}>
 
             <div style={{
@@ -137,6 +211,7 @@ class NFTForm extends Component {
               />
               
              </div>
+
              <div style={{
             display: "flex",
             justifyContent: "center",
@@ -149,6 +224,13 @@ class NFTForm extends Component {
               <b>NFT MarketPlace Coming Soon</b>
               }
                 </div>
+                <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+                  }}>
+                <h1> <font color={(!this.state.pinataConnection) ? "red" :"green"}>{this.state.pinataConnection} </font></h1> 
+                 </div>
             <div style={{
             display: "flex",
             justifyContent: "center",
@@ -170,7 +252,7 @@ class NFTForm extends Component {
             justifyContent: "center",
             alignItems: "center"
               }}>
-            <button type="submit" name="btn"  value = "Sniper" className="btn btn-primary btn-block btn-lg" style={{ maxWidth: '325px', justifyContent:'center'}}> Mint Your Image</button>
+            <button onClick={this.handleFile}/*type="submit"*/ name="btn" className="btn btn-primary btn-block btn-lg" style={{ maxWidth: '325px', justifyContent:'center'}}> Mint Your Image</button>
             
             </div>
             </form>

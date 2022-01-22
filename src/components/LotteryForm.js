@@ -256,9 +256,9 @@ class LotteryForm extends Component {
           this.onFinished = this.onFinished.bind(this);
         }
       
-        componentWillUnmount() {
+       /* componentWillUnmount() {
           clearInterval(this.interval);
-        }
+        }*/
         
         
        async onFinished(winner){

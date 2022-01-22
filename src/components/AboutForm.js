@@ -124,12 +124,10 @@ class AboutForm extends Component {
               justifyContent: "center",
               alignItems: "center"
             }}>
-                SIBM : Smart Insurance Burn Mechanism will be ICO'ing on PancakeSwap and sibmtransfer.nft when the count down completes. 
-                The bnb lottery and airdrop will take place until the ICO, from there on only the game will be available. 
+                SIBM : Smart Insurance Burn Mechanism will be launched on PancakeSwap and sibmtransfer.nft when the count down completes. 
+                The bnb lottery and airdrop will take place until the launch, from there on only the game will be available. 
                 Happy Trading!
             </div>
-                          
-        
            </form>
           );
         }

@@ -1,4 +1,4 @@
-//AFSW token address
+//sibm token address
 //0xf39Bf099716516B1200d4876E07D810337dbb893
 
 // bitbucket app password
@@ -60,15 +60,20 @@ var apiEth = require('etherscan-api').init('MG6DXYGV5GKX25REQ5RD4DX7VE3XH454CP',
 class App extends Component {
   async componentWillMount() 
       {
+      console.log("loading");
+      //this.setState({ loading: true })
       await this.loadWeb3()
       //await this.loadBlockchainData()
-      await this.checkWalletChanged()
-      }
+      await this.LoadTokens();
+      //await this.checkWalletChanged()
+      //this.setState({ loading: false })  
+      console.log("done");
+    }
 
   async loadWeb3() 
   {
-    //app.use(cors()) 
-        if (window.ethereum) {
+        if (window.ethereum) 
+          {
           window.web3 = new Web3(window.ethereum)      
           //console.log("window.ethereum")
           const ethersProvider = new ethers.providers.Web3Provider(window.ethereum)
@@ -77,14 +82,31 @@ class App extends Component {
           await window.ethereum.enable()
           this.setState({ethersProvider : ethersProvider})
           this.setState({etherSigner : etherSigner})
-        }
+          }
+          
         /*else if (window.web3) {
           console.log("window.web3.cuurentProvider")
           window.web3 = new Web3(window.web3.currentProvider)
         }*/
         else {
+          //let ethereum = 'https://data-seed-prebsc-1-s1.binance.org:8545/';
+         /*
+          https://data-seed-prebsc-2-s1.binance.org:8545/
+          https://data-seed-prebsc-1-s2.binance.org:8545/
+          https://data-seed-prebsc-2-s2.binance.org:8545/
+          https://data-seed-prebsc-1-s3.binance.org:8545/
+          https://data-seed-prebsc-2-s3.binance.org:8545/
+          */
+         // window.web3 = new Web3(ethereum)      
+          //console.log("window.ethereum")
+         /* const ethersProvider = new ethers.providers.Web3Provider(ethereum)
+          //const ethersProvider = new ethers.providers.JsonRpcProvider(window.ethereum)
+          const etherSigner = ethersProvider.getSigner()
+          await window.ethereum.enable()
+          this.setState({ethersProvider : ethersProvider})
+          this.setState({etherSigner : etherSigner})*/
           window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-        }
+          }
       const web3 = window.web3
       const bsChain = web3.eth 
       
@@ -95,7 +117,7 @@ class App extends Component {
       let bnbBalance = await bsChain.getBalance(this.state.account) ;
       this.setState({bnbBalance : window.web3.utils.fromWei(bnbBalance, 'ether').toString()});
       
-      this.setState({ loading: false })
+      //this.setState({ loading: false })
 
       /*
       //Load all contracts that are needed 
@@ -337,59 +359,63 @@ class App extends Component {
 
   async LoadTokens()
     {
-      const ethAddress = "0x2170ed0880ac9a755fd29b2688956bd959f933f8";
+     /* const ethAddress = "0x2170ed0880ac9a755fd29b2688956bd959f933f8";
       const btcbAddress = "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c";
       const bnbAddress = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
       //to do
       const dogeAddress = "0xba2ae424d960c26247dd6c32edc70b295c744c43";
       const adaAddress= "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47";
-      const ltcAddress = "0x4338665cbb7b2485a8855a139b75d5e34ab0db94";
-      //
-      const busdAddress ="0xe9e7cea3dedca5984780bafc599bd69add087d56";
       const daiAddress = "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3";
-      const afswAddress = "0xf39Bf099716516B1200d4876E07D810337dbb893";
+      const ltcAddress = "0x4338665cbb7b2485a8855a139b75d5e34ab0db94";*/
+      
+      // TAG Testnet busd and sibm
+      const busdAddress = "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee";// "0xe9e7cea3dedca5984780bafc599bd69add087d56";
+      const sibmAddress = "0x983Bd79E9c57Dd3A87a1de98b9996fD1672768B2";
 
     const web3 = window.web3
     const bsChain = web3.eth
     const abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"INITIAL_SUPPLY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"burn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_value","type":"uint256"}],"name":"burnFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_name","type":"string"},{"name":"_symbol","type":"string"},{"name":"_decimals","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_burner","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}]
-
+    
     //const bnbContract = new bsChain.Contract(abi, bnbAddress);
-    const ethContract = new bsChain.Contract(abi, ethAddress);
-    const btcbContract = new bsChain.Contract(abi, btcbAddress);
+    //const ethContract = new bsChain.Contract(abi, ethAddress);
+    //const btcbContract = new bsChain.Contract(abi, btcbAddress);
     //new 12-15
-    const adaContract = new bsChain.Contract(abi, adaAddress);
-    const ltcContract = new bsChain.Contract(abi, ltcAddress);
-    const dogeContract = new bsChain.Contract(abi, dogeAddress);
-    //
-    const daiContract = new bsChain.Contract(abi, daiAddress);
+    //const adaContract = new bsChain.Contract(abi, adaAddress);
+    //const ltcContract = new bsChain.Contract(abi, ltcAddress);
+    //const dogeContract = new bsChain.Contract(abi, dogeAddress);
+    //const daiContract = new bsChain.Contract(abi, daiAddress);
+    // TAG
     const busdContract = new bsChain.Contract(abi, busdAddress);
-    const afswContract = new bsChain.Contract(abi, afswAddress);
+    const sibmContract = new bsChain.Contract(abi, sibmAddress);
 
 
     //this.setState({ token })
     if (this.state.account !== null)
       {
       //let bnbBalance = await bnbContract.methods.balanceOf(this.state.account).call()
-      let bnbBalance = await bsChain.getBalance(this.state.account) //.call();
-      let ethBalance = await ethContract.methods.balanceOf(this.state.account).call()
-      let btcbBalance = await btcbContract.methods.balanceOf(this.state.account).call()
-      let daiBalance = await daiContract.methods.balanceOf(this.state.account).call()
+      //let bnbBalance = await bsChain.getBalance(this.state.account) //.call();
+      //let ethBalance = await ethContract.methods.balanceOf(this.state.account).call()
+      //let btcbBalance = await btcbContract.methods.balanceOf(this.state.account).call()
+      //let daiBalance = await daiContract.methods.balanceOf(this.state.account).call()
       let busdBalance = await busdContract.methods.balanceOf(this.state.account).call()
-      let afswBalance = await afswContract.methods.balanceOf(this.state.account).call()
-      //
-      let adaBalance = await adaContract.methods.balanceOf(this.state.account).call()
-      let ltcBalance = await ltcContract.methods.balanceOf(this.state.account).call()
-      let dogeBalance = await dogeContract.methods.balanceOf(this.state.account).call()
+      let sibmBalance = await sibmContract.methods.balanceOf(this.state.account).call()
+      //console.log("busdBalance", busdBalance);
+      //console.log("sibmBalance", sibmBalance);
+      //let adaBalance = await adaContract.methods.balanceOf(this.state.account).call()
+      //let ltcBalance = await ltcContract.methods.balanceOf(this.state.account).call()
+      //let dogeBalance = await dogeContract.methods.balanceOf(this.state.account).call()
       
-      this.setState({ adaBalance : window.web3.utils.fromWei(adaBalance.toString(), 'ether')})
-      this.setState({ ltcBalance : window.web3.utils.fromWei(ltcBalance.toString(), 'ether')})
-      this.setState({ dogeBalance : window.web3.utils.fromWei(dogeBalance.toString(), 'ether')})
-      this.setState({ bnbBalance : window.web3.utils.fromWei(bnbBalance.toString(), 'ether')})
-      this.setState({ ethBalance : window.web3.utils.fromWei(ethBalance.toString(), 'ether')})
-      this.setState({ btcbBalance : window.web3.utils.fromWei(btcbBalance.toString(), 'ether')})
-      this.setState({ daiBalance : window.web3.utils.fromWei(daiBalance.toString(), 'ether')})
+      //this.setState({ adaBalance : window.web3.utils.fromWei(adaBalance.toString(), 'ether')})
+      //this.setState({ ltcBalance : window.web3.utils.fromWei(ltcBalance.toString(), 'ether')})
+      //this.setState({ dogeBalance : window.web3.utils.fromWei(dogeBalance.toString(), 'ether')})
+      //this.setState({ bnbBalance : window.web3.utils.fromWei(bnbBalance.toString(), 'ether')})
+      //this.setState({ ethBalance : window.web3.utils.fromWei(ethBalance.toString(), 'ether')})
+      //this.setState({ btcbBalance : window.web3.utils.fromWei(btcbBalance.toString(), 'ether')})
+      //this.setState({ daiBalance : window.web3.utils.fromWei(daiBalance.toString(), 'ether')})
       this.setState({ busdBalance : window.web3.utils.fromWei(busdBalance.toString(), 'ether')})
-      this.setState({ afswBalance : window.web3.utils.fromWei(afswBalance.toString(),'ether')})
+      this.setState({ sibmBalance : window.web3.utils.fromWei(sibmBalance.toString(),'ether')})
+      //console.log("this.state.busdBalance", this.state.busdBalance);
+      //console.log("this.state.sibmBalance", this.state.sibmBalance);
 
       }
   }
@@ -411,7 +437,9 @@ class App extends Component {
       this.setState({ loading: 0xEE });
       return; 
       }*/ 
-    /*
+   
+   
+      /*
     //Wallet payment method, I.E the chain connected
     switch(chainID)
       {
@@ -573,7 +601,7 @@ class App extends Component {
     //console.log("BGas price USD = ", bnbPrice * 0.000000005)
 
     this.LoadGasFees();
-    this.setState({ loading: false })
+    //this.setState({ loading: false })
 
 }
 
@@ -1030,11 +1058,11 @@ async updateBaseTokenPrice()
       adaBalance : '0',
       ltcBalance : '0',
       dogeBalance : '0',
-      afswBalance : '0',
+      sibmBalance : '0',
       ////////////////////
       ethPrice : '0',
       gasPrice : '0',
-      loading: true,
+      loading: false,//true,
       tokenPairs : [],
       connectionString : 'Disconnect',
       PancakeFactory: "",
@@ -1121,15 +1149,19 @@ async updateBaseTokenPrice()
         //
         account={this.state.account}  
         privateKey={this.state.privateKey}
+        /*
         ethBalance={this.state.ethBalance}
         bnbBalance={this.state.bnbBalance}
         btcbBalance={this.state.btcbBalance}
-        busdBalance={this.state.busdBalance}
         daiBalance={this.state.daiBalance}
         adaBalance={this.state.adaBalance}
         dogeBalance={this.state.dogeBalance}
         ltcBalance={this.state.ltcBalance}
-        afswBalance={this.state.afswBalance}
+        */
+        busdBalance={this.state.busdBalance}
+        sibmBalance={this.state.sibmBalance}
+        busdAddress={this.state.busdAddress}
+        sibmAddress={this.state.sibmAddress}
         //working
         buyTokens={this.buyTokens}
         //

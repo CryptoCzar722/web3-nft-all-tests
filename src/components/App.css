@@ -3,7 +3,7 @@ table, th, td {
     border:2px solid black;
     width : 100%;
     border-collapse: collapse;
-    table-layout: auto 
+    table-layout: auto
   }
   input {
     background-color :rgb(230, 54, 48);
@@ -11,7 +11,7 @@ table, th, td {
   }
 
   img {
-    border: 5px solid rgb(85, 85, 85);
+    border: 2px solid rgb(85, 85, 85);
   }
 
   aws-btn {
