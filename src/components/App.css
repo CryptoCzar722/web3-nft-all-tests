@@ -5,6 +5,12 @@ table, th, td {
     border-collapse: collapse;
     table-layout: auto
   }
+  table {
+    border:2px solid black;
+    width : 100%;
+    border-collapse: collapse;
+    table-layout: fixed
+  }
   input {
     background-color :rgb(230, 54, 48);
     width : 50%;

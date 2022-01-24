@@ -11,6 +11,7 @@
     "@capacitor/core": "^3.4.0",
     "@capacitor/ios": "3.4.0",
     "@pinata/sdk": "^1.1.23",
+    "@ramonak/react-progress-bar": "^4.2.0",
     "@rumess/react-flip-countdown": "^1.2.3",
     "apexcharts": "^3.30.0",
     "apollo-cache-inmemory": "^1.6.6",

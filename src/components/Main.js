@@ -21,7 +21,7 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentForm: 'presale'
+      currentForm: 'nft'
     }
   }
 
@@ -100,7 +100,7 @@ class Main extends Component {
       setPrivateKey = {this.props.setPrivateKey}
       />
     }*/
-    if (this.state.currentForm === 'lottery') {
+   /* if (this.state.currentForm === 'lottery') {
       content = <LotteryForm
       gasPrice = {this.props.gasPrice}
       bnbBalance={this.props.bnbBalance}
@@ -110,7 +110,8 @@ class Main extends Component {
       sendTokens={this.props.sendTokens}
       />
     }
-    else if (this.state.currentForm === 'games') {
+    else*/ 
+    if (this.state.currentForm === 'games') {
       content = 
        <GameForm
        account={this.props.account}
@@ -161,6 +162,11 @@ class Main extends Component {
 
       />
     }
+    else if (this.state.currentForm === 'nft') {
+      content = <NFTForm
+       account={this.props.account}
+       />
+     }
    /* else if (this.state.currentForm === 'dashboard') {
       content = <DashboardForm
       account={this.props.account} 
@@ -220,11 +226,6 @@ class Main extends Component {
       BiswapBtcbArbPrice ={this.props.BiswapBtcbArbPrice}
       />
     }*/
-    else if (this.state.currentForm === 'nft') {
-     content = <NFTForm
-      account={this.props.account}
-      />
-    }
     /*else if (this.state.currentForm === 'sniper') {
       content = <SniperForm
       account={this.props.account}
@@ -243,7 +244,14 @@ class Main extends Component {
             >
             Sniper
     </button>
-
+    <button
+                className="btn btn-outline-dark"
+                onClick={(event) => {
+                  this.setState({ currentForm: 'lottery' })
+                }}
+              >
+              Giveaway
+            </button>
     */
     /*else if (this.state.currentForm === 'bridge') {
       content = <BridgeForm
@@ -255,7 +263,8 @@ class Main extends Component {
       ethPrice = {this.props.ethPrice}
       gasPrice = {this.props.gasPrice}
       />
-    }*/
+    }
+    */
     
     return (
       <div id="content" className="mt-3">
@@ -267,14 +276,6 @@ class Main extends Component {
                 }}
               >
               Presale
-            </button>
-          <button
-                className="btn btn-outline-dark"
-                onClick={(event) => {
-                  this.setState({ currentForm: 'lottery' })
-                }}
-              >
-              Giveaway
             </button>
           <button
                 className="btn btn-outline-dark"

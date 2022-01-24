@@ -68,10 +68,10 @@ class App extends Component {
       //await this.checkWalletChanged()
       //this.setState({ loading: false })  
       console.log("done");
-    }
+      }
 
   async loadWeb3() 
-  {
+      {
         if (window.ethereum) 
           {
           window.web3 = new Web3(window.ethereum)      
@@ -113,6 +113,7 @@ class App extends Component {
       this.setState({bsChain : bsChain});
       //TAG 11/22
       const accounts = await bsChain.getAccounts()
+      //console.log("accounts :: ", accounts[0]);
       this.setState({ account: accounts[0] })
       let bnbBalance = await bsChain.getBalance(this.state.account) ;
       this.setState({bnbBalance : window.web3.utils.fromWei(bnbBalance, 'ether').toString()});
@@ -390,8 +391,8 @@ class App extends Component {
 
 
     //this.setState({ token })
-    if (this.state.account !== null)
-      {
+   //if (this.state.account !== null)
+    //  {
       //let bnbBalance = await bnbContract.methods.balanceOf(this.state.account).call()
       //let bnbBalance = await bsChain.getBalance(this.state.account) //.call();
       //let ethBalance = await ethContract.methods.balanceOf(this.state.account).call()
@@ -416,8 +417,11 @@ class App extends Component {
       this.setState({ sibmBalance : window.web3.utils.fromWei(sibmBalance.toString(),'ether')})
       //console.log("this.state.busdBalance", this.state.busdBalance);
       //console.log("this.state.sibmBalance", this.state.sibmBalance);
-
-      }
+      console.log("balances loaded");
+      console.log("sibmBalance :: ", sibmBalance.toString());
+      console.log("busdBalance :: ", busdBalance.toString());
+      console.log("balances loaded");
+     // }
   }
 
   async loadBlockchainData() 
@@ -472,8 +476,7 @@ class App extends Component {
       this.setState({ ethBalance : window.web3.utils.fromWei(etherBalance, "Ether") })
       console.log('BNB balance -', window.web3.utils.fromWei(etherBalance, "Ether"))
       }*/
-
-    this.LoadTokens();  
+  
     //  pancakeswap v2 factory contract
     //  testnet 
     //  '0x6725F303b657a9451d8BA641348b6761A6CC7a17'
@@ -965,7 +968,7 @@ async updateBaseTokenPrice()
   }
 
   async UpdateSwapPrices()
-  {
+    {
     //Swap Pair
       //Pancake
       if (!this.state.loading  && this.state.swapPair)
@@ -974,7 +977,7 @@ async updateBaseTokenPrice()
         let swapPairPrice = (swapPairReserves._reserve1.toString() / (10 ** 18)) / (swapPairReserves._reserve0.toString()/ (10 ** 18));
         this.setState({swapPairPrice});
         }
-  }
+    }
 
   componentDidMount() 
   {
@@ -1097,11 +1100,23 @@ async updateBaseTokenPrice()
     this.SniperBot = this.SniperBot.bind(this);
     //this.ArbitrageBot = this.ArbitrageBot.bind(this);
     this.setSwapPair = this.setSwapPair.bind(this);
+    //this.state.account = this.state.account.bind(this);
     //this.SetTimer = this.SetTimer.bind(this);
+    this.getWindowDimensions = this.getWindowDimensions.bind(this);
   }
+
+  async getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
+
   render() 
     {
     //loadPairs();
+    let width, height = this.getWindowDimensions();
     let content
     if(this.state.loading === 0xEE) 
       {
@@ -1186,7 +1201,7 @@ async updateBaseTokenPrice()
         <Navbar account={this.state.account}  connectionString = {this.state.connectionString} connectWallet = {this.connectWallet} loadBlockchainData = {this.loadBlockchainData} />
         <div className="container-fluid mt-5">
           <div className="row">
-            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
+            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: "615px", backgroundColor : "white" }}>
               <div className="content mr-auto ml-auto">
                 <a
                   href="http://www.etherscan.io"

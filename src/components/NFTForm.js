@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 //import { useState } from 'react'
-import FormData from 'form-data';
 import './App.css'
-
 import Switch from 'react-ios-switch';
+import FormData from 'form-data';
 
 //import Identicon from 'identicon.js';
 //var QRCode = require('qrcode.react');
@@ -16,48 +15,7 @@ import Switch from 'react-ios-switch';
 
 const pinataSDK = require('@pinata/sdk');
 const pinata = pinataSDK('0f3f630bec73946940bd', 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9');
-
 const axios = require('axios');
-const userApiKey = `0f3f630bec73946940bd`;
-const userApiSecret = `c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9`;
-
-//ADD QR code.
-
-//Reveal nfts in marketplace
-/*
- </div>
-
-              <div style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}><p>Minting Coming Soon! Click image to unblur </p>
-            </div> 
-            <div style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}>
-            { this.props.account
-              ? <img
-                className="ml-2"
-                width='350'
-                height='350'
-                src= {`data:image/png;base64,${new Identicon(this.props.account, 200).toString()}`}
-                alt=""
-                onClick = {this.reveal}
-                style={this.state.revealImg ? {filter: 'blur(0)' }:{filter: 'blur(4rem)'}}
-              />
-              : <span></span>
-            }
-            
-            { this.props.account
-              ? <QRCode  onClick = {this.reveal2} style={this.state.revealImg2 ? {filter: 'blur(0)' }:{filter: 'blur(4rem)'}} size = '175' value= {this.props.account}  /> 
-              : <span></span>
-            }
-
-*/
-
 
 class NFTForm extends Component {
         
@@ -79,27 +37,7 @@ class NFTForm extends Component {
           };//localStorage.getItem("Timer")  };
           //this.onImageChange = this.onImageChange.bind(this);
           //this.handleFile = this.handleFile.bind(this);
-        }
-        tick() {
-            localStorage.setItem('Timer', 0)
-            //console.log('time tick ',parseInt(localStorage.getItem("Timer").toString()))
-        if (parseInt(localStorage.getItem("Timer"),10) > 0 )
-            {
-            this.setState(state => ({
-                seconds: localStorage.getItem("Timer").toString() + 1
-            }));
-            //localStorage.setItem('Timer', this.state.seconds)
-            //this.props.SetTimer(this.state.seconds)
-            }
-        else 
-            {
-            this.setState(state => ({
-                seconds: state.seconds + 1
-            }));
-            //localStorage.setItem('Timer', this.state.seconds)
-            //this.props.SetTimer(this.state.seconds)
-            }
-            localStorage.setItem('Timer', this.state.seconds)
+          this.PinFile = this.PinFile.bind(this);
         }
         
         reveal(){
@@ -118,7 +56,7 @@ class NFTForm extends Component {
       
         componentDidMount() {
           //localStorage.setItem('Timer', 0)
-          this.interval = setInterval(() => this.tick(), 1000);
+          //this.interval = setInterval(() => this.tick(), 1000);
           this.reveal = this.reveal.bind(this);
           this.reveal2 = this.reveal2.bind(this);
           pinata.testAuthentication().then((result) => {
@@ -147,16 +85,48 @@ class NFTForm extends Component {
             
             
             console.log("File location ", './'+img.name)  //this.state.setFile) 
-            this.setState({setFile : './'+img.name})
+            this.setState({setFile : event.target.files[0]})
+
             this.setState({
               image: URL.createObjectURL(img)
             });
-            console.log("image - ", this.state.image);
+            //console.log("image - ", this.state.image);
           }
                      
        };
+       async PinFile(){
+        // initialize the form data
+        console.log("Pinning");
+        const formData = new FormData()
+  
+        // append the file form data to 
+        formData.append("file", this.state.setFile)
+  
+        //TAG call the keys from .env
+        const API_KEY = '0f3f630bec73946940bd';
+        const API_SECRET = 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9';
+        
+        // the endpoint needed to upload the file
+        const url =  `https://api.pinata.cloud/pinning/pinFileToIPFS`
+  
+        const response = await axios.post(
+          url,
+          formData,
+          {
+              maxContentLength: "Infinity",
+              headers: {
+                  "Content-Type": `multipart/form-data;boundary=${formData._boundary}`, 
+                  'pinata_api_key': API_KEY,
+                  'pinata_secret_api_key': API_SECRET
+  
+              }
+          })
 
-       async handleFile() {
+          console.log(response)
+          // get the hash
+          this.setState({ipfsHash: response.data.IpfsHash})
+      }
+     /*  async handleFile() {
         console.log("image - ", this.state.image);
         console.log('starting')
         const fileToHandle = this.state.setFile;
@@ -186,12 +156,14 @@ class NFTForm extends Component {
       // get the hash
       //setIPFSHASH(response.data.IpfsHash)
       this.setState({setIPFSHASH : response.data.IpfsHash});
-    }
+    }*/
       
+    
         render() {
           return (
             <form className="mb-0" onSubmit={(event) => {
                 event.preventDefault()                
+                this.PinFile();
                 //let ipfs = pinata.pinFileToIPFS(this.state.imageName)//, options)
                 //console.log("ipfs pin ", ipfs);
                 //this.state.IpfsPostImg();

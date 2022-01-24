@@ -1,7 +1,16 @@
 import React, { Component } from 'react'
-import { AwesomeButtonProgress } from 'react-awesome-button';
+//import ProgressButton from 'react-progress-button'
+import ProgressBar from "@ramonak/react-progress-bar";
+//import { AwesomeButtonProgress } from 'react-awesome-button';
+//import AwesomeButtonProgress from 'react-awesome-button/src/components/AwesomeButtonProgress';
+import "./Swap.css"
 //import AwesomeButtonStyles from 'react-awesome-button/src/styles/styles.css'
  
+//TAG FIRST $10 investment
+// 0x88ed0A8ff7a40BBafDc338d9e50b6B71628C742C
+//Best so far contract
+//0x4a06469522989f991391055D8e175Dd591c0600a
+
 /*
 <AwesomeButtonProgress
           type="secondary"
@@ -12,7 +21,6 @@ import { AwesomeButtonProgress } from 'react-awesome-button';
           Primary
         </AwesomeButtonProgress>
 */
-//import afswLogo from '../token-logo.png'
 
 import sibmLogo from '../sibm-logo.png'
 import busdLogo from '../busd-logo.png'
@@ -26,12 +34,13 @@ class InvestorForm extends Component {
     //this.onSubmit = this.onSubmit.bind(this)
     this.state = {
     //TAG
-      presaleAddress : "0xdf441e62C78Ff5627c5DCA0299189ea52058e873",//"0xD279A0eF79bcaCeaa48DF272B8E5580E79185a02",
+    account : "",      //V3.1                                           //V3.0
+      presaleAddress : "0x509739e0bb661F3b97ceF75d0552c45b9dc23c3F",      //"0x1532e8FDB5348c630593051E8D1B37d97383AEEE", //"0x60423E74c25c266F03736F23afC0b817880d7275"
       busdAddress : "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
       BusdContract : "",
       PresaleContract : "",
+      uinsuranceContract : "",
       contractName : "",
-      //PresalePrice : "",
       ps_ABI : [
         {
           "inputs": [
@@ -160,6 +169,44 @@ class InvestorForm extends Component {
           "inputs": [
             {
               "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "confirmedOrders",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "finishBlock",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
               "name": "depositer",
               "type": "address"
             }
@@ -179,11 +226,11 @@ class InvestorForm extends Component {
           "inputs": [
             {
               "internalType": "address",
-              "name": "user",
+              "name": "",
               "type": "address"
             }
           ],
-          "name": "insuranceContract",
+          "name": "insuranceContracts",
           "outputs": [
             {
               "internalType": "address",
@@ -202,6 +249,25 @@ class InvestorForm extends Component {
               "internalType": "string",
               "name": "",
               "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "order_id",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
             }
           ],
           "stateMutability": "view",
@@ -229,6 +295,44 @@ class InvestorForm extends Component {
             {
               "internalType": "uint256",
               "name": "price",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "pendingOrder",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "pendingTokenPayment",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
               "type": "uint256"
             }
           ],
@@ -300,65 +404,27 @@ class InvestorForm extends Component {
           "type": "function"
         },
         {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "startBlock",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
           "inputs": [],
           "name": "TokenBalance",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "depositer",
-              "type": "address"
-            }
-          ],
-          "name": "viewConfirmedOrders",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "depositer",
-              "type": "address"
-            }
-          ],
-          "name": "viewPendingDeposit",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "depositer",
-              "type": "address"
-            }
-          ],
-          "name": "viewPendingTokenPayment",
           "outputs": [
             {
               "internalType": "uint256",
@@ -375,30 +441,16 @@ class InvestorForm extends Component {
       tokenPrice : '0',
       token0Img : busdLogo,
       token1Img : sibmLogo,
-      token0Balance: this.props.busdBalance,
+      token0Balance: this.props.busdBalance, 
       token1Balance: this.props.sibmBalance,
       //
-      token0Addr : this.props.busdAddress, //busd tesnet
-      token1Addr : this.props.sibmAddress,  //sibm testnet
-
       approved : "0",
-      deposited : "0",
+      deposited : "",
       pending : "0",
       received : "0"
     }
-    this.execute = this.execute.bind(this);
+    this.executeInvestment = this.executeInvestment.bind(this);
   }
-  
-  /*componentDidMount = () => {
-    this.isComponentMounted = true;
-    //this.setDivSizeThrottleable();
-    //window.addEventListener("resize", this.setDivSizeThrottleable);
-  };*/
-
-  /*componentWillUnmount = () => {
-    this.isComponentMounted = false;
-    //window.removeEventListener("resize", this.setDivSizeThrottleable);
-  };*/
 
   async componentWillMount() {
     this.isComponentMounted = true;
@@ -409,61 +461,71 @@ class InvestorForm extends Component {
     {
     const web3 = window.web3
     const bsChain = web3.eth
+
+    const accounts = await bsChain.getAccounts()
+    //console.log("accounts :: ", accounts[0]);
+    this.setState({account : accounts[0]});
+
     this.state.presaleAddress = web3.utils.toChecksumAddress(this.state.presaleAddress);
     const PresaleContract = new bsChain.Contract(this.state.ps_ABI, this.state.presaleAddress);
     this.setState({PresaleContract});
+    
+    let uinsuranceContract = await PresaleContract.methods.insuranceContracts(this.state.account).call();
+    this.setState({uinsuranceContract});
 
     this.state.busdAddress = web3.utils.toChecksumAddress(this.state.busdAddress);
     const BusdContract = new bsChain.Contract(this.state.busd_ABI, this.state.busdAddress);
     this.setState({BusdContract});
 
-    //let usd = await BusdContract.methods.balanceOf(this.props.account).call();
-    //console.log("BUSD :: ", usd.toString());
+    let approved = await PresaleContract.methods.confirmedOrders(this.state.account).call();
+    this.setState({approved : approved.toString()});
+
+    let deposited = await BusdContract.methods.balanceOf(uinsuranceContract).call();
+    this.setState({deposited : window.web3.utils.fromWei(deposited.toString(), 'ether')});
+
+    let pending = await PresaleContract.methods.pendingTokenPayment(this.state.account).call();
+    this.setState({pending : pending.toString()});
+
+    let received = await PresaleContract.methods.TokenBalance().call();
+    this.setState({received : received.toString()});
+    
+    //console.log("accounts :: ", this.state.account);
+    
 
     let contractName = await PresaleContract.methods.name().call();
     this.setState({contractName});  
     
     let tokenPrice = await PresaleContract.methods.orderBook().call();
     
-    //let insuranceContract = await PresaleContract.methods.orderBook.insuranceContract(this.props.account).call();
+    //let insuranceContract = await PresaleContract.methods.orderBook.insuranceContract(this.state.account).call();
     //console.log("insuranceContract ",insuranceContract);
 
     let price = tokenPrice.price;
+    let supply = tokenPrice.TokenSupply;
     this.setState({tokenPrice : window.web3.utils.fromWei(price.toString(),'ether')}); 
-    console.log("tokenPrice ",this.state.tokenPrice);
+    //console.log("tokenPrice ",this.state.tokenPrice);
+    console.log("token supply ",supply);
     } 
 
-  async execute(){
+  async executeInvestment(){
     let usd
     usd = this.input.value.toString()
-    //let result = window.confirm("Sell " + tokenAmount + ' Busb for ', this.state.tokenPrice,'BUSD');
-    console.log("Buy " + usd / this.state.tokenPrice + ' Busb for ',usd ,' BUSD');
-    //usd = window.web3.utils.toWei(usd,'ether');
-    //console.log("Deposit ", usd);
     let usdConv = window.web3.utils.toWei(usd,'ether');
-    let result = window.confirm("Request " + usd / this.state.tokenPrice + ' Busb for ', this.state.tokenPrice,'BUSD');
+    let result = window.confirm(usd.toString() + " usd for" + usd / this.state.tokenPrice + 'SIBM');
     let appr = await this.state.BusdContract.methods.approve(this.state.presaleAddress,usdConv).send({ from: this.props.account });//.call();
-    console.log("approved :: ", appr, this.props.account);
+    //console.log("approved :: ", appr, this.props.account);
+    
     //let allow = await this.state.BusdContract.methods.allowance(this.props.account, this.state.presaleAddress).call();
     //console.log("allow :: ",allow.toString()); 
-    this.setState({approved : appr});
-    usdConv = usdConv / window.web3.utils.toWei(this.state.tokenPrice,'ether') * 1.02;
     console.log("usdConv :: ", usdConv)//this.state.tokenPrice);
-    //await this.state.PresaleContract.methods.RequestPresaleBuyIn(usdConv).send({ from: this.props.account });//.call();
-    //this.setState({deposited : usd});
+    await this.state.PresaleContract.methods.RequestPresaleBuyIn(usdConv).send({ from: this.props.account });
   }
 
   render() {
     //
     const busdAddress ="0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee";
     const sibmAddress = "0x983Bd79E9c57Dd3A87a1de98b9996fD1672768B2";
-    
-    //this.props.setSwapPair(this.state.token0Addr, this.state.token1Addr);
-    /*if (this.state.token0Img === busdLogo)
-      {
-      let tokenPrice = (this.state.token0Img === busdLogo) ? (this.state.output / this.props.swapPairPrice): (this.state.output * this.props.swapPairPrice);
-      this.setState({tokenPrice})
-      }*/
+
     /*
     <Loader
         type="Puff"
@@ -474,23 +536,10 @@ class InvestorForm extends Component {
       />
     */
 
-  //const busdBal = this.props.busdBalance;
-  // const sibmBal = this.props.sibmBalance;
-  // console.log("this.props.busdBalance ", this.props.busdBalance);
-  // console.log("this.props.sibmBalance ", this.props.sibmBalance);
-
     return (
       <form className="mb-3" onSubmit={(event) => {
           event.preventDefault()
-          
-          //await
-          this.execute();
-          
-          /*if (result)
-            {
-            tokenAmount = window.web3.utils.toWei(tokenAmount, 'Ether')
-            this.props.swapTokens(tokenAmount, this.state.token0Addr, this.state.token1Addr)
-            }*/
+          this.executeInvestment();
         }}>
          <div style={{
           display: "flex",
@@ -499,10 +548,10 @@ class InvestorForm extends Component {
           }}>
             <h5>{this.state.contractName}</h5>
         </div>
-        <table >
+        <table>
                <thead>
                 <tr>
-                  <th>BUSD Deposited</th>
+                  <th width="10" >BUSD pending</th>
                   <th>BUSD Approved </th>
                   <th>SIBM Pending </th>
                   <th>SIBM Received </th>
@@ -510,10 +559,10 @@ class InvestorForm extends Component {
                </thead>
             <tbody>
             <tr>
-              <td>{this.state.deposited}</td>   
-              <td> <font color={"green"}> {this.state.approved} </font> </td>
-              <td>{this.state.pending} </td>
-              <td> {this.state.received}</td>
+              <td><font color={"red"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)  > 0 ? 0.00 : parseFloat(this.state.deposited).toFixed(2)} </font></td>   
+              <td> <font color={"green"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)} </font> </td>
+              <td><font color={"red"}> {parseFloat(window.web3.utils.fromWei(this.state.pending)).toFixed(2)} </font> </td>
+              <td> <font color={"green"}> {parseFloat(window.web3.utils.fromWei(this.state.received)).toFixed(2)} </font></td>
               </tr>
             </tbody>
             </table>  
@@ -542,7 +591,7 @@ class InvestorForm extends Component {
         <div>
           <label className="float-left"><b>Token0</b></label>
           <span className="float-right text-muted">
-            Balance: {this.state.token0Balance}
+            Balance: {parseFloat(this.props.busdBalance).toFixed(2)}
           </span>
         </div>
         <div className="input-group mb-4">
@@ -593,14 +642,11 @@ class InvestorForm extends Component {
         <div>
           <label className="float-left"><b>Token1</b></label>
           <span className="float-right text-muted">
-            Balance: {this.state.token1Balance}
+            Balance: {parseFloat(this.props.sibmBalance).toFixed(2)}
           </span>
         </div>
         <div className="input-group mb-2">
-          <input
-            type="text"
-            className="form-control form-control-lg"
-            placeholder="0"
+          <input type="text" className="form-control form-control-lg" placeholder="0"
             value= {this.state.output != '0'  ? this.state.output / this.state.tokenPrice : 0}
             disabled
           />
@@ -608,24 +654,7 @@ class InvestorForm extends Component {
             <div className="input-group-text">
               <img src={this.state.token1Img} height='34' alt=""/>
               &nbsp;
-              <select name="buyToken" id="buyToken" ref={(select4) => { this.select4 = select4 }} onChange ={ (event) => {
-                   if (this.select4.value  === "BUSD"){
-                    this.setState({token1Img : busdLogo});
-                    this.setState({token1Addr : busdAddress});
-                    this.setState({token1Balance : this.props.busdBalance});
-                    //this.setState({tokenCount : window.web3.utils.fromWei(this.props.tokenBalance.toString(), 'Ether')})
-                  }
-                  
-                  //TAG exchange token
-                  else if (this.select4.value  === "SIBM"){
-                    this.setState({token1Img : sibmLogo});
-                    //this.setState({token0Addr : sibmAddress});
-                    this.setState({token1Balance : this.props.sibmBalance});
-                  }
-                //this.props.setSwapPair(this.state.token0Addr, this.state.token1Addr);  
-                  
-              }}>
-                
+              <select name="buyToken" id="buyToken" ref={(select4) => { this.select4 = select4 }}>
                 <option value="SIBM">SIBM</option>
             </select>
             </div>
@@ -633,10 +662,33 @@ class InvestorForm extends Component {
         </div>        
         <div className="mb-5">
           <span className="float-left text-muted">Exchange Rate</span>
-          <span className="float-right text-muted">1 token0 = { 1 / parseFloat(this.state.tokenPrice).toFixed(10)} token1 </span>
+          <span className="float-right text-muted">1 token0 = { parseFloat(1 / parseFloat(this.state.tokenPrice).toFixed(10)).toFixed(2)} token1 </span>
         </div>
         
         <button type="submit" className="btn btn-primary btn-block btn-lg">Request Presale Tokens </button> 
+        <ProgressBar completed={0} maxCompleted={100}/>
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+          }}>
+        SI Contract : {this.state.uinsuranceContract}
+        </div>
+            <table>
+               <thead>
+                <tr>
+                  <th>BUSD Covered </th>
+                  <th width="10" >BUSD in Policy</th>
+                </tr>
+               </thead>
+            <tbody>
+            <tr>
+              <td> <font color={"green"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2) * 2} </font> </td>
+              <td><font color={"green"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)} </font></td>   
+              </tr>
+            </tbody>
+            </table>  
+            
       </form>
 
 
