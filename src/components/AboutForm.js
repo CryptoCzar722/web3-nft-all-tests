@@ -125,8 +125,7 @@ class AboutForm extends Component {
               alignItems: "center"
             }}>
                 SIBM : Smart Insurance Burn Mechanism will be launched on PancakeSwap and sibmtransfer.nft when the count down completes. 
-                The bnb lottery and airdrop will take place until the launch, from there on only the game will be available. 
-                Happy Trading!
+                NFT's will be mintable for low fees until 1GB of IPFS storage has been reached. 
             </div>
            </form>
           );

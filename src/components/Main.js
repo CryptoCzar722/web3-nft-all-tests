@@ -111,20 +111,21 @@ class Main extends Component {
       />
     }
     else*/ 
-    if (this.state.currentForm === 'games') {
-      content = 
-       <GameForm
-       account={this.props.account}
-       gasPrice = {this.props.gasPrice}
-       bnbBalance={this.props.bnbBalance}
-       />
+   // if (this.state.currentForm === 'games') {
+   //   content = 
+   //    <GameForm
+   //    account={this.props.account}
+   //    gasPrice = {this.props.gasPrice}
+   //    bnbBalance={this.props.bnbBalance}
+   //    />
       /*<BlackjackForm
       //bnbBalance={this.props.bnbBalance}
       //account={this.props.account} 
       />*/
+    // }
+    // else 
      
-     }
-     else if (this.state.currentForm === 'about') {
+     if (this.state.currentForm === 'about') {
       content = 
        <AboutForm/>
       /*<BlackjackForm
@@ -264,6 +265,14 @@ class Main extends Component {
       gasPrice = {this.props.gasPrice}
       />
     }
+    <button
+                className="btn btn-outline-dark"
+                onClick={(event) => {
+                  this.setState({ currentForm: 'games' })
+                }}
+              >
+              Games
+    </button>
     */
     
     return (
@@ -277,14 +286,6 @@ class Main extends Component {
               >
               Presale
             </button>
-          <button
-                className="btn btn-outline-dark"
-                onClick={(event) => {
-                  this.setState({ currentForm: 'games' })
-                }}
-              >
-              Games
-          </button>
           <button
               className="btn btn-outline-dark"
               onClick={(event) => {

@@ -611,30 +611,8 @@ class InvestorForm extends Component {
             <div className="input-group-text">
               <img src={this.state.token0Img} height='34' alt=""/>
               &nbsp;&nbsp;&nbsp; 
-              <select name="sellToken" id="sellToken" ref={(select3) => { this.select3 = select3 }} onChange ={ (event) => {
-                 if (this.select3.value  === "BUSD"){
-                    this.select4.value = "SIBM";
-                    this.setState({token0Img : busdLogo});
-                    this.setState({token0Addr : busdAddress});
-                    this.setState({token0Balance : this.props.busdBalance});
-
-                    //this.setState({tokenCount : window.web3.utils.fromWei(this.props.tokenBalance.toString(), 'Ether')})
-                  }
-                  
-                  //Exchange token
-                  else if (this.select3.value  === "SIBM"){
-                    this.setState({token0Img : sibmLogo});
-                    this.setState({token0Addr : sibmAddress});
-                    this.setState({token0Balance : this.props.sibmBalance});
-                  }
-                  /////////////////////////////////////////////////////////////////////////////////////////////////////////
-                
-                  
-                  //this.props.setSwapPair(this.state.token0Addr, this.state.token1Addr);
-              }}>
-              
+              <select name="sellToken" id="sellToken" ref={(select3) => { this.select3 = select3 }}>
               <option value="BUSD">BUSD</option>
-              
             </select>
             </div>
           </div>
