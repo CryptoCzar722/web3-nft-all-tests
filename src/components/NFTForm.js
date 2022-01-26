@@ -7,12 +7,6 @@ import FormData from 'form-data';
 //import Identicon from 'identicon.js';
 //var QRCode = require('qrcode.react');
 
-//Exhange contract v0
-//0x8B68984546d5BE5089eBf791533a10267df8D107
-//exchange contract v0.1
-//0x26a0f03E7A43C1cd77029e0B902DcBfFB5e1E9Fa
-//0x26a0f03E7A43C1cd77029e0B902DcBfFB5e1E9Fa
-
 const pinataSDK = require('@pinata/sdk');
 const pinata = pinataSDK('0f3f630bec73946940bd', 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9');
 const axios = require('axios');
@@ -601,28 +595,8 @@ class NFTForm extends Component {
           this.setState({ipfsByteCount : response.data.pin_size_total / 1000})
 
             }
-
-
-
-        /*reveal(){
-          //this.setState({revealImg : !this.state.revealImg});
-          this.setState(state => ({
-            revealImg: !this.state.revealImg
-        }));
-        }
-
-        reveal2(){
-          //this.setState({revealImg : !this.state.revealImg});
-          this.setState(state => ({
-            revealImg2: !this.state.revealImg2
-        }));
-        }*/
       
         componentDidMount() {
-          //localStorage.setItem('Timer', 0)
-          //this.interval = setInterval(() => this.tick(), 1000);
-          //this.reveal = this.reveal.bind(this);
-          //this.reveal2 = this.reveal2.bind(this);
           this.loadMintContract(); 
 
           pinata.testAuthentication().then((result) => {
@@ -634,8 +608,6 @@ class NFTForm extends Component {
               console.log(err);
               this.setState({pinataConnection : false});
           });
-          
-          //this.reveal = setInterval(() => this.tick(), 0);
         }
       
         componentWillUnmount() {
@@ -661,7 +633,7 @@ class NFTForm extends Component {
                      
        };
 
-       async PinFile(){
+       async PinFilethenMint(){
         // initialize the form data
         console.log("Pinning");
         const formData = new FormData()
@@ -685,10 +657,9 @@ class NFTForm extends Component {
               }
           })
           console.log(response.data.IpfsHash)
-          // get the hash
-          //this.setState({ipfsHash: "https://ipfs.io/ipfs/"+response.data.IpfsHash+"/"+this.state.imageName});//response.data.IpfsHash})
-          this.setState({ipfsHash: "https://gateway.pinata.cloud/ipfs/"+response.data.IpfsHash+"/?preview=1"});//this.state.imageName});
-          console.log("ipfsHash ::", this.state.ipfsHash);//"https://ipfs.io/ipfs/"+this.state.ipfsHash+"/"+this.state.imageName);
+          // get the hash link
+          this.setState({ipfsHash: "https://gateway.pinata.cloud/ipfs/"+response.data.IpfsHash+"/?preview=1"});
+          console.log("ipfsHash ::", this.state.ipfsHash);
           
           
           if (this.state.ipfsHash != "NONE")
@@ -711,12 +682,10 @@ class NFTForm extends Component {
                       'pinata_secret_api_key': API_SECRET
                   }
               })
-              //console.log("JSON hash :: ", "https://ipfs.io/ipfs/"+response.data.IpfsHash)
               this.setState({ipfsJSONHash: "https://gateway.pinata.cloud/ipfs/"+response.data.IpfsHash})
               console.log("ipfsJSONHash :: ", this.state.ipfsJSONHash)
-              //await this.state.nftMintContract.methods.mint(response.data.IpfsHash).send({from :this.state.account});
-              //new                                                 //make into token uri
-              await this.state.nftMintContract.methods.createNft(this.state.ipfsJSONHash).send({from :this.state.account});
+              let item_Id = await this.state.nftMintContract.methods.createNft(this.state.ipfsJSONHash).send({from :this.state.account});
+              let result = window.confirm("IMPORTANT used for viewing in metamask! NFT Token ID : ", item_Id.toString());
             }
       }
     
@@ -724,7 +693,7 @@ class NFTForm extends Component {
           return (
             <form className="mb-0" onSubmit={(event) => {
                 event.preventDefault()                
-                this.PinFile();
+                this.PinFilethenMint();
                 
                 }}>
 

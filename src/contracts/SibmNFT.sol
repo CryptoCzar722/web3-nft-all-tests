@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
+//TRASH only for testing
+
 pragma solidity ^0.8.2;
 
-import "@openzepplin/contracts/token/ERC721/ERC721.sol"
-
-contract SibmNFT is ERC721{
+contract SibmNFT{
     string public name = "SIBM: NFT Minter";
 
     event Mint(address indexed _to, uint256 indexed _tokenId, string _ipfsHash);

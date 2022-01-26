@@ -5,7 +5,7 @@ pragma solidity ^0.8.2;
 //import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-abstract contract nftSibm is ERC721URIStorage{
+contract nftSibm is ERC721URIStorage{
     uint256 public Nft_Id;
     
     address public admin;
