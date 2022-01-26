@@ -39,10 +39,391 @@ class NFTForm extends Component {
             ipfsHash : "NONE",
             ipfsJSONHash : "",
             tokenUri : "",
-
-            //nft contract
-            nftMintAddress : "0x760e90639425f52c0295987BfB99046E4CFD72C3",//"0x8A422D1Ea395721423eF544aC95c316e9CbF37f8",
+            //nft contract       
+            nftMintAddress : "0x96C742592c5b55C17c86B6a996c91C8A812BB91C", //"0x760e90639425f52c0295987BfB99046E4CFD72C3",    //"0x8A422D1Ea395721423eF544aC95c316e9CbF37f8",
             nftMintAbi : [
+              {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "approved",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "Approval",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "operator",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": false,
+                    "internalType": "bool",
+                    "name": "approved",
+                    "type": "bool"
+                  }
+                ],
+                "name": "ApprovalForAll",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "Transfer",
+                "type": "event"
+              },
+              {
+                "inputs": [],
+                "name": "Nft_Id",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "admin",
+                "outputs": [
+                  {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "approve",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "string",
+                    "name": "tokenUri",
+                    "type": "string"
+                  }
+                ],
+                "name": "createNft",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "getApproved",
+                "outputs": [
+                  {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "operator",
+                    "type": "address"
+                  }
+                ],
+                "name": "isApprovedForAll",
+                "outputs": [
+                  {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                  {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "ownerOf",
+                "outputs": [
+                  {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "safeTransferFrom",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "_data",
+                    "type": "bytes"
+                  }
+                ],
+                "name": "safeTransferFrom",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "operator",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "bool",
+                    "name": "approved",
+                    "type": "bool"
+                  }
+                ],
+                "name": "setApprovalForAll",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "bytes4",
+                    "name": "interfaceId",
+                    "type": "bytes4"
+                  }
+                ],
+                "name": "supportsInterface",
+                "outputs": [
+                  {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                  {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "tokenURI",
+                "outputs": [
+                  {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "transferFrom",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              }
+            ],
+            /*[
               {
                 "inputs": [],
                 "stateMutability": "nonpayable",
@@ -174,7 +555,7 @@ class NFTForm extends Component {
                 "stateMutability": "nonpayable",
                 "type": "function"
               }
-            ],
+            ]*/
             nftMintContract : "",
             nftMintName : ""
 
@@ -284,14 +665,11 @@ class NFTForm extends Component {
         // initialize the form data
         console.log("Pinning");
         const formData = new FormData()
-  
         // append the file form data to 
         formData.append("file", this.state.setFile)
-  
         //TAG call the keys from .env
         const API_KEY = '0f3f630bec73946940bd';
         const API_SECRET = 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9';
-        
         // the endpoint needed to upload the file
         const url =  `https://api.pinata.cloud/pinning/pinFileToIPFS`
   
@@ -308,22 +686,20 @@ class NFTForm extends Component {
           })
           console.log(response.data.IpfsHash)
           // get the hash
-          this.setState({ipfsHash: response.data.IpfsHash})
-
+          //this.setState({ipfsHash: "https://ipfs.io/ipfs/"+response.data.IpfsHash+"/"+this.state.imageName});//response.data.IpfsHash})
+          this.setState({ipfsHash: "https://gateway.pinata.cloud/ipfs/"+response.data.IpfsHash+"/?preview=1"});//this.state.imageName});
+          console.log("ipfsHash ::", this.state.ipfsHash);//"https://ipfs.io/ipfs/"+this.state.ipfsHash+"/"+this.state.imageName);
+          
+          
           if (this.state.ipfsHash != "NONE")
             {
             let tokenUri = {
               "name" : this.input.value.toString(),//this.state.nftName,
               "description" : "NFT minted with SIBM contracts",
-              "image" : "https://ipfs.io/ipfs/"+this.state.ipfsHash+"/"+this.state.imageName,
-              "attributes" : [
-                {
-                  "trait_type" : "Rank",
-                  "value" : this.state.nftCount,
-                }
-              ]
+              "image" : this.state.ipfsHash
             }
             console.log(tokenUri);
+            
             const urlJs =  `https://api.pinata.cloud/pinning/pinJSONToIPFS`
 
             const response = await axios.post(
@@ -335,12 +711,12 @@ class NFTForm extends Component {
                       'pinata_secret_api_key': API_SECRET
                   }
               })
-              console.log("JSON hash :: ", response.data.IpfsHash)
-              // get the hash
-              this.setState({ipfsJSONHash: response.data.IpfsHash})
-              
+              //console.log("JSON hash :: ", "https://ipfs.io/ipfs/"+response.data.IpfsHash)
+              this.setState({ipfsJSONHash: "https://gateway.pinata.cloud/ipfs/"+response.data.IpfsHash})
+              console.log("ipfsJSONHash :: ", this.state.ipfsJSONHash)
               //await this.state.nftMintContract.methods.mint(response.data.IpfsHash).send({from :this.state.account});
-              
+              //new                                                 //make into token uri
+              await this.state.nftMintContract.methods.createNft(this.state.ipfsJSONHash).send({from :this.state.account});
             }
       }
     

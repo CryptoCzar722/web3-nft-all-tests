@@ -10,11 +10,14 @@ abstract contract nftSibm is ERC721URIStorage{
     
     address public admin;
 
-    constructor() public ERC721("SIBM: Nfts","SIBM"){
+    constructor() ERC721URIStorage() ERC721("SIBM: NFT Mint", "SIBM"){
         Nft_Id = 0;
+        admin = msg.sender;
     }
 
     function createNft(string memory tokenUri) public returns (uint256){
+        //require(msg.value >= 0.001 ether, "Minting Costs 0.001 bnb");
+        //payable(admin).transfer(msg.value);
         uint256 newItem_Id = Nft_Id;
         _safeMint(msg.sender,newItem_Id);
         _setTokenURI(newItem_Id, tokenUri);
