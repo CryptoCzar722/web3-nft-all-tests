@@ -295,10 +295,11 @@ class Main extends Component {
             NFT
           </button>
           <button
-                className="btn btn-outline-dark"
+                className= "btn btn-outline-dark" //"btn btn-outline-dark"
                 onClick={(event) => {
                   this.setState({ currentForm: 'about' })
                 }}
+                width = "0px"
               >
               About
           </button>

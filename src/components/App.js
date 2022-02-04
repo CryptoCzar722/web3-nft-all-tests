@@ -281,7 +281,7 @@ class App extends Component {
   }
 
   async checkWalletChanged()
-  {
+    {
     window.ethereum.on("accountsChanged", accounts => {
        if (accounts.length > 0) 
           {
@@ -290,7 +290,7 @@ class App extends Component {
           }
          else this.setState({account: ""});
     });
-  }
+    }
 
   async connectWallet(){
    /* const web3 = window.web3
@@ -1103,6 +1103,7 @@ async updateBaseTokenPrice()
     //this.state.account = this.state.account.bind(this);
     //this.SetTimer = this.SetTimer.bind(this);
     this.getWindowDimensions = this.getWindowDimensions.bind(this);
+    this.setAccount = this.setAccount.bind(this);
   }
 
   async getWindowDimensions() {
@@ -1112,6 +1113,11 @@ async updateBaseTokenPrice()
       height
     };
   }
+
+  async setAccount(account)
+    {
+    this.setState({account: account})
+    }
 
   render() 
     {
@@ -1198,7 +1204,7 @@ async updateBaseTokenPrice()
     return (
 
       <div>
-        <Navbar account={this.state.account}  connectionString = {this.state.connectionString} connectWallet = {this.connectWallet} loadBlockchainData = {this.loadBlockchainData} />
+        <Navbar account={this.state.account} setAccount={this.setAccount}  connectionString = {this.state.connectionString} connectWallet = {this.connectWallet} loadBlockchainData = {this.loadBlockchainData} />
         <div className="container-fluid mt-5">
           <div className="row">
             <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: "615px", backgroundColor : "white" }}>

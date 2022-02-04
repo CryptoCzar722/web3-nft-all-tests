@@ -1,18 +1,54 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 //import { useState } from 'react'
-import './App.css'
+import './App.css';
 import Switch from 'react-ios-switch';
 import FormData from 'form-data';
+//import sibmLogo from '../sIcon.ico'
+import sibmLogo from '../sibm-logo.png';
 
-//import Identicon from 'identicon.js';
-//var QRCode = require('qrcode.react');
+import NFTCard from './NFTCard'
+
+// ...
+
+//import {Card} from 'Card.js';
+//import { ColorExtractor } from 'react-color-extractor'
+//import { colors } from "Colors.js";
+//import { Card, Icon, Image } from 'semantic-ui-react';
+//import { Container, Header, List } from "semantic-ui-react";
+
+//import {ProductCard} from 'react-ui-cards';
+//import {Card} from 'react-ui-cards';
+//import {CryptoCard} from 'react-ui-cards';
+//import {NewsHeaderCard} from 'react-ui-cards';
+
+//import AwesomeButtonProgress from 'react-awesome-button/src/components/AwesomeButtonProgress';
 
 const pinataSDK = require('@pinata/sdk');
+//add .ENV file
 const pinata = pinataSDK('0f3f630bec73946940bd', 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9');
 const axios = require('axios');
 
+
+/*
+export const NftCard = () => <ProductCard
+photos={[
+    'https://i.imgur.com/jRVDeI8.jpg',
+    'https://i.imgur.com/raPe27t.jpg'
+]}
+price='$99'
+productName='JPG'
+description='NFT for sale'
+buttonText='Add to cart'
+url=''
+/>
+*/
+//import Identicon from 'identicon.js';
+//var QRCode = require('qrcode.react');
+
+// <img src = {this.state.nftImageUri[this.state.nftIdx]} onClick = {this.updateNft}  width = {150} height = {150}/>    
+
 class NFTForm extends Component {
-        
+
         constructor(props) {
           super(props);
           this.state = { 
@@ -21,9 +57,9 @@ class NFTForm extends Component {
             imgBuffer : "",
             revealImg: false,
             revealImg2: false,
-            image: null,
+            image: sibmLogo,
             imageName: null,
-            mint_market : true,
+            mint_market : false,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
@@ -551,12 +587,16 @@ class NFTForm extends Component {
               }
             ]*/
             nftMintContract : "",
-            nftMintName : ""
-
+            nftMintName : "",
+            Nft_Id : "",
+            nftImageUri : [],
+            nftIdx : 0,
+            Nfts_owned : 0
           };
           //this.loadMintContract = this.loadMintContract.bind(this);
+          this.updateNft = this.updateNft.bind(this);
         }
-        
+
         async loadMintContract()
             {
             const web3 = window.web3
@@ -569,11 +609,31 @@ class NFTForm extends Component {
             this.state.nftMintAddress = web3.utils.toChecksumAddress(this.state.nftMintAddress);
             const nftMintContract = new bsChain.Contract(this.state.nftMintAbi, this.state.nftMintAddress);
             this.setState({nftMintContract});
-
+            
             let nftMintName = await nftMintContract.methods.name().call();
             this.setState({nftMintName}); 
             console.log("nftMintName :: ",nftMintName);
 
+            let Nft_Id = await nftMintContract.methods.Nft_Id().call();
+            Nft_Id = Nft_Id.toString() - 1;
+            console.log("Nft_Id :: ",Nft_Id);
+            this.setState({Nft_Id}); 
+
+            for (let i = 0; i <= Nft_Id; i++)
+              {
+              let nftUri = await nftMintContract.methods.tokenURI(i).call();
+              const response = await axios.get(nftUri)
+              console.log( " response :: ",response.data.image)
+              this.state.nftImageUri.push(response.data.image)
+              //this.setState({nftImageUri[i] : response.data.image}) 
+              }
+              console.log(this.state.nftImageUri);
+            if (this.state.account)
+              {
+              let Nfts_owned = await nftMintContract.methods.balanceOf(this.state.account).call();
+              this.setState({Nfts_owned : Nfts_owned})
+              console.log("Nft_account :: ", Nfts_owned);
+              }
             //TAG call the keys from .env
             const API_KEY = '0f3f630bec73946940bd';
             const API_SECRET = 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9';
@@ -617,11 +677,8 @@ class NFTForm extends Component {
         onImageChange = event => {
           if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
-            console.log("IMG - ", img.name);
-            
+            console.log("IMG - ", img.name);  
             this.setState({imageName : img.name})
-            
-            
             console.log("File location ", './'+img.name)  //this.state.setFile) 
             this.setState({setFile : event.target.files[0]})
 
@@ -632,6 +689,14 @@ class NFTForm extends Component {
           }
                      
        };
+       //tag remove later
+       async updateNft(){
+         if (this.state.nftIdx > this.state.Nfts_owned) 
+            {
+            this.setState({nftIdx : 0}) 
+            }
+          else this.setState({nftIdx : this.state.nftIdx + 1})
+       }
 
        async PinFilethenMint(){
         // initialize the form data
@@ -661,7 +726,6 @@ class NFTForm extends Component {
           this.setState({ipfsHash: "https://gateway.pinata.cloud/ipfs/"+response.data.IpfsHash+"/?preview=1"});
           console.log("ipfsHash ::", this.state.ipfsHash);
           
-          
           if (this.state.ipfsHash != "NONE")
             {
             let tokenUri = {
@@ -690,93 +754,140 @@ class NFTForm extends Component {
       }
     
         render() {
-          return (
+          let content
+          if (this.state.mint_market) 
+          {
+            content =
             <form className="mb-0" onSubmit={(event) => {
-                event.preventDefault()                
-                this.PinFilethenMint();
-                
-                }}>
+              event.preventDefault()                
+              this.PinFilethenMint();
+              
+              }}>
+            <table>
+             <thead>
+              <tr>
+                <th>NFT's Minted   </th>
+                <th  width="20" >NFT's Remaining</th>
+                <th>Avg. NFT Size (KB)</th>
+              </tr>
+             </thead>
+            <tbody>
+            <tr>
+              <td>{this.state.Nft_Id} </td>
+              <td> {parseFloat((1000000 - this.state.ipfsByteCount) / (this.state.ipfsByteCount / this.state.Nft_Id)).toFixed(0)} </td>
+              <td> {this.state.ipfsByteCount / this.state.Nft_Id} </td>
+              </tr>
+            </tbody>
+            </table>
 
-            <div style={{
+              <div style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center"
-              }}>
-              
-              <Switch
-                checked={this.state.mint_market}
-                onChange={checked => {this.setState({mint_market : !this.state.mint_market})}}
-                offColor="yellow"
-              />
-              
-             </div>
-
-             <div style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-              }}>
-              {
-              this.state.mint_market
-              ?
-              <b>{this.state.nftMintName}</b> :
-              <b>NFT MarketPlace Coming Soon</b>
-              }
-                </div>
-                <div style={{
+                }}>
+              <h1> <font color={(!this.state.pinataConnection) ? "red" :"green"}>{this.state.pinataConnection} </font></h1> 
+               </div>
+               <div style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center"
                   }}>
-                <h1> <font color={(!this.state.pinataConnection) ? "red" :"green"}>{this.state.pinataConnection} </font></h1> 
-                 </div>
-                 <div style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                    }}>
-                { this.state.ipfsByteCount}KB / 1.0 GB   
-                 </div>
+              { this.state.ipfsByteCount}KB / 1.0 GB   
+               </div>
+          <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+            }}>
+          <img height="300" width="300" src={this.state.image} />
+          </div>
+
+          <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+            }}>
+          <input type="file" name="myImage" onChange={this.onImageChange} />
+          </div>
+
+
+          <input
+          type="text"
+          onChange={(event) => {
+            const nftName = this.input.value.toString()
+            this.setState({
+              nftName: nftName // * this.props.swapPairPrice
+            }) 
+           // console.log('nftName :: ', this.state.nftName); 
+          }}
+          ref={(input) => { this.input = input }}
+          className="form-control form-control-lg"
+          placeholder="Give your NFT a Name"
+          required
+          style={{ maxWidth: '650px', justifyContent:'center'}}
+           />
+
+          <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+            }}>
+          <button onClick={this.handleFile}/*type="submit"*/ name="btn" className="btn btn-primary btn-block btn-lg" style={{ maxWidth: '650px', justifyContent:'center'}}> Mint Your Image</button>
+          
+          </div>
+          </form>
+          }
+          else 
+            {
+            content =
+            <form className="mb-6" onSubmit={(event) => {
+            event.preventDefault()                
+            //make offer / buy
+            }}>      
             <div style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
-              }}>
-            <img height="250" width="250" src={this.state.image} />
+            }}>
+              <div className='container'>
+                {
+                this.state.nftImageUri.map(count => {
+                  console.log(" count :: ",count);
+                  if (count % 3 == 0)
+                  { console.log("br");
+                    return <br/> }
+                  return <NFTCard nftImageUri = {count} />
+                })
+              }
+              </div>
+              </div>
+          </form>
+          }
+//<div className="card-body">
+          return (
+            <div className="mb-3" >
+            <div style={{display: "flex",justifyContent: "center",alignItems: "center"}}>
+            <Switch
+              checked={this.state.mint_market}
+              onChange={checked => {this.setState({mint_market : !this.state.mint_market})}}
+              offColor="blue"
+            />
             </div>
-
             <div style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
-              }}>
-            <input type="file" name="myImage" onChange={this.onImageChange} />
+            }}>
+            {
+            this.state.mint_market
+            ?
+            <b>{this.state.nftMintName}</b> :
+            <b>NFT MarketPlace Coming Soon</b>
+            }
+              </div>
+              {content}
             </div>
-
-
-            <input
-            type="text"
-            onChange={(event) => {
-              const nftName = this.input.value.toString()
-              this.setState({
-                nftName: nftName // * this.props.swapPairPrice
-              }) 
-             // console.log('nftName :: ', this.state.nftName); 
-            }}
-            ref={(input) => { this.input = input }}
-            className="form-control form-control-lg"
-            placeholder="Give your NFT a Name"
-            required />
-
-            <div style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-              }}>
-            <button onClick={this.handleFile}/*type="submit"*/ name="btn" className="btn btn-primary btn-block btn-lg" style={{ maxWidth: '325px', justifyContent:'center'}}> Mint Your Image</button>
             
-            </div>
-            </form>
           );
         }
       }

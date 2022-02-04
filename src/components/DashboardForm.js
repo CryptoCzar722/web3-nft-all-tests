@@ -3,6 +3,18 @@ import React, { Component } from 'react'
 //import { PieChart } from 'react-minimal-pie-chart';
 import Chart from "react-apexcharts";
 
+/*import {CryptoCard} from 'react-ui-cards';
+export const Crypto = () => <CryptoCard
+    currencyName='Smart Insurance'
+    currencyPrice='0.0000001'
+    icon = {sibmLogo}
+    currencyShortName='SIBM'
+    trend = "10"
+    trendDirection={-1}
+    chartColor='blue'
+    chartData={[0,1,2,3,1,3,4]}
+/>*/
+
 class DashboardForm extends Component {
   constructor(props) {
     super(props)

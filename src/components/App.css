@@ -1,4 +1,19 @@
 /* Styles go here */
+#connect-wallet {
+  width: 180px;
+  height: 40px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 10px;
+  margin-left: 30px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 table, th, td {
     border:2px solid black;
     width : 100%;
@@ -18,6 +33,10 @@ table, th, td {
 
   img {
     border: 2px solid rgb(85, 85, 85);
+  }
+
+  button {
+    width: "500px"
   }
 
   aws-btn {
@@ -46,6 +65,155 @@ table, th, td {
     --button-anchor-border: none;
     }
 
-
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+     
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    #card-list{
+      /* border:1px solid blue; */
+      display:flex;
+      flex-wrap: wrap;
+      margin-left: 45px;
+      margin-right: 45px;
+      align-items:center;
+      justify-content: center;
+      width: 80vw;
+      margin-bottom: 100px;
+  }
+    .card {
+      background-color: hsl(216, 50%, 16%);
+      border-radius: 12px;
+      box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.7);
+      padding: 1em;
+      width: 275px;
+    }
+    
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    .card-content_overlay-eye {
+      position: absolute;
+      display: none;
+    }
+    
+    .card-content_overlay {
+      position: absolute;
+      display: none;
+      background-color: #00fff7;
+      opacity: 0.5;
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+    }
+    
+    .card-content_img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    
+    .card-content:hover .card-content_overlay-eye {
+      display: block;
+      cursor: pointer;
+    }
+    
+    .card-content:hover .card-content_overlay {
+      display: block;
+      cursor: pointer;
+    }
+    
+    .card-content_details-title {
+      margin: 1rem 0;
+      color: #fff;
+      font-size: 1.125rem;
+    }
+    
+    .card-content_details-title:hover,
+    .card-content_user-name span:hover {
+      color: #00fff7;
+      cursor: pointer;
+    }
+    
+    .card-content_details-explanation {
+      /* color: rgb(175, 230, 255); */
+      color: hsl(215, 51%, 70%);
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.4px;
+    }
+    
+    .card-content_meta {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      font-size: 0.75rem;
+      border-bottom: solid hsl(215, 32%, 27%);
+      border-bottom-width: thin;
+    }
+    
+    .card-content_meta-left {
+      display: flex;
+    }
+    
+    .card-content_meta-left p {
+      color: #00fff7;
+      letter-spacing: 0.7px;
+    }
+    
+    .card-content_meta-left-pendant {
+      margin-right: 2px;
+    }
+    
+    .card-content_meta-right {
+      display: flex;
+    }
+    
+    .card-content_meta-right p {
+      /* color: rgb(175, 230, 255); */
+      color: hsl(215, 51%, 70%);
+    }
+    
+    .card-content_meta-left-clock {
+      margin-right: 2px;
+    }
+    
+    .card-content_user {
+      display: flex;
+      align-items: center;
+      padding: 15px 0 5px;
+    }
+    
+    .card-content_user-avatar {
+      width: 25px;
+      /* border: 1px solid rgb(175, 230, 255); */
+      border: 1px solid hsl(215, 51%, 70%);
+      border-radius: 50px;
+      margin-right: 15px;
+    }
+    
+    .card-content_user-name {
+      /* color: rgb(175, 230, 255); */
+      color: hsl(215, 51%, 70%);
+      font-size: 0.75rem;
+      letter-spacing: 0.3px;
+    }
+    
+    .card-content_user-name span {
+      color: rgb(230, 230, 230);
+      font-size: 0.75rem;
+    }
 
   
