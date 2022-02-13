@@ -133,7 +133,7 @@ class Main extends Component {
       //account={this.props.account} 
       />*/ 
      }
-     else if(this.state.currentForm === 'presale') {
+     /*else if(this.state.currentForm === 'presale') {
       content = <InvestorForm
         account={this.props.account}
        updateBasePrice = {this.props.updateBaseTokenPrice}
@@ -162,7 +162,7 @@ class Main extends Component {
         sibmAddress={this.props.sibmAddress}
 
       />
-    }
+    }*/
     else if (this.state.currentForm === 'nft') {
       content = <NFTForm
        account={this.props.account}
@@ -273,19 +273,20 @@ class Main extends Component {
               >
               Games
     </button>
-    */
-    
-    return (
-      <div id="content" className="mt-3">
-    <div className="d-flex justify-content-between mb-3">
-            <button
+
+    <button
                 className="btn btn-outline-dark"
                 onClick={(event) => {
                   this.setState({ currentForm: 'presale' })
                 }}
               >
               Presale
-            </button>
+    </button>
+    */
+    
+    return (
+      <div id="content" className="mt-3">
+    <div className="d-flex justify-content-between mb-3">
           <button
               className="btn btn-outline-dark"
               onClick={(event) => {

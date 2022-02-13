@@ -20,9 +20,29 @@ import './App.css'
 //3X gas
 //0x2b69318d414c4F215ac9D156C3814F1bF75De94e
 // posts last winner
-
-
+import RoadmapProgress from 'react-roadmap-progress';
 import {UserCard} from 'react-ui-cards';
+
+const milestones = [
+  {
+      title: 'Phase 1',
+      version: '0.0.1',
+      description: 'Just getting started...',
+      complete: true,
+  },
+  {
+      title: 'Phase 2',
+      version: '1.0.0',
+      description: (
+          <div>
+              <h2>Marketing</h2>
+              <p>Gaming</p>
+          </div>
+      ),
+      complete: true,
+  },
+];
+
 export const Founder = () => <UserCard
 float
 href ='https://www.linkedin.com/in/andrew-czarnecki-7a7371190/'
@@ -140,6 +160,7 @@ class AboutForm extends Component {
             <Founder/>
             <Founder2/>
             </div>
+            <RoadmapProgress milestones={milestones} />
            </form>
           );
         }

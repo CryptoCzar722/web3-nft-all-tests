@@ -5,6 +5,9 @@ import Switch from 'react-ios-switch';
 import FormData from 'form-data';
 //import sibmLogo from '../sIcon.ico'
 import sibmLogo from '../sibm-logo.png';
+import pixelPeep0 from '../pixelPeep0.png';
+import pixelPeep1 from '../pixelPeep1.png';
+import pixelPeep2 from '../pixelPeep2.png';
 
 import NFTCard from './NFTCard'
 
@@ -590,13 +593,24 @@ class NFTForm extends Component {
             nftMintName : "",
             Nft_Id : "",
             nftImageUri : [],
+            nftImageName : ["Shelby Peep #0", "Shelby Peep #1", "Shelby Peep #2"],
             nftIdx : 0,
-            Nfts_owned : 0
+            Nfts_owned : 0,
+            imgIdx : 0
           };
           //this.loadMintContract = this.loadMintContract.bind(this);
           this.updateNft = this.updateNft.bind(this);
         }
 
+        /*
+//   console.log(" count :: ",count);
+                  //this.setState({imgIdx : this.state.imgIdx + 1});
+
+                 // if (this.state.imgIdx % 3 == 0)
+                 // { console.log("br");
+                 //   return <br/> }
+                  //return 
+        */
         async loadMintContract()
             {
             const web3 = window.web3
@@ -612,18 +626,18 @@ class NFTForm extends Component {
             
             let nftMintName = await nftMintContract.methods.name().call();
             this.setState({nftMintName}); 
-            console.log("nftMintName :: ",nftMintName);
+            //console.log("nftMintName :: ",nftMintName);
 
             let Nft_Id = await nftMintContract.methods.Nft_Id().call();
             Nft_Id = Nft_Id.toString() - 1;
-            console.log("Nft_Id :: ",Nft_Id);
+            //console.log("Nft_Id :: ",Nft_Id);
             this.setState({Nft_Id}); 
-
+            
             for (let i = 0; i <= Nft_Id; i++)
               {
               let nftUri = await nftMintContract.methods.tokenURI(i).call();
               const response = await axios.get(nftUri)
-              console.log( " response :: ",response.data.image)
+              //console.log( " response :: ",response.data.image)
               this.state.nftImageUri.push(response.data.image)
               //this.setState({nftImageUri[i] : response.data.image}) 
               }
@@ -631,8 +645,8 @@ class NFTForm extends Component {
             if (this.state.account)
               {
               let Nfts_owned = await nftMintContract.methods.balanceOf(this.state.account).call();
-              this.setState({Nfts_owned : Nfts_owned})
-              console.log("Nft_account :: ", Nfts_owned);
+              this.setState({Nfts_owned : Nfts_owned.toString()})
+              console.log("Nft_account :: ", this.state.Nfts_owned);
               }
             //TAG call the keys from .env
             const API_KEY = '0f3f630bec73946940bd';
@@ -835,6 +849,18 @@ class NFTForm extends Component {
           <button onClick={this.handleFile}/*type="submit"*/ name="btn" className="btn btn-primary btn-block btn-lg" style={{ maxWidth: '650px', justifyContent:'center'}}> Mint Your Image</button>
           
           </div>
+          <table>
+             <thead>
+              <tr>
+                <th>NFT's Owned </th>
+              </tr>
+             </thead>
+            <tbody>
+            <tr>
+              <td> {this.state.Nfts_owned} </td>
+              </tr>
+            </tbody>
+            </table>
           </form>
           }
           else 
@@ -850,15 +876,14 @@ class NFTForm extends Component {
             alignItems: "center"
             }}>
               <div className='container'>
-                {
-                this.state.nftImageUri.map(count => {
-                  console.log(" count :: ",count);
-                  if (count % 3 == 0)
-                  { console.log("br");
-                    return <br/> }
-                  return <NFTCard nftImageUri = {count} />
-                })
-              }
+                
+                  <NFTCard nftImageUri = {pixelPeep0} nftImageName = {this.state.nftImageName[0]} nftMintAddress = {this.state.nftMintAddress}/>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                  <NFTCard nftImageUri = {pixelPeep1} nftImageName = {this.state.nftImageName[1]} nftMintAddress = {this.state.nftMintAddress}/>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                  <NFTCard nftImageUri = {pixelPeep2} nftImageName = {this.state.nftImageName[2]} nftMintAddress = {this.state.nftMintAddress} />
+                  
+
               </div>
               </div>
           </form>

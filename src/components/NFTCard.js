@@ -53,14 +53,14 @@ class NFTCard extends Component {
                     <img className='card-content_img' src={this.props.nftImageUri} alt='' width = "125" height = "220" />
                     </div>
                     <div className='card-content_details'>
-                        <p className='card-content_details-title'>Equilibrium #3429</p>
+                        <p className='card-content_details-title'>Shelby Peeps</p>
                         <p className='card-content_details-explanation'>
-                            Our Equilibrium collection promotes balance and calm.
+                        {this.props.nftImageName}
                         </p>
                     </div>
                     <div className='card-content_meta'>
                         <div className='card-content_meta-left'>
-                        <p>0.041 bnb</p>
+                        <p>0.08 BNB</p>
                         </div>
                         <div className='card-content_meta-right'>
                         <svg
@@ -74,14 +74,18 @@ class NFTCard extends Component {
                             fill='#8BACD9'
                             />
                         </svg>
-                        <p>3 days left</p>
+                        <p>** days left <br></br></p>
+                        
+                        </div>
+                        <div>
+                        <button name="btn" className="btn btn-primary btn-block btn-lg"  style={{ maxWidth: '100px', justifyContent:'center'}} type="button" disabled>Mint</button>
                         </div>
                     </div>
                     <div className='card-content_user'>
                     <img className='card-content_user-avatar' src={sibmLogo} alt='Avatar' />
-                    <div className='card-content_user-name'>
+                    <div className='card-content_user-name' style ={{overflow: "hidden"}}>
                         <p>
-                        Owner <span> </span>
+                        Mint Address : <span href = "https://testnet.bscscan.com/address/0x96C742592c5b55C17c86B6a996c91C8A812BB91C" > {this.props.nftMintAddress} </span>
                         </p>
                     </div>
                     </div>
