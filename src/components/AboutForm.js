@@ -12,10 +12,8 @@ import './App.css'
 //import "react-poker/styles.css"
 
 //TAG TO DO game contracts 
-//broken
 //0x5Bf93f59C29d9792Ec589EDf07713090596515a0
 //new
-//
 //contract intertactions run out of gas 
 //3X gas
 //0x2b69318d414c4F215ac9D156C3814F1bF75De94e
@@ -49,7 +47,7 @@ href ='https://www.linkedin.com/in/andrew-czarnecki-7a7371190/'
 header = {sibmLogo}
 avatar = {drew}    
 name = 'Andrew Czarnecki'
-positionName = 'Founder & CTO'
+positionName = 'Founder & Core Developer'
 stats = {[
   {
     name: 'Engineering',
@@ -62,27 +60,7 @@ stats = {[
 ]}
 />
 
-export const Founder2 = () => <UserCard
-float
-href=''
-header=  {tokenLogo} // 'https://i.imgur.com/w5tX1Pn.jpg'
-avatar={drago}      //'https://i.imgur.com/uDYejhJ.jpg'
-name='Joseph Kasneci'
-positionName=' Co-Founder'
-stats={[
-    {
-        name: 'Insurance',
-        value: "Field"
-    },
-    {
-        name: 'Years',
-        value: '3'
-    }
-]}
-/>
-
 //
-//<Founder2/>
 //<RoadmapProgress milestones={milestones} />
 
 class AboutForm extends Component {
@@ -142,7 +120,7 @@ class AboutForm extends Component {
               justifyContent: "center",
               alignItems: "center"
             }}>
-            <h7><b> SIBM Prelaunch Party </b></h7>
+            <h7><b> About </b></h7>
             </div>
             <div style={{
               display: "flex",
@@ -150,10 +128,10 @@ class AboutForm extends Component {
               alignItems: "center"
             }}>  
             <ul>
-            
-              <li>Utility Token for peer-to-peer Smart Insurance & Escrow </li>
-              <li> Presale 50% locked in insurance contract for 3 months</li>
-              <li>NFT Marketplace and Minting</li>
+              <li> NFT Mint & Marketplace coming in March 2022</li>
+              <li> SIBM Token presale coming with NFT drop</li>
+              <li> NFT dividends are in developement</li>
+              <li> For now Mint your Own Image and Add it to your MetaMask wallet!</li>
             </ul> 
             </div>
             <div style={{

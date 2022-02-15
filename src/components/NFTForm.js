@@ -65,7 +65,7 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : false,
+            mint_market : true,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
@@ -594,12 +594,14 @@ class NFTForm extends Component {
             ]*/
             nftMintContract : "",
             nftMintName : "",
-            Nft_Id : "",
+            Nft_Id : "--",
             nftImageUri : [],
             nftImageName : ["Shelby Peep #0", "Shelby Peep #1", "Shelby Peep #2","Shelby Peep #3", "Shelby Peep #4", "Shelby Peep #5"],
             nftIdx : 0,
             Nfts_owned : 0,
-            imgIdx : 0
+            imgIdx : 0,
+            nftRem : "--",
+            nftSizeAvg : "--"
           };
           //this.loadMintContract = this.loadMintContract.bind(this);
           this.updateNft = this.updateNft.bind(this);
@@ -670,7 +672,9 @@ class NFTForm extends Component {
             console.log( " response :: ",response.data.pin_size_total / 1000)
           // get the hash
           this.setState({ipfsByteCount : response.data.pin_size_total / 1000})
-
+          //now
+          this.setState({nftRem : parseFloat((1000000 - this.state.ipfsByteCount) / (this.state.ipfsByteCount / this.state.Nft_Id)).toFixed(0)});
+          this.setState({nftSizeAvg :this.state.ipfsByteCount / this.state.Nft_Id});
             }
       
         componentDidMount() {
@@ -791,8 +795,8 @@ class NFTForm extends Component {
             <tbody>
             <tr>
               <td>{this.state.Nft_Id} </td>
-              <td> {parseFloat((1000000 - this.state.ipfsByteCount) / (this.state.ipfsByteCount / this.state.Nft_Id)).toFixed(0)} </td>
-              <td> {this.state.ipfsByteCount / this.state.Nft_Id} </td>
+              <td> {this.state.nftRem} </td>
+              <td> {this.state.nftSizeAvg} </td>
               </tr>
             </tbody>
             </table>

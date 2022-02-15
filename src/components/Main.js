@@ -133,7 +133,7 @@ class Main extends Component {
       //account={this.props.account} 
       />*/ 
      }
-     /*else if(this.state.currentForm === 'presale') {
+     else if(this.state.currentForm === 'presale') {
       content = <InvestorForm
         account={this.props.account}
        updateBasePrice = {this.props.updateBaseTokenPrice}
@@ -162,7 +162,7 @@ class Main extends Component {
         sibmAddress={this.props.sibmAddress}
 
       />
-    }*/
+    }
     else if (this.state.currentForm === 'nft') {
       content = <NFTForm
        account={this.props.account}
@@ -294,6 +294,14 @@ class Main extends Component {
               }}
             >
             NFT
+          </button>
+          <button
+                className="btn btn-outline-dark"
+                onClick={(event) => {
+                  this.setState({ currentForm: 'presale' })
+                }}
+              >
+              Presale
           </button>
           <button
                 className= "btn btn-outline-dark" //"btn btn-outline-dark"
