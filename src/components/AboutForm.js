@@ -81,6 +81,10 @@ stats={[
 ]}
 />
 
+//
+//<Founder2/>
+//<RoadmapProgress milestones={milestones} />
+
 class AboutForm extends Component {
         
         constructor(props) {
@@ -158,9 +162,7 @@ class AboutForm extends Component {
               alignItems: "left"
             }}>
             <Founder/>
-            <Founder2/>
             </div>
-            <RoadmapProgress milestones={milestones} />
            </form>
           );
         }

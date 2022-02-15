@@ -86,7 +86,7 @@ render() {
           target="_blank"
           rel="noopener noreferrer"
         >
-         SIBM Lottery AirDrop         
+         Shelby Peeps NFT Mint        
         </a>
         <div style={{
                   display: "flex",
@@ -95,7 +95,8 @@ render() {
                 }}>
           <FlipCountdown
                 hideYear
-                hideMonth
+                //hideMonth
+                monthTitle='Months'
                 dayTitle='Days'
                 hourTitle='Hours'
                 minuteTitle='Minutes'

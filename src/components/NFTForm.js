@@ -8,6 +8,9 @@ import sibmLogo from '../sibm-logo.png';
 import pixelPeep0 from '../pixelPeep0.png';
 import pixelPeep1 from '../pixelPeep1.png';
 import pixelPeep2 from '../pixelPeep2.png';
+import pixelPeep3 from '../pixelPeep3.png';
+import pixelPeep4 from '../pixelPeep4.png';
+import pixelPeep5 from '../pixelPeep5.png';
 
 import NFTCard from './NFTCard'
 
@@ -593,7 +596,7 @@ class NFTForm extends Component {
             nftMintName : "",
             Nft_Id : "",
             nftImageUri : [],
-            nftImageName : ["Shelby Peep #0", "Shelby Peep #1", "Shelby Peep #2"],
+            nftImageName : ["Shelby Peep #0", "Shelby Peep #1", "Shelby Peep #2","Shelby Peep #3", "Shelby Peep #4", "Shelby Peep #5"],
             nftIdx : 0,
             Nfts_owned : 0,
             imgIdx : 0
@@ -875,16 +878,20 @@ class NFTForm extends Component {
             justifyContent: "center",
             alignItems: "center"
             }}>
-              <div className='container'>
-                
+               <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+            }}>
+
                   <NFTCard nftImageUri = {pixelPeep0} nftImageName = {this.state.nftImageName[0]} nftMintAddress = {this.state.nftMintAddress}/>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                   <NFTCard nftImageUri = {pixelPeep1} nftImageName = {this.state.nftImageName[1]} nftMintAddress = {this.state.nftMintAddress}/>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                   <NFTCard nftImageUri = {pixelPeep2} nftImageName = {this.state.nftImageName[2]} nftMintAddress = {this.state.nftMintAddress} />
-                  
-
               </div>
+              
+
               </div>
           </form>
           }
