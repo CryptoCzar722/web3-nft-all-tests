@@ -882,20 +882,19 @@ class NFTForm extends Component {
             justifyContent: "center",
             alignItems: "center"
             }}>
-               <div style={{
+                   <button onClick = {console.log("Joining whitelist")} id = "connect-whitelist"> Join Whitelist! </button>
+             </div>
+               
+             <div style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
             }}>
-
                   <NFTCard nftImageUri = {pixelPeep0} nftImageName = {this.state.nftImageName[0]} nftMintAddress = {this.state.nftMintAddress}/>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                   <NFTCard nftImageUri = {pixelPeep1} nftImageName = {this.state.nftImageName[1]} nftMintAddress = {this.state.nftMintAddress}/>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                   <NFTCard nftImageUri = {pixelPeep2} nftImageName = {this.state.nftImageName[2]} nftMintAddress = {this.state.nftMintAddress} />
-              </div>
-              
-
               </div>
           </form>
           }
