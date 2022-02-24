@@ -24,7 +24,7 @@
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 var HDWalletProvider = require("truffle-hdwallet-provider");
-const MNEMONIC = 'build clock ramp banner scan print hungry view tobacco mouse tomorrow dragon';
+const MNEMONIC = '';
 
 
 module.exports = {

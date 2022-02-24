@@ -17,7 +17,7 @@ contract ShelbyNft is ERC721{
     }
             //createNft
     function mintNft() public payable returns (uint256){
-        require(Nft_Id < 999, "MINT SOLD OUT");
+        require(Nft_Id < 1001, "MINT SOLD OUT");
         require(msg.value >= 0.015 ether, "Not enough BNB. Minting Costs 0.015 BNB");
         payable(admin).transfer(msg.value * 15 / 100);
         totalSupply = Nft_Id;
