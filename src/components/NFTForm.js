@@ -12,6 +12,10 @@ import pixelPeep3 from '../pixelPeep3.png';
 import pixelPeep4 from '../pixelPeep4.png';
 import pixelPeep5 from '../pixelPeep5.png';
 
+import p682 from '../682.png';
+import p683 from '../683.png';
+import p684 from '../684.png';
+
 import NFTCard from './NFTCard'
 
 // ...
@@ -65,7 +69,7 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : true,
+            mint_market : false,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
@@ -876,25 +880,17 @@ class NFTForm extends Component {
             <form className="mb-6" onSubmit={(event) => {
             event.preventDefault()                
             //make offer / buy
-            }}>      
-            <div style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-            }}>
-                   <button onClick = {console.log("Joining whitelist")} id = "connect-whitelist"> Join Whitelist! </button>
-             </div>
-               
+            }}>    
              <div style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
             }}>
-                  <NFTCard nftImageUri = {pixelPeep0} nftImageName = {this.state.nftImageName[0]} nftMintAddress = {this.state.nftMintAddress}/>
+                  <NFTCard nftImageUri = {p682} nftImageName = {this.state.nftImageName[0]} nftMintAddress = {this.state.nftMintAddress}/>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                  <NFTCard nftImageUri = {pixelPeep1} nftImageName = {this.state.nftImageName[1]} nftMintAddress = {this.state.nftMintAddress}/>
+                  <NFTCard nftImageUri = {p683} nftImageName = {this.state.nftImageName[1]} nftMintAddress = {this.state.nftMintAddress}/>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                  <NFTCard nftImageUri = {pixelPeep2} nftImageName = {this.state.nftImageName[2]} nftMintAddress = {this.state.nftMintAddress} />
+                  <NFTCard nftImageUri = {p684} nftImageName = {this.state.nftImageName[2]} nftMintAddress = {this.state.nftMintAddress} />
               </div>
           </form>
           }

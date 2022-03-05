@@ -35,6 +35,7 @@
     "cors": "^2.8.5",
     "ethers": "^5.5.1",
     "etherscan-api": "^10.0.5",
+    "firebase": "^9.6.8",
     "follow-redirects": "^1.14.9",
     "identicon.js": "^2.3.3",
     "moment": "^2.29.1",

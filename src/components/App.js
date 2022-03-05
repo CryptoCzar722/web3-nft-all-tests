@@ -117,7 +117,8 @@ class App extends Component {
       this.setState({ account: accounts[0] })
       let bnbBalance = await bsChain.getBalance(this.state.account) ;
       this.setState({bnbBalance : window.web3.utils.fromWei(bnbBalance, 'ether').toString()});
-      
+      this.getAccountBalance();
+      this.LoadGasFees();
       //this.setState({ loading: false })
 
       /*
@@ -352,10 +353,11 @@ class App extends Component {
   const web3 = window.web3
   const bsChain = web3.eth 
   let gas = await bsChain.getGasPrice();
+  console.log("Gas wei", gas)
   gas  = bsChain.utils.fromWei(new bsChain.utils.BN(gas).toString(), 'ether')
-  //console.log("Gas BNB", gas)
-  //console.log("Gas USD", this.state.ethPrice * gas)
-  this.setState({gasPrice : this.state.ethPrice * gas});  
+  console.log("Gas BNB", gas)
+  console.log("Gas USD", this.state.ethPrice * gas)
+  this.setState({gasPrice : gas});  
   }
 
   async LoadTokens()
@@ -393,13 +395,14 @@ class App extends Component {
     //this.setState({ token })
    //if (this.state.account !== null)
     //  {
-      //let bnbBalance = await bnbContract.methods.balanceOf(this.state.account).call()
+      //let bnbBalance = this.state.account == "" ? 0 : await bnbContract.methods.balanceOf(this.state.account).call()
       //let bnbBalance = await bsChain.getBalance(this.state.account) //.call();
       //let ethBalance = await ethContract.methods.balanceOf(this.state.account).call()
       //let btcbBalance = await btcbContract.methods.balanceOf(this.state.account).call()
       //let daiBalance = await daiContract.methods.balanceOf(this.state.account).call()
-      let busdBalance = await busdContract.methods.balanceOf(this.state.account).call()
-      let sibmBalance = await sibmContract.methods.balanceOf(this.state.account).call()
+      //tag logout was breaking this page
+      let busdBalance = this.state.account == "" ? 0 : await busdContract.methods.balanceOf(this.state.account).call()
+      let sibmBalance = this.state.account == "" ? 0 : await sibmContract.methods.balanceOf(this.state.account).call()
       //console.log("busdBalance", busdBalance);
       //console.log("sibmBalance", sibmBalance);
       //let adaBalance = await adaContract.methods.balanceOf(this.state.account).call()
@@ -1179,6 +1182,7 @@ async updateBaseTokenPrice()
         dogeBalance={this.state.dogeBalance}
         ltcBalance={this.state.ltcBalance}
         */
+        bnbBalance={this.state.bnbBalance}
         busdBalance={this.state.busdBalance}
         sibmBalance={this.state.sibmBalance}
         busdAddress={this.state.busdAddress}

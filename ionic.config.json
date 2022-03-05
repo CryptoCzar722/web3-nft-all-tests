@@ -1,7 +1,0 @@
-{
-    "name": "SIBMTest",
-    "integrations": {
-      "capacitor": {}
-    },
-    "type": "react"
-  }

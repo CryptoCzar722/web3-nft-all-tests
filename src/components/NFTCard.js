@@ -1,8 +1,26 @@
 import React, { Component } from 'react'
 import sibmLogo from '../sibm-logo.png'
 
+//import { AwesomeButton } from "react-awesome-button";
+//import AwesomeButtonProgress from "react-awesome-button";///src/components/AwesomeButtonProgress';
+import {
+    AwesomeButton,
+    AwesomeButtonProgress,
+    AwesomeButtonSocial,
+  } from 'react-awesome-button';
+import "react-awesome-button/dist/styles.css";
+//import styles from 'react-awesome-button/src/styles/themes/theme-blue';
 
 import './App.css'
+/*
+<AwesomeButtonProgress
+                        type="secondary"
+                        size="medium"
+                        //action={(element, next) => doSomethingThenCall()}
+                        >
+                        Mint
+</AwesomeButtonProgress>
+*/
 
 class NFTCard extends Component {
         
@@ -12,10 +30,11 @@ class NFTCard extends Component {
               test: ""
             };
           //  this.rollDoneCallback1 = this.rollDoneCallback1.bind(this);
+          
         }
  
         componentDidMount() {
-
+            this.doSomethingThenCall = this.doSomethingThenCall.bind(this);
         }
         
         async componentWillMount() {
@@ -24,9 +43,23 @@ class NFTCard extends Component {
         async componentWillUnmount() {
           
         }
+
+        async doSomethingThenCall(then){
+            return then;
+        }
         
         render() {
             //console.log(new Date());
+            //<button name="btn" className="btn btn-primary btn-block btn-lg"  style={{ maxWidth: '100px', justifyContent:'center'}} type="button" enabled>Mint</button>
+            let buttonContent = <AwesomeButtonProgress
+            type="secondary"
+            size="medium"
+            //cssModules = {styles}
+            border-radius= "25px"
+            //action={(element, next) => doSomethingThenCall(next)}
+            >
+            Mint
+            </AwesomeButtonProgress>
           return (
             <form className="mb-3" onSubmit={(event) => {
                 event.preventDefault()
@@ -53,14 +86,15 @@ class NFTCard extends Component {
                     <img className='card-content_img' src={this.props.nftImageUri} alt='' width = "125" height = "220" />
                     </div>
                     <div className='card-content_details'>
-                        <p className='card-content_details-title'>Shelby Peeps</p>
+                        <p className='card-content_details-title'>Smart Peeps</p>
                         <p className='card-content_details-explanation'>
-                        {this.props.nftImageName}
+                        {/*this.props.nftImageName*/}
+                        Smart Peep #****
                         </p>
                     </div>
                     <div className='card-content_meta'>
                         <div className='card-content_meta-left'>
-                        <p>0.08 BNB</p>
+                        <p>0.06 BNB</p>
                         </div>
                         <div className='card-content_meta-right'>
                         <svg
@@ -78,7 +112,7 @@ class NFTCard extends Component {
                         
                         </div>
                         <div>
-                        <button name="btn" className="btn btn-primary btn-block btn-lg"  style={{ maxWidth: '100px', justifyContent:'center'}} type="button" disabled>Mint</button>
+                        {buttonContent}
                         </div>
                     </div>
                     <div className='card-content_user'>

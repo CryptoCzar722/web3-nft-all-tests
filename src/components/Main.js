@@ -12,6 +12,8 @@ import ContractForm from './ContractForm'
 import LotteryForm from './LotteryForm'
 import GameForm from './GameForm'
 import AboutForm from './AboutForm'
+import BetForm from './BetForm'
+//import ChatForm from './ChatForm'
 //import BlackjackForm from './BlackjackForm'
 //TAG remove later
 import InvestorForm from './InvestorForm'
@@ -168,6 +170,18 @@ class Main extends Component {
        account={this.props.account}
        />
      }
+    /* else if (this.state.currentForm === 'bet') {
+      content = <BetForm
+       account={this.props.account}
+       bnbBalance={this.props.bnbBalance}
+       gasPrice = {this.props.gasPrice}
+       />
+     }*/
+     /*else if (this.state.currentForm === 'chat') {
+      content = <ChatForm
+       account={this.props.account}
+       />
+     }*/
    /* else if (this.state.currentForm === 'dashboard') {
       content = <DashboardForm
       account={this.props.account} 
@@ -287,23 +301,15 @@ class Main extends Component {
     return (
       <div id="content" className="mt-3">
     <div className="d-flex justify-content-between mb-3">
-          <button
+        <a>  <button
               className="btn btn-outline-dark"
               onClick={(event) => {
                 this.setState({ currentForm: 'nft' })
               }}
             >
             NFT
-          </button>
-          <button
-                className="btn btn-outline-dark"
-                onClick={(event) => {
-                  this.setState({ currentForm: 'presale' })
-                }}
-              >
-              Presale
-          </button>
-          <button
+          </button></a>
+          <a> <button
                 className= "btn btn-outline-dark" //"btn btn-outline-dark"
                 onClick={(event) => {
                   this.setState({ currentForm: 'about' })
@@ -311,7 +317,7 @@ class Main extends Component {
                 width = "0px"
               >
               About
-          </button>
+          </button></a>
           </div>
         <div className="mb-4" >
 
@@ -329,6 +335,26 @@ class Main extends Component {
 export default Main;
 
 /*
+
+<a><button
+                className= "btn btn-outline-dark" //"btn btn-outline-dark"
+                onClick={(event) => {
+                  this.setState({ currentForm: 'bet' })
+                }}
+                width = "0px"
+              >
+              Bets
+          </button></a>
+
+<a> <button
+                className="btn btn-outline-dark"
+                onClick={(event) => {
+                  this.setState({ currentForm: 'presale' })
+                }}
+              >
+              Presale
+          </button></a>
+
 <div className="d-flex justify-content-between mb-3">
         <button
               className="btn btn-outline-dark"

@@ -1,9 +1,12 @@
-import React, { Component } from 'react'
-import Identicon from 'identicon.js';
+import React, { Component, useEffect } from 'react'
 import FlipCountdown from '@rumess/react-flip-countdown';
 import './App.css'
-//import { useEthers, useEtherBalance } from "@usedapp/core";
 
+import BackendService from "../Services/backend-service";
+
+//import Identicon from 'identicon.js';
+//import { useEthers, useEtherBalance } from "@usedapp/core";
+//import FireBase from "./Firebase";
 //var QRCode = require('qrcode.react');
 
 class Navbar extends Component {
@@ -14,7 +17,7 @@ class Navbar extends Component {
     }
     
   }
-  changeImg(){
+  /*changeImg(){
     //this.setState({revealImg : !this.state.revealImg});
     if (this.state.imgRef == "idc")
       {
@@ -28,7 +31,7 @@ class Navbar extends Component {
       imgRef: 'idc'
       }));
       }
-  }
+  }*/
   async loadAccount(){
     const web3 = window.web3
     const bsChain = web3.eth
@@ -41,19 +44,28 @@ class Navbar extends Component {
     this.loadAccount = this.loadAccount.bind(this);
     this.loadAccount();
     this.handleWallet = this.handleWallet.bind(this);
-    this.changeImg = this.changeImg.bind(this);
+    //this.changeImg = this.changeImg.bind(this);
   }
 
   // Arbitrage Finance Swap  
 //TAG add back 
 // <button className="btn btn-primary btn-block centered" style ={{width : '150px', height : '35px'}} type="button" onClick = {this.props.connectWallet} >{this.props.connectionString}</button>
+// <button onClick = {() => (state.button = "wllt")}  type="submit" value = "wllt" id = "connect-wallet">{ !this.props.account? 'Connect Wallet' : this.props.account }</button>
+//
 
 async handleWallet(){
   if (this.props.account)
     {
     console.log("DIS");
+    let chk = [];
+    chk = await BackendService.checkAddress(this.props.account);
+    console.log("checkAddress :: ",chk);
+    const keys = Object.keys(chk)
+    console.log("keys :: ", keys);  
+    console.log("keys.length :: ",keys.length)
+    
     //this.setState({account : 0});
-    this.props.setAccount(0);
+    this.props.setAccount("");
     //await window.ethereum.disconnect();
     //await window.web3.eth.currentProvider.close();
     }
@@ -65,21 +77,55 @@ async handleWallet(){
     const accounts = await bsChain.getAccounts()
     this.props.setAccount(accounts[0]);
     await window.ethereum.enable();
-    }  
+    //if (!BackendService.getAddr(accounts[0])){
+      let data = {
+        account : accounts[0],
+        whitelist : true,
+        airdrop : true
+      };
+      BackendService.create(data)
+        .then(() => {
+          console.log("Created new item successfully!");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+     /* } 
+      else{
+        console.log("Already in data base");
+      }*/
+  } 
 }
 
-render() {
-    return (
-      <nav className="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow" onSubmit={(event) => {
-        event.preventDefault()
-        //let ethAmount
-        //ethAmount = this.input.value.toString()
-        //ethAmount = window.web3.utils.toWei(ethAmount, 'Ether')
-        const address = this.state.toAddress;
-        let result = window.web3.utils.isAddress(address)
-        window.confirm("Connecting wallet - ", address);
-      }}>
+/*useEffect(
+  () =>
+    onSnapshot(db, (snapshot) =>
+    console.log(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))  
+    //setColors(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    ),
+  []
+);
 
+    const state = {
+      button: ""
+    };
+    const addWhiteList = event => {
+      event.preventDefault()
+          console.log(state.button);
+          if (state.button === "whtlst"){
+            console.log("Whitelist button ::", this.props.account)
+            state.button = 0;
+            }
+          else if (state.button === "wllt"){
+            this.handleWallet();
+            state.button = 0;
+            }
+          }*/
+  render() {
+    return (
+      <nav className="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow" onSubmit={event =>
+        event.preventDefault()
+        }>
         <a
           className="navbar-brand col-sm-3 col-md-2 mr-0"
           href="http://www.etherscan.io"
@@ -120,10 +166,9 @@ render() {
               /> : <QRCode   onClick = {this.changeImg} size = {40} value= {this.state.account}  /> )
               : <span></span>*/
             }
-        <button id = "connect-wallet" onClick = {this.handleWallet} >{ !this.props.account? 'Connect Wallet' : this.props.account }</button>
+          <button id = "connect-wallet" onClick = {this.handleWallet} >{ !this.props.account? 'Connect Wallet' : this.props.account }</button>
           </li>
         </ul>
-        
       </nav>
     );
   }
