@@ -4,6 +4,12 @@ import tokenLogo from '../token-logo.png'
 import drew from '../drew.png'
 import drago from '../drago.png'
 import './App.css'
+
+import {
+    AwesomeButton,
+    AwesomeButtonSocial,
+    } from 'react-awesome-button';
+
 //SI BM token 
 //0x983Bd79E9c57Dd3A87a1de98b9996fD1672768B2
 
@@ -120,7 +126,7 @@ class AboutForm extends Component {
               justifyContent: "center",
               alignItems: "center"
             }}>
-            <h7><b> About </b></h7>
+            <h1><b> About </b></h1>
             </div>
             <div style={{
               display: "flex",

@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import sibmLogo from '../sibm-logo.png'
 
-//import { AwesomeButton } from "react-awesome-button";
-//import AwesomeButtonProgress from "react-awesome-button";///src/components/AwesomeButtonProgress';
-import {
-    AwesomeButton,
-    AwesomeButtonProgress,
-    AwesomeButtonSocial,
-  } from 'react-awesome-button';
+import {AwesomeButtonProgress} from 'react-awesome-button';
 import "react-awesome-button/dist/styles.css";
 //import styles from 'react-awesome-button/src/styles/themes/theme-blue';
 
@@ -30,11 +24,12 @@ class NFTCard extends Component {
               test: ""
             };
           //  this.rollDoneCallback1 = this.rollDoneCallback1.bind(this);
+        this.minting = this.minting.bind(this);
           
         }
  
         componentDidMount() {
-            this.doSomethingThenCall = this.doSomethingThenCall.bind(this);
+            //this.mintButton = this.mintButton.bind(this);
         }
         
         async componentWillMount() {
@@ -44,8 +39,11 @@ class NFTCard extends Component {
           
         }
 
-        async doSomethingThenCall(then){
-            return then;
+        next(){
+            console.log('mint done');
+        }
+        async minting(){
+            await this.props.mintNow();
         }
         
         render() {
@@ -54,9 +52,19 @@ class NFTCard extends Component {
             let buttonContent = <AwesomeButtonProgress
             type="secondary"
             size="medium"
+            resultLabel = "Confirm"
             //cssModules = {styles}
-            border-radius= "25px"
-            //action={(element, next) => doSomethingThenCall(next)}
+            onPress={(ref, next) => {
+                // next is the second parameter !
+                console.log('mint button');
+                this.minting();
+                next();
+              }}
+            style = { {
+            "button-default-border-radius" : "25px",
+            "button-hover-pressure" : '5',
+            "button-raise-level" : "10px"
+            }}
             >
             Mint
             </AwesomeButtonProgress>
@@ -88,13 +96,12 @@ class NFTCard extends Component {
                     <div className='card-content_details'>
                         <p className='card-content_details-title'>Smart Peeps</p>
                         <p className='card-content_details-explanation'>
-                        {/*this.props.nftImageName*/}
-                        Smart Peep #****
+                        {this.props.nftImageName}
                         </p>
                     </div>
                     <div className='card-content_meta'>
                         <div className='card-content_meta-left'>
-                        <p>0.06 BNB</p>
+                        <p>0.02 BNB</p>
                         </div>
                         <div className='card-content_meta-right'>
                         <svg
@@ -109,12 +116,15 @@ class NFTCard extends Component {
                             />
                         </svg>
                         <p>** days left <br></br></p>
-                        
-                        </div>
-                        <div>
-                        {buttonContent}
                         </div>
                     </div>
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                            }}>
+                        {buttonContent}
+                        </div>
                     <div className='card-content_user'>
                     <img className='card-content_user-avatar' src={sibmLogo} alt='Avatar' />
                     <div className='card-content_user-name' style ={{overflow: "hidden"}}>

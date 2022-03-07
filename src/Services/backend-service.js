@@ -2,6 +2,7 @@ import firebase from "../components/firebase";
 import { doc, getDocFromCache } from "firebase/firestore";
 
 const db = firebase.collection("whitelist");
+const dbMint = firebase.collection("mint");
 
 class BackendService {
   getAll() {
@@ -9,13 +10,23 @@ class BackendService {
   }
   async checkAddress(address){
     let items = [];
-    await db.where('account', '==',address).onSnapshot((querySnap)=>{
+    db.where('account', '==',address).onSnapshot((querySnap)=>{
      querySnap.forEach((doc) => {
-      console.log("doc.data() :: ",doc.data()["account"])
+      //console.log("doc.data() :: ",doc.data()["account"])
       items.push(doc.data()["account"]);
     });
-  })//.limitToFirst(1);
-  //console.log("typeof(items) :: ",items)
+  })
+  return items;
+}
+
+  async checkMint(address){
+    let items = [];
+    dbMint.where('address', '==',address).onSnapshot((querySnap)=>{
+     querySnap.forEach((doc) => {
+      console.log("checkMint -> doc.data() :: ",doc.data()["address"])
+      items.push(doc.data()["address"]);
+    });
+    })
   return items;
   }
 

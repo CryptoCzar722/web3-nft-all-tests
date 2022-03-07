@@ -59,10 +59,10 @@ async handleWallet(){
     console.log("DIS");
     let chk = [];
     chk = await BackendService.checkAddress(this.props.account);
-    console.log("checkAddress :: ",chk);
-    const keys = Object.keys(chk)
-    console.log("keys :: ", keys);  
-    console.log("keys.length :: ",keys.length)
+    console.log("checkAddress :: ",chk.pop());
+    //const keys = Object.keys(chk)
+    //console.log("keys :: ", keys);  
+    //console.log("keys.length :: ",keys.length)
     
     //this.setState({account : 0});
     this.props.setAccount("");
@@ -79,9 +79,7 @@ async handleWallet(){
     await window.ethereum.enable();
     //if (!BackendService.getAddr(accounts[0])){
       let data = {
-        account : accounts[0],
-        whitelist : true,
-        airdrop : true
+        account : accounts[0]
       };
       BackendService.create(data)
         .then(() => {

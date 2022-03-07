@@ -7,11 +7,13 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 contract ShelbyNft is ERC721{
     
+    address admin;
+    address txFeeToken;
+    
     uint256 private Nft_Id;
     uint256 public totalSupply;
     uint256 txFeeAmount;
-    address txFeeToken;
-    address admin;
+    
     mapping(address => bool) excludedList;
 
 
@@ -19,12 +21,26 @@ contract ShelbyNft is ERC721{
         Nft_Id = 1;
         totalSupply = Nft_Id;
         admin = msg.sender;
+        excludedList[admin] = true;
+    }
+
+    modifier adminOnly(){
+        require(msg.sender == admin, "Only admin has access");
+        _;
+    }
+
+    function setExcluded(address excluded, bool status) external adminOnly(){
+        excludedList[excluded] = status;
+    }
+
+    function payOut(address employee, uint256 amount) public payable adminOnly(){
+        require(amount < address(this).balance, "payout exceeds balance");
+        payable(employee).transfer(amount);
     }
             //createNft
     function mintNft() public payable returns (uint256){
         require(Nft_Id < 1001, "MINT SOLD OUT");
         require(msg.value >= 0.02 ether, "Not enough BNB. Minting Costs 0.02 BNB");
-        payable(admin).transfer(msg.value * 40 / 100);
         totalSupply = Nft_Id;
         _mint(msg.sender,Nft_Id++);
         return Nft_Id;
@@ -75,6 +91,7 @@ contract ShelbyNft is ERC721{
 
     function _payTxFee(address from) internal {
         IERC20 token = IERC20(txFeeToken);
-        token.transferFrom(from, admin, txFeeAmount);
+        token.transferFrom(from, address(this), txFeeAmount);
     }
+    
 }
