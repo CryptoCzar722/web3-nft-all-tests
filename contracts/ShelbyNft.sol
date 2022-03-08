@@ -7,18 +7,15 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 contract ShelbyNft is ERC721{
     
     address admin;
-    
     uint256 private Nft_Id;
     uint256 public totalSupply;
     uint256 mintPrice;
-    
     mapping(address => bool) royaltiesList;
 
     constructor() ERC721("Smart Peeps", "SIN"){
         Nft_Id = 1;
         totalSupply = Nft_Id;
         admin = msg.sender;
-        royaltiesList[admin] = true;
         mintPrice = 0.02 ether;
     }
 
@@ -30,6 +27,10 @@ contract ShelbyNft is ERC721{
     function payOut(address employee, uint256 amount) public payable adminOnly(){
         require(amount < address(this).balance, "payout exceeds balance");
         payable(employee).transfer(amount);
+    }
+
+    function clearRoyalty(address owner) public adminOnly(){
+        royaltiesList[owner] = false;
     }
             //createNft
     function mintNft() public payable returns (uint256){
@@ -52,7 +53,7 @@ contract ShelbyNft is ERC721{
                 )
             );
         }
-        
+
     function tokenURINextMint() public view returns(string memory)
         {
         return string
@@ -65,4 +66,17 @@ contract ShelbyNft is ERC721{
                 )
             );
         }
+    function nftsMinted() public view returns(uint256){
+        return Nft_Id - 1;
+    }
+
+    function CollectRoyalty() public {
+        require(balanceOf(msg.sender) > 0, "Only Collectors get a royalty payout");
+        require(royaltiesList[msg.sender] != true, "You've already collected a royalty");
+        royaltiesList[msg.sender] = true;
+        uint256 ryt = address(this).balance * 2 / 100;
+        ryt = ryt / nftsMinted(); 
+        payable(msg.sender).transfer(ryt);
+    }
+
 }

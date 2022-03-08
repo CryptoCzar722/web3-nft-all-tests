@@ -4,7 +4,9 @@ import Switch from 'react-ios-switch';
 import sibmLogo from '../sibm-logo.png';
 
 import NFTCard from './NFTCard'
+import NFTMpCard from './NFTMpCard'
 import p683 from '../683.png';
+import noNft from '../noNft.png';
 /*
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 <NFTCard nftImageUri = {p683} nftImageName = {this.state.nftImageName[1]} nftMintAddress = {this.state.nftMintAddress}/>
@@ -29,18 +31,12 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : false,
+            mint_market : true,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
-            nftCount : "",
-            setFile : "",
-            nftName : "",
-            ipfsHash : "NONE",
-            ipfsJSONHash : "",
-            tokenUri : "",
             //nft contract       
-            nftMintAddress : "0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
+            nftMintAddress : "0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
             nftMintAbi : [
               {
                 "inputs": [],
@@ -123,6 +119,13 @@ class NFTForm extends Component {
                 "type": "event"
               },
               {
+                "inputs": [],
+                "name": "CollectRoyalty",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
                 "inputs": [
                   {
                     "internalType": "address",
@@ -157,6 +160,19 @@ class NFTForm extends Component {
                   }
                 ],
                 "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  }
+                ],
+                "name": "clearRoyalty",
+                "outputs": [],
+                "stateMutability": "nonpayable",
                 "type": "function"
               },
               {
@@ -223,6 +239,19 @@ class NFTForm extends Component {
                     "internalType": "string",
                     "name": "",
                     "type": "string"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "nftsMinted",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
                   }
                 ],
                 "stateMutability": "view",
@@ -337,24 +366,6 @@ class NFTForm extends Component {
               {
                 "inputs": [
                   {
-                    "internalType": "address",
-                    "name": "excluded",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "status",
-                    "type": "bool"
-                  }
-                ],
-                "name": "setExcluded",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
                     "internalType": "bytes4",
                     "name": "interfaceId",
                     "type": "bytes4"
@@ -453,407 +464,50 @@ class NFTForm extends Component {
                 "type": "function"
               }
             ],
-            Old : [
-              {
-                "inputs": [],
-                "stateMutability": "nonpayable",
-                "type": "constructor"
-              },
-              {
-                "anonymous": false,
-                "inputs": [
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "owner",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "approved",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": true,
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "Approval",
-                "type": "event"
-              },
-              {
-                "anonymous": false,
-                "inputs": [
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "owner",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "operator",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": false,
-                    "internalType": "bool",
-                    "name": "approved",
-                    "type": "bool"
-                  }
-                ],
-                "name": "ApprovalForAll",
-                "type": "event"
-              },
-              {
-                "anonymous": false,
-                "inputs": [
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "from",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "to",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": true,
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "Transfer",
-                "type": "event"
-              },
-              {
-                "inputs": [],
-                "name": "Nft_Id",
-                "outputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [],
-                "name": "admin",
-                "outputs": [
-                  {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "to",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "approve",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "owner",
-                    "type": "address"
-                  }
-                ],
-                "name": "balanceOf",
-                "outputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "string",
-                    "name": "tokenUri",
-                    "type": "string"
-                  }
-                ],
-                "name": "createNft",
-                "outputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                  }
-                ],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "getApproved",
-                "outputs": [
-                  {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "owner",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "address",
-                    "name": "operator",
-                    "type": "address"
-                  }
-                ],
-                "name": "isApprovedForAll",
-                "outputs": [
-                  {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [],
-                "name": "name",
-                "outputs": [
-                  {
-                    "internalType": "string",
-                    "name": "",
-                    "type": "string"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "ownerOf",
-                "outputs": [
-                  {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "from",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "address",
-                    "name": "to",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "safeTransferFrom",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "from",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "address",
-                    "name": "to",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "bytes",
-                    "name": "_data",
-                    "type": "bytes"
-                  }
-                ],
-                "name": "safeTransferFrom",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "operator",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "approved",
-                    "type": "bool"
-                  }
-                ],
-                "name": "setApprovalForAll",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "bytes4",
-                    "name": "interfaceId",
-                    "type": "bytes4"
-                  }
-                ],
-                "name": "supportsInterface",
-                "outputs": [
-                  {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [],
-                "name": "symbol",
-                "outputs": [
-                  {
-                    "internalType": "string",
-                    "name": "",
-                    "type": "string"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "tokenURI",
-                "outputs": [
-                  {
-                    "internalType": "string",
-                    "name": "",
-                    "type": "string"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "from",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "address",
-                    "name": "to",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "transferFrom",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              }
-            ],
             nftMintContract : "",
             nftMintName : "",
             nftImageUri : [p683],
-            nftImageName : "", //["Shelby Peep #0", "Shelby Peep #1", "Shelby Peep #2","Shelby Peep #3", "Shelby Peep #4", "Shelby Peep #5"],
+            nftImageName : "--", //["Shelby Peep #0", "Shelby Peep #1", "Shelby Peep #2","Shelby Peep #3", "Shelby Peep #4", "Shelby Peep #5"],
             nftIdx : 0,
-            Nfts_owned : 0,
+            Nfts_owned : "--",
+            Nfts_minted : "--",
+            uriOwned : [noNft],
+            idOwned : "--",
             imgIdx : 0,
             Nft_Id : "--",
             nftRem : "--",
-            nftSizeAvg : "--"
+            nftSizeAvg : "--",
+            nftOwnedIdx : 0
           };
           //this.loadMintContract = this.loadMintContract.bind(this);
           //this.updateNft = this.updateNft.bind(this);
           this.mintNow = this.mintNow.bind(this);
+          //this.incIdx = this.incIdx.bind(this);
         }
 
         async mintNow(){
-          let mintedID = await this.state.nftMintContract.methods.mintNft().send({ from: this.props.account, value : "20000000000000000" });
+          let mintedID = await this.state.nftMintContract.methods.mintNft().send({ from: this.props.account, value : "20000000000000000" })
           console.log("mintedID :: ",mintedID);
+          window.alert(mintedID.blockHash);
+        }
+        async findOwnedUri(){
+          let i = 0
+          for (i = 1 ; i <= 999; i++){
+            let owner = await this.state.nftMintContract.methods.ownerOf(i).call();
+            if (owner == this.props.account)
+              {
+              this.setState({nftOwnedIdx : 1});
+                //console.log(i," Owned :: ",owner);
+              let URI = await this.state.nftMintContract.methods.tokenURI(i).call();
+              URI = await axios.get(URI);
+              //console.log(i," uri :: ",URI.data.image);
+              this.setState({idOwned : i});
+              //this.setState({uriOwned: URI.data.image});
+              this.state.uriOwned.push(URI.data.image); 
+              console.log(i," uriOwned :: ",this.state.uriOwned);
+              }
+        }
+          console.log("Owners scanned");
         }
 
         async loadMintContract()
@@ -872,20 +526,7 @@ class NFTForm extends Component {
             let nftMintName = await nftMintContract.methods.name().call();
             this.setState({nftMintName}); 
               
-            let nftImageUri = await nftMintContract.methods.tokenURINextMint().call();
-            nftImageUri = await axios.get(nftImageUri);
-            console.log("nftImageUri :: ",nftImageUri.data.image);
-            this.setState({nftImageUri : nftImageUri.data.image});
-            let nftImageName = nftImageUri.data.name;
-            console.log("nftImageName :: ",nftImageName);
-            this.setState({nftImageName});
-
-            if (this.state.account)
-              {
-              let Nfts_owned = await nftMintContract.methods.balanceOf(this.state.account).call();
-              this.setState({Nfts_owned : Nfts_owned.toString()})
-              console.log("Nft_account :: ", this.state.Nfts_owned);
-              }
+            this.updateMintData();
             
               //TAG call the keys from .env
             const API_KEY = '0f3f630bec73946940bd';
@@ -907,12 +548,37 @@ class NFTForm extends Component {
           // get the hash
           this.setState({ipfsByteCount : response.data.pin_size_total / 1000})
           //now
-          this.setState({nftRem : parseFloat((1000000 - this.state.ipfsByteCount) / (this.state.ipfsByteCount / this.state.Nft_Id)).toFixed(0)});
-          this.setState({nftSizeAvg :this.state.ipfsByteCount / this.state.Nft_Id});
+          this.setState({nftRem : 1000 - this.state.Nfts_minted})//parseFloat((1000000 - this.state.ipfsByteCount) / (this.state.ipfsByteCount / this.state.Nft_Id)).toFixed(0)});
+          this.setState({nftSizeAvg : this.state.ipfsByteCount / 1000});
+          this.findOwnedUri()
             }
+
+        async updateMintData(){
+          //console.log("updateMintImage");
+          let nftImageUri = await this.state.nftMintContract.methods.tokenURINextMint().call();
+          nftImageUri = await axios.get(nftImageUri);
+          this.setState({nftImageUri : nftImageUri.data.image});
+          let nftImageName = nftImageUri.data.name;
+          this.setState({nftImageName});
+          if (this.state.account)
+              {
+              let Nfts_owned = await this.state.nftMintContract.methods.balanceOf(this.state.account).call();
+              if (Nfts_owned.toString() != this.state.Nfts_owned){
+                this.setState({Nfts_owned : Nfts_owned.toString()})
+                //console.log("Nfts_owned :: ", this.state.Nfts_owned);
+              }
+              let Nfts_minted = await this.state.nftMintContract.methods.nftsMinted().call();
+              if (Nfts_minted.toString() != this.state.Nfts_minted){
+                this.setState({Nfts_minted : Nfts_minted.toString()})
+                //console.log("Nfts_owned :: ", this.state.Nfts_owned);
+              }
+              //console.log("Nfts_minted :: ", this.state.Nfts_minted);
+              }
+        }
       
         componentDidMount() {
           this.loadMintContract(); 
+          this.interval = setInterval(() => this.updateMintData(), 3000);
 
           pinata.testAuthentication().then((result) => {
             //handle successful authentication here
@@ -928,31 +594,70 @@ class NFTForm extends Component {
         componentWillUnmount() {
           clearInterval(this.interval);
         }
+        incIdx(){
+          if (this.state.nftOwnedIdx < this.state.Nfts_owned)
+            {
+            this.setState({nftOwnedIdx :this.state.nftOwnedIdx+1})
+            //console.log("inc :: ", this.state.nftOwnedIdx);
+            }
+        }
+        decIdx(){
+          if (this.state.nftOwnedIdx > 1)
+            {
+            this.setState({nftOwnedIdx :this.state.nftOwnedIdx-1})
+            //console.log("dec :: ", this.state.nftOwnedIdx);
+            }
+        }
 
-        onImageChange = event => {
-          if (event.target.files && event.target.files[0]) {
-            let img = event.target.files[0];
-            console.log("IMG - ", img.name);  
-            this.setState({imageName : img.name})
-            console.log("File location ", './'+img.name)  //this.state.setFile) 
-            this.setState({setFile : event.target.files[0]})
-
-            this.setState({
-              image: URL.createObjectURL(img)
-            });
-            //console.log("image - ", this.state.image);
-          }
-                     
-       };
-    
         render() {
           let content
+          const state = {
+            button: ""
+          };
           if (this.state.mint_market) 
             {
             content =
             <form className="mb-0" onSubmit={(event) => {
               event.preventDefault()
+              if (state.button == "dec"){
+                this.decIdx();
+              }
+              else if (state.button == "inc"){
+                this.incIdx();
+              }
+              state.button = 0;
               }}>
+
+          <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+            }}>
+              <button type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
+              <NFTMpCard nftImageUri = {this.state.uriOwned[this.state.nftOwnedIdx]} nftImageName = {this.state.nftOwnedIdx}  nftMintAddress = {this.state.nftMintAddress}/>
+              <button type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
+          </div>
+          </form>
+          }
+          else 
+            {
+            content =
+            <form className="mb-6" onSubmit={(event) => {
+            event.preventDefault()                
+            //make offer / buy
+            }}>
+            <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+            }}>
+              <NFTCard mintNow = {this.mintNow} nftImageUri = {this.state.nftImageUri} nftImageName = {this.state.nftImageName}  nftMintAddress = {this.state.nftMintAddress}/>
+            </div>   
+            <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+            }}>
             <table>
              <thead>
               <tr>
@@ -964,55 +669,19 @@ class NFTForm extends Component {
              </thead>
             <tbody>
             <tr>
-              <td>{this.state.Nft_Id} </td>
+              <td>{this.state.Nfts_minted} </td>
               <td> {this.state.Nfts_owned} </td>
               <td> {this.state.nftRem} </td>
               <td> {this.state.nftSizeAvg} </td>
               </tr>
             </tbody>
             </table>
-
-              <div style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-                }}>
-              <h1> <font color={(!this.state.pinataConnection) ? "red" :"green"}>{this.state.pinataConnection} </font></h1> 
-               </div>
-               <div style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-                  }}>
-              { this.state.ipfsByteCount}KB / 1.0 GB   
-               </div>
-
-          <div style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-            }}>
-          </div>
-          
-          </form>
-          }
-          else 
-            {
-            content =
-            <form className="mb-6" onSubmit={(event) => {
-            event.preventDefault()                
-            //make offer / buy
-            }}>    
-             <div style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-            }}>
-                  <NFTCard mintNow = {this.mintNow} nftImageUri = {this.state.nftImageUri} nftImageName = {this.state.nftImageName}  nftMintAddress = {this.state.nftMintAddress}/>
-            </div>
+            </div> 
           </form>
           }
 //<div className="card-body">
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
           return (
             <div className="mb-3" >
             <div style={{display: "flex",justifyContent: "center",alignItems: "center"}}>
@@ -1030,8 +699,8 @@ class NFTForm extends Component {
             {
             this.state.mint_market
             ?
-            <b><h1>NFT MarketPlace Coming Soon</h1></b>:
-            <b><h1>{this.state.nftMintName}</h1></b>   
+            <b><h1>NFT Wallet</h1></b>:
+            <b><h1>{this.state.nftMintName} Mint</h1></b>   
           }
               </div>
               {content}

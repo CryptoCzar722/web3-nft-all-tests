@@ -13,6 +13,7 @@ import LotteryForm from './LotteryForm'
 import GameForm from './GameForm'
 import AboutForm from './AboutForm'
 import BetForm from './BetForm'
+import NFTOwnedForm from './NFTOwnedForm'
 //import ChatForm from './ChatForm'
 //import BlackjackForm from './BlackjackForm'
 //TAG remove later
@@ -135,7 +136,7 @@ class Main extends Component {
       //account={this.props.account} 
       />*/ 
      }
-     else if(this.state.currentForm === 'presale') {
+     /*else if(this.state.currentForm === 'presale') {
       content = <InvestorForm
         account={this.props.account}
        updateBasePrice = {this.props.updateBaseTokenPrice}
@@ -164,12 +165,16 @@ class Main extends Component {
         sibmAddress={this.props.sibmAddress}
 
       />
-    }
+    }*/
     else if (this.state.currentForm === 'nft') {
       content = <NFTForm
        account={this.props.account}
        />
      }
+     else if (this.state.currentForm === 'nftsOwned') {
+      content = <NFTOwnedForm
+      />
+    }
     /* else if (this.state.currentForm === 'bet') {
       content = <BetForm
        account={this.props.account}
@@ -307,7 +312,15 @@ class Main extends Component {
                 this.setState({ currentForm: 'nft' })
               }}
             >
-            NFT
+            NFT Mint
+          </button></a>
+          <a>  <button
+              className="btn btn-outline-dark"
+              onClick={(event) => {
+                this.setState({ currentForm: 'nftsOwned' })
+              }}
+            >
+            NFT's Owned
           </button></a>
           <a> <button
                 className= "btn btn-outline-dark" //"btn btn-outline-dark"
