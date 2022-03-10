@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import bnbLogo from '../bnb-logo.png'
 
-import NFTMpCard from './NFTMpCard'
+//import NFTMpCard from './NFTMpCard'
 
 
 class SendForm extends Component {

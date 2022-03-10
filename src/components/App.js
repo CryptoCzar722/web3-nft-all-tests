@@ -985,7 +985,8 @@ async updateBaseTokenPrice()
   componentDidMount() 
   {
    // this.interval = setInterval(() => this.updateBaseTokenPrice(), 3000);
-   // this.interval = setInterval(() => this.UpdateSwapPrices(), 100);
+   //this.interval = setInterval(() => this.UpdateSwapPrices(), 100);
+   this.interval = setInterval(() => this.checkWalletChanged(), 2000);
   }
 
   constructor(props) {

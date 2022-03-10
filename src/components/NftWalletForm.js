@@ -5,8 +5,7 @@ import sibmLogo from '../sibm-logo.png';
 
 import NFTCard from './NFTCard'
 //import NFTMpCard from './NFTMpCard'
-//import NftWalletCard from './NftWalletCard'
-import NftMarketCard from './NftMarketCard'
+import NftWalletCard from './NftWalletCard'
 import bnbLogo from '../bnb-logo.png'
 import p683 from '../683.png';
 import noNft from '../noNft.png';
@@ -23,7 +22,7 @@ const pinataSDK = require('@pinata/sdk');
 const pinata = pinataSDK('0f3f630bec73946940bd', 'c59ada21cf8e2eac1d19b2eb7177ff6d5d95f4c6a2b962a6d74959c3a7b132e9');
 const axios = require('axios');
 
-class NFTForm extends Component {
+class NftWalletForm extends Component {
 
         constructor(props) {
           super(props);
@@ -35,7 +34,6 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : true,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
@@ -482,8 +480,11 @@ class NFTForm extends Component {
             nftRem : "--",
             nftSizeAvg : "--",
             nftOwnedIdx : 0,
-            mintedHistory: [
-              { nft_id: 1, account: this.props.account, price: 0.02},
+            history: [
+              { nft_id: 1, account: this.props.account, price: 21, b_s_o: 'wasi.com' },
+              { nft_id: 2, account: this.props.account, price: 19, b_s_o: 'ali@email.com' },
+              { nft_id: 3, account: this.props.account, price: 16, b_s_o: 'saad@email.com' },
+              { nft_id: 4, account: this.props.account, price: 25, b_s_o: 'asad@email.com' }
               ]
           };
           //this.loadMintContract = this.loadMintContract.bind(this);
@@ -491,7 +492,19 @@ class NFTForm extends Component {
           this.mintNow = this.mintNow.bind(this);
           //this.incIdx = this.incIdx.bind(this);
         }
-        
+        renderTableData() {
+          return this.state.history.map((history, index) => {
+             const { nft_id, account, price, b_s_o } = history //destructuring
+             return (
+                <tr key={nft_id}>
+                   <td>{nft_id}</td>
+                   <td>{account}</td>
+                   <td>{price}</td>
+                   <td>{b_s_o}</td>
+                </tr>
+             )
+          })
+       }
 
         async mintNow(){
           let mintedID = await this.state.nftMintContract.methods.mintNft().send({ from: this.props.account, value : "20000000000000000" })
@@ -553,7 +566,7 @@ class NFTForm extends Component {
                 }
               }
               )
-            console.log( " response :: ",response.data.pin_size_total / 1000)
+            //console.log( " response :: ",response.data.pin_size_total / 1000)
           // get the hash
           this.setState({ipfsByteCount : response.data.pin_size_total / 1000})
           //now
@@ -561,18 +574,27 @@ class NFTForm extends Component {
           this.findOwnedUri()
             }
 
+        async checkListed(){
+          //let checkIdForsale = await 
+          BackendService.checkIdForsale(this.state.nftOwnedIdx).then(out =>{
+            console.log("checkIdForsale :: ",out);
+          });
+          //['0'].address);
+          //this.interval = checkListed(() => this.checkListed(), 3000);
+        }
+
         async updateMintData(){
           //console.log("updateMintImage");
-          //let checkSale =  BackendService.checkForsale();  
-          let nftImageUri = await this.state.nftMintContract.methods.tokenURINextMint().call();
+          /*let nftImageUri = await this.state.nftMintContract.methods.tokenURINextMint().call();
           nftImageUri = await axios.get(nftImageUri);
           this.setState({nftImageUri : nftImageUri.data.image});
           let nftImageName = nftImageUri.data.name;
           this.setState({nftImageName});
           let mintBalance = await window.web3.eth.getBalance(this.state.nftMintAddress);
           mintBalance = window.web3.utils.fromWei(mintBalance.toString(),'ether')
-          this.setState({mintBalance});
-
+          this.setState({mintBalance});*/
+          //this.checkListed()
+          
           if (this.state.account)
               {
               let Nfts_owned = await this.state.nftMintContract.methods.balanceOf(this.state.account).call();
@@ -589,7 +611,6 @@ class NFTForm extends Component {
               //console.log("Nfts_minted :: ", this.state.Nfts_minted);
               }
         }
-      
         componentDidMount() {
           this.loadMintContract(); 
           this.interval = setInterval(() => this.updateMintData(), 3000);
@@ -628,9 +649,7 @@ class NFTForm extends Component {
           const state = {
             button: ""
           };
-          if (this.state.mint_market) 
-            {
-            content =
+          content =
             <form className="mb-0" onSubmit={(event) => {
               event.preventDefault()
               if (state.button == "dec"){
@@ -648,26 +667,10 @@ class NFTForm extends Component {
           alignItems: "center"
             }}>
               <button type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
-              <NftMarketCard nftOwnedIdx = {this.state.nftOwnedIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftOwnedIdx]} nftImageName = {this.state.idOwned[this.state.nftOwnedIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
+              <NftWalletCard nftOwnedIdx = {this.state.nftOwnedIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftOwnedIdx]} nftImageName = {this.state.idOwned[this.state.nftOwnedIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
               <button type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
           </div>
-          </form>
-          }
-          else 
-            {
-            content =
-            <form className="mb-0" onSubmit={(event) => {
-            event.preventDefault()                
-            //make offer / buy
-            }}>
-            <div style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-            }}>
-              <NFTCard mintNow = {this.mintNow} nftImageUri = {this.state.nftImageUri} nftImageName = {this.state.nftImageName}  nftMintAddress = {this.state.nftMintAddress}/>
-            </div>   
-            <div style={{
+          <div style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
@@ -675,50 +678,46 @@ class NFTForm extends Component {
             <table>
              <thead>
               <tr>
-              <th>Contract BNB   </th>
-                <th>NFT's Minted   </th>
-                <th>NFT's Owned </th>
-                <th  width="20" >NFT's Remaining</th>
-                <th>Avg. NFT Size (KB)</th>
+                <th>TX Hash  </th>
+                <th>NFT ID </th>
+                <th>Mint</th>
+                <th>Buy</th>
+                <th>Sell</th>
+                <th>Offer</th>
               </tr>
              </thead>
             <tbody>
             <tr>
-            <td>{this.state.mintBalance} </td>
+            <td>{this.state.txHash} </td>
               <td>{this.state.Nfts_minted} </td>
-              <td> {this.state.Nfts_owned} </td>
-              <td> {this.state.nftRem} </td>
-              <td> {parseFloat(this.state.nftSizeAvg).toFixed(2)} </td>
+              <td> {this.state.buy} </td>
+              <td> {this.state.sell} </td>
+              <td> {this.state.offer} </td>
               </tr>
             </tbody>
             </table>
-            </div> 
+            </div>
+            <div>
+            <h1 id='title'>React Dynamic Table</h1>
+            <table id='history'>
+               <tbody>
+                {this.renderTableData()}
+               </tbody>
+            </table>
+         </div>
           </form>
-          }
-//<div className="card-body">
+          
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
           return (
             <div className="mb-3" >
-            <div style={{display: "flex",justifyContent: "center",alignItems: "center"}}>
-            <Switch
-              checked={this.state.mint_market}
-              onChange={checked => {this.setState({mint_market : !this.state.mint_market})}}
-              offColor="blue"
-            />
-            </div>
             <div style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
             }}>
-            {
-            this.state.mint_market
-            ?
-            <b><h1>NFT Marketplace</h1></b>:
-            <b><h1>{this.state.nftMintName} Mint</h1></b>   
-          }
-              </div>
+            <b><h1>NFT Wallet</h1></b>
+            </div>
               {content}
             </div>
             
@@ -726,5 +725,5 @@ class NFTForm extends Component {
         }
       }
       
-      export default NFTForm;
+      export default NftWalletForm;
   

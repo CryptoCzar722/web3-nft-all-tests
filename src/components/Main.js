@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NFTForm from './NFTForm'
+import NftWalletForm from './NftWalletForm'
 import SwapForm from './SwapForm'
 import SendForm from './SendForm'
 import BridgeForm from './BridgeForm'
@@ -13,12 +14,10 @@ import LotteryForm from './LotteryForm'
 import GameForm from './GameForm'
 import AboutForm from './AboutForm'
 import BetForm from './BetForm'
-import NFTOwnedForm from './NFTOwnedForm'
 //import ChatForm from './ChatForm'
 //import BlackjackForm from './BlackjackForm'
 //TAG remove later
 import InvestorForm from './InvestorForm'
-
 
 class Main extends Component {
   constructor(props) {
@@ -171,10 +170,11 @@ class Main extends Component {
        account={this.props.account}
        />
      }
-     else if (this.state.currentForm === 'nftsOwned') {
-      content = <NFTOwnedForm
-      />
-    }
+     else if (this.state.currentForm === 'wallet') {
+      content = <NftWalletForm
+       account={this.props.account}
+       />
+     }
     /* else if (this.state.currentForm === 'bet') {
       content = <BetForm
        account={this.props.account}
@@ -312,15 +312,15 @@ class Main extends Component {
                 this.setState({ currentForm: 'nft' })
               }}
             >
-            NFT Mint
+            NFT's
           </button></a>
           <a>  <button
               className="btn btn-outline-dark"
               onClick={(event) => {
-                this.setState({ currentForm: 'nftsOwned' })
+                this.setState({ currentForm: 'wallet' })
               }}
             >
-            NFT's Owned
+            Wallet
           </button></a>
           <a> <button
                 className= "btn btn-outline-dark" //"btn btn-outline-dark"
