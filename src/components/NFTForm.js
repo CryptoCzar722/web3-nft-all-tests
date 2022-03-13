@@ -1072,8 +1072,9 @@ class NFTForm extends Component {
             nftIdx : 0,
             Nfts_owned : "--",
             Nfts_minted : "--",
-            uriOwned : [noNft],
+            uriForsale : [noNft],
             idForsale : [],
+            idForsalePrice : [],
             imgIdx : 0,
             Nft_Id : "--",
             nftRem : "--",
@@ -1083,7 +1084,7 @@ class NFTForm extends Component {
               { nft_id: 1, account: this.props.account, price: 0.02},
               ],
             listhistory: [
-                { nft_id: 0, price: 0.02 },
+                { nft_id: "NFT ID", price: "Price" },
                 ]
           };
           //this.loadMintContract = this.loadMintContract.bind(this);
@@ -1113,12 +1114,19 @@ class NFTForm extends Component {
         async findForsaleUri(){
           for (let i = 1 ; i <= this.state.nftsForsaleCount; i++){
           let forsale = await this.state.nftMintContract.methods.forsale(i).call();
-          let URI = await this.state.nftMintContract.methods.tokenURI(i).call();
-          URI = await axios.get(URI);
-          this.state.idForsale.push(i); 
           console.log("forsale => ", forsale.nft_id.toNumber())
+          let id = forsale.nft_id.toNumber()
+          //const price = window.web3.utils.fromWei(forsale.price.toNumber(),'ether');
+          let URI = await this.state.nftMintContract.methods.tokenURI(id).call();
+          URI = await axios.get(URI);
+          this.state.idForsale.push(id);
+          //this.state.idForsalePrice.push(price); 
+          this.state.uriForsale.push(URI.data.image); 
+          if (this.state.nftsForsaleCount > 0){
+            this.setState({nftForsaleIdx : 1});
           }
-          let i = 0
+          }
+          /*let i = 0
           for (i = 1 ; i <= 999; i++){
             let owner = await this.state.nftMintContract.methods.ownerOf(i).call();
             if (owner == this.props.account)
@@ -1130,11 +1138,11 @@ class NFTForm extends Component {
               //console.log(i," uri :: ",URI.data.image);
               //this.setState({idForsale : i});
               this.state.idForsale.push(i); 
-              //this.setState({uriOwned: URI.data.image});
-              this.state.uriOwned.push(URI.data.image); 
-              //console.log(i," uriOwned :: ",this.state.uriOwned);
+              //this.setState({uriForsale: URI.data.image});
+              this.state.uriForsale.push(URI.data.image); 
+              //console.log(i," uriForsale :: ",this.state.uriForsale);
               }
-          }
+          }*/
           //console.log("Owners scanned");
         }
 
@@ -1272,7 +1280,7 @@ class NFTForm extends Component {
           alignItems: "center"
             }}>
               <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
-              <NftMarketCard nftForsaleIdx = {this.state.nftForsaleIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftForsaleIdx]} nftImageName = {this.state.idForsale[this.state.nftForsaleIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
+              <NftMarketCard nftForsaleIdx = {this.state.nftForsaleIdx} account = {this.props.account} nftImageUri = {this.state.uriForsale[this.state.nftForsaleIdx]} nftImageName = {this.state.idForsale[this.state.nftForsaleIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
               <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
           </div>
           <div>
