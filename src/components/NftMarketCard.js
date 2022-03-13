@@ -611,7 +611,8 @@ class NftMarketCard extends Component {
             nftMintContract : ""
             };
           //  this.rollDoneCallback1 = this.rollDoneCallback1.bind(this);
-        this.postSale = this.postSale.bind(this);
+        //this.postSale = this.postSale.bind(this);
+        this.BuyNow = this.BuyNow.bind(this);
           
         }
         async loadMintContract()
@@ -635,7 +636,7 @@ class NftMarketCard extends Component {
         async BuyNow(nft_id, price){
           await await this.state.nftMintContract.methods.BuyNow(nft_id).send({from : this.props.account, value : price});
         }
-        
+
         componentDidMount() {
           this.loadMintContract()
             //this.mintButton = this.mintButton.bind(this);
@@ -648,12 +649,8 @@ class NftMarketCard extends Component {
           
         }
 
-        next(){
-            
-        }
-        async postSale(){
-           
-        }
+        next(){}
+        
         //<p className='card-content_details-title'>Smart Peeps</p>
         render() {
           return (
@@ -670,12 +667,17 @@ class NftMarketCard extends Component {
                 let confirmation = prompt("Confirm Offer Price ", this.state.bnbPrice);
                 if (confirmation == this.state.bnbPrice){
                     confirmation = prompt("Confirm Nft Id ", this.props.nftImageName);
-                    if (confirmation == this.props.nftImageName){
-                    //set sale in database / smart contract
-                    console.log("confirmation :: ",confirmation);
-                    }
+                    if (confirmation == this.props.nftImageName)
+                      {
+                      //set sale in database / smart contract
+                      console.log("confirmation :: ",confirmation);
+                      let wei = window.web3.utils.toWei(this.state.bnbPrice,"ether");
+                      this.BuyNow(this.props.nftImageName,wei);
+                      }
                 }
+                else{
                 console.log("con fail :: ",confirmation);
+                }
                 }}>
             <div className='card'>
                 <div className='card-content'>
@@ -690,7 +692,7 @@ class NftMarketCard extends Component {
                     <div>
                     <label className="float-left"><b>BNB Sale Price:</b></label>
                     <span className="float-right text-muted">
-                        BNB: {this.state.salePrice}
+                        BNB: {this.props.nftImagePrice}
                     </span>
                     </div>
                     <div className="input-group mb-4">

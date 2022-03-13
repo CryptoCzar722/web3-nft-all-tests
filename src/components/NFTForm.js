@@ -1114,13 +1114,14 @@ class NFTForm extends Component {
         async findForsaleUri(){
           for (let i = 1 ; i <= this.state.nftsForsaleCount; i++){
           let forsale = await this.state.nftMintContract.methods.forsale(i).call();
-          console.log("forsale => ", forsale.nft_id.toNumber())
+          console.log(window.web3.utils.fromWei(forsale.price.toString(),"ether"), "<= forsale")
           let id = forsale.nft_id.toNumber()
           //const price = window.web3.utils.fromWei(forsale.price.toNumber(),'ether');
           let URI = await this.state.nftMintContract.methods.tokenURI(id).call();
           URI = await axios.get(URI);
           this.state.idForsale.push(id);
-          //this.state.idForsalePrice.push(price); 
+          //this.state.listhistory.push();
+          this.state.idForsalePrice.push(window.web3.utils.fromWei(forsale.price.toString())) 
           this.state.uriForsale.push(URI.data.image); 
           if (this.state.nftsForsaleCount > 0){
             this.setState({nftForsaleIdx : 1});
@@ -1280,7 +1281,7 @@ class NFTForm extends Component {
           alignItems: "center"
             }}>
               <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
-              <NftMarketCard nftForsaleIdx = {this.state.nftForsaleIdx} account = {this.props.account} nftImageUri = {this.state.uriForsale[this.state.nftForsaleIdx]} nftImageName = {this.state.idForsale[this.state.nftForsaleIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
+              <NftMarketCard nftForsaleIdx = {this.state.nftForsaleIdx} account = {this.props.account} nftImageUri = {this.state.uriForsale[this.state.nftForsaleIdx]} nftImagePrice = {this.state.idForsalePrice[this.state.nftForsaleIdx - 1]} nftImageName = {this.state.idForsale[this.state.nftForsaleIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
               <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
           </div>
           <div>
