@@ -86,8 +86,8 @@ class NftMarketCard extends Component {
                         style ={{overflow: "hidden"}} 
                         placeholder=""
                     required />
-                      <button type="submit" className="btn btn-primary btn-block btn-lg">Make Offer</button>
                       <button type="submit" className="btn btn-primary btn-block btn-lg">Buy Now</button>
+                      <button disabled type="submit" className="btn btn-primary btn-block btn-lg">Make Offer</button>
                     </div>
             </div>
            </form>

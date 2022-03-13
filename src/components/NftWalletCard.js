@@ -13,7 +13,7 @@ class NftWalletCard extends Component {
           this.state = { 
               test: "",
               bnbPrice : 0.00,
-              salePrice : 0.02
+              salePrice : "--"
             };
           //  this.rollDoneCallback1 = this.rollDoneCallback1.bind(this);
         this.postSale = this.postSale.bind(this);
@@ -41,49 +41,41 @@ class NftWalletCard extends Component {
         async postSale(){
            // await this.props.mintNow();
         }
-        async IsSaleListed(id){
+        /*async IsSaleListed(id){
           let checkSale = BackendService.checkIdForsale(id);
           return checkSale;
-        }
+        }*/
         //<p className='card-content_details-title'>Smart Peeps</p>
         render() {
+          const state = {
+            button: ""
+          };
           return (
             <form className="mb-3" onSubmit={(event) => {
                 event.preventDefault();
                 let saleDetails = {
-                    address : this.props.account,
-                    nft_id : this.props.nftImageName,
-                    price : this.state.bnbPrice
+                  address : this.props.account,
+                  nft_id : this.props.nftImageName,
+                  price : this.state.bnbPrice
                 }
-                let checkSale = this.IsSaleListed(this.props.nftImageName)
-                console.log("check is listed :: ", checkSale);
-                //if (checkSale < 1){
-                  //console.log("Sale details :: ", saleDetails);
-                  this.setState({salePrice: this.state.bnbPrice});
-                  //let confirmation = confirm(saleDetails);
-                  let confirmation = prompt("Confirm Sale Price ", this.state.bnbPrice);
+                if (state.button == "list"){
+                  console.log("listing",saleDetails)
+                  this.state.nftmint
+                }
+                else if (state.button == "delist"){
+                  console.log("delisting",saleDetails)
+                }
+                state.button = 0;
+                /*this.setState({salePrice: this.state.bnbPrice});
+                let confirmation = prompt("Confirm Sale Price ", this.state.bnbPrice);
                   if (confirmation == this.state.bnbPrice){
                       confirmation = prompt("Confirm Nft Id ", this.props.nftImageName);
                       if (confirmation == this.props.nftImageName){
-                      //set sale in database / smart contract
-                      let data = BackendService.createListing(saleDetails);
-                      BackendService.createListing(saleDetails)
-                      .then(() => {
-                        console.log("Created new listing successfully!");
-                      })
-                      .catch((e) => {
-                        console.log(e);
-                      });
-                      console.log("BackendService data :: ",data);
-                      }
-                  }
-                  console.log("con fail :: ",confirmation);
-              /*  }
-                else 
-                {
-                  alert("Sale Already Listed");
-                }*/
-                }}>
+                      
+                    }
+                  }*/
+            }}>
+                
             <div className='card'>
                 <div className='card-content'>
                     <div className='card-content_overlay'></div>
@@ -114,7 +106,8 @@ class NftWalletCard extends Component {
                         style ={{overflow: "hidden"}} 
                         placeholder=""
                     required />
-                      <button type="submit" className="btn btn-primary btn-block btn-lg">List Sale</button>
+                      <button type="submit" onClick={() => (state.button = "list")}  className="btn btn-primary btn-block btn-lg">List Sale</button>
+                      <button type="submit" onClick={() => (state.button = "delist")}  className="btn btn-primary btn-block btn-lg">De-List Sale</button>
                     </div>
             </div>
            </form>

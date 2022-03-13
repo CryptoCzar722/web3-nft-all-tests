@@ -35,13 +35,609 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : true,
+            mint_market : false,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
             //nft contract       
-            nftMintAddress : "0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
-            nftMintAbi : [
+            nftMintAddress : "0xB30dAf287933EA6763617ee8614806A0144dA28f",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
+            nftMintAbi:[
+              {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "approved",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "Approval",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "operator",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": false,
+                    "internalType": "bool",
+                    "name": "approved",
+                    "type": "bool"
+                  }
+                ],
+                "name": "ApprovalForAll",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "Transfer",
+                "type": "event"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "BuyNow",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "ListSale",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "Nft_Id",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "RemoveSale",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "ReturnForsaleList",
+                "outputs": [
+                  {
+                    "internalType": "uint256[]",
+                    "name": "",
+                    "type": "uint256[]"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "ReturnForsalePrices",
+                "outputs": [
+                  {
+                    "internalType": "uint256[]",
+                    "name": "",
+                    "type": "uint256[]"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "approve",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "forsale",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "nft_id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "forsaleIdtracker",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "forsale_Count",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "getApproved",
+                "outputs": [
+                  {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "operator",
+                    "type": "address"
+                  }
+                ],
+                "name": "isApprovedForAll",
+                "outputs": [
+                  {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "mintNft",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "payable",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "mintPrice",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                  {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "nftsMinted",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "ownerOf",
+                "outputs": [
+                  {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "employee",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "payOut",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "safeTransferFrom",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "_data",
+                    "type": "bytes"
+                  }
+                ],
+                "name": "safeTransferFrom",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "operator",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "bool",
+                    "name": "approved",
+                    "type": "bool"
+                  }
+                ],
+                "name": "setApprovalForAll",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "sold",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "nft_id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "sold_Count",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "bytes4",
+                    "name": "interfaceId",
+                    "type": "bytes4"
+                  }
+                ],
+                "name": "supportsInterface",
+                "outputs": [
+                  {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                  {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "_tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "tokenURI",
+                "outputs": [
+                  {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                  }
+                ],
+                "stateMutability": "pure",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "tokenURINextMint",
+                "outputs": [
+                  {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "transferFrom",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              }
+            ],
+            oldnftMintAbi : [
               {
                 "inputs": [],
                 "stateMutability": "nonpayable",
@@ -484,13 +1080,27 @@ class NFTForm extends Component {
             nftOwnedIdx : 0,
             mintedHistory: [
               { nft_id: 1, account: this.props.account, price: 0.02},
-              ]
+              ],
+            listhistory: [
+                { nft_id: 0, price: 0.02 },
+                ]
           };
           //this.loadMintContract = this.loadMintContract.bind(this);
           //this.updateNft = this.updateNft.bind(this);
           this.mintNow = this.mintNow.bind(this);
           //this.incIdx = this.incIdx.bind(this);
         }
+        renderTableData() {
+          return this.state.listhistory.map((listhistory, index) => {
+             const { nft_id, price} = listhistory //destructuring
+             return (
+                <tr key={nft_id}>
+                   <td>{nft_id}</td>
+                   <td>{price}</td>
+                </tr>
+             )
+          })
+       }
         
 
         async mintNow(){
@@ -647,10 +1257,18 @@ class NFTForm extends Component {
           justifyContent: "center",
           alignItems: "center"
             }}>
-              <button type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
+              <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
               <NftMarketCard nftOwnedIdx = {this.state.nftOwnedIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftOwnedIdx]} nftImageName = {this.state.idOwned[this.state.nftOwnedIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
-              <button type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
+              <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
           </div>
+          <div>
+            <h1 id='title'>MarketPlace history</h1>
+            <table id='history'>
+               <tbody>
+                {this.renderTableData()}
+               </tbody>
+            </table>
+         </div>
           </form>
           }
           else 
