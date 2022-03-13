@@ -35,12 +35,12 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : false,
+            mint_market : true,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
             //nft contract       
-            nftMintAddress : "0xB30dAf287933EA6763617ee8614806A0144dA28f",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
+            nftMintAddress : "0xF260B394ec88A037751032A4d072eBa6aB64fA82",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
             nftMintAbi:[
               {
                 "inputs": [],
@@ -1067,17 +1067,18 @@ class NFTForm extends Component {
             nftMintContract : "",
             nftMintName : "",
             nftImageUri : [p683],
+            nftsForsaleCount : 0,
             nftImageName : "--", //["Shelby Peep #0", "Shelby Peep #1", "Shelby Peep #2","Shelby Peep #3", "Shelby Peep #4", "Shelby Peep #5"],
             nftIdx : 0,
             Nfts_owned : "--",
             Nfts_minted : "--",
             uriOwned : [noNft],
-            idOwned : [],
+            idForsale : [],
             imgIdx : 0,
             Nft_Id : "--",
             nftRem : "--",
             nftSizeAvg : "--",
-            nftOwnedIdx : 0,
+            nftForsaleIdx : 0,
             mintedHistory: [
               { nft_id: 1, account: this.props.account, price: 0.02},
               ],
@@ -1108,24 +1109,32 @@ class NFTForm extends Component {
           console.log("mintedID :: ",mintedID);
           window.alert("Mint TX hash: ",mintedID.blockHash);
         }
-        async findOwnedUri(){
+
+        async findForsaleUri(){
+          for (let i = 1 ; i <= this.state.nftsForsaleCount; i++){
+          let forsale = await this.state.nftMintContract.methods.forsale(i).call();
+          let URI = await this.state.nftMintContract.methods.tokenURI(i).call();
+          URI = await axios.get(URI);
+          this.state.idForsale.push(i); 
+          console.log("forsale => ", forsale.nft_id.toNumber())
+          }
           let i = 0
           for (i = 1 ; i <= 999; i++){
             let owner = await this.state.nftMintContract.methods.ownerOf(i).call();
             if (owner == this.props.account)
               {
-              this.setState({nftOwnedIdx : 1});
+              this.setState({nftForsaleIdx : 1});
                 //console.log(i," Owned :: ",owner);
               let URI = await this.state.nftMintContract.methods.tokenURI(i).call();
               URI = await axios.get(URI);
               //console.log(i," uri :: ",URI.data.image);
-              //this.setState({idOwned : i});
-              this.state.idOwned.push(i); 
+              //this.setState({idForsale : i});
+              this.state.idForsale.push(i); 
               //this.setState({uriOwned: URI.data.image});
               this.state.uriOwned.push(URI.data.image); 
               //console.log(i," uriOwned :: ",this.state.uriOwned);
               }
-        }
+          }
           //console.log("Owners scanned");
         }
 
@@ -1144,7 +1153,12 @@ class NFTForm extends Component {
             
             let nftMintName = await nftMintContract.methods.name().call();
             this.setState({nftMintName}); 
-              
+            
+
+            let nftsForsaleCount = await nftMintContract.methods.forsale_Count().call();
+            console.log("nftsForsaleCount :: ",nftsForsaleCount.toNumber());
+            this.setState({nftsForsaleCount: nftsForsaleCount.toNumber()}); 
+            
             this.updateMintData();
             
               //TAG call the keys from .env
@@ -1168,7 +1182,7 @@ class NFTForm extends Component {
           this.setState({ipfsByteCount : response.data.pin_size_total / 1000})
           //now
           this.setState({nftSizeAvg : this.state.ipfsByteCount / 1000});
-          this.findOwnedUri()
+          this.findForsaleUri()
             }
 
         async updateMintData(){
@@ -1219,17 +1233,17 @@ class NFTForm extends Component {
           clearInterval(this.interval);
         }
         incIdx(){
-          if (this.state.nftOwnedIdx < this.state.Nfts_owned)
+          if (this.state.nftForsaleIdx < this.state.nftsForsaleCount)
             {
-            this.setState({nftOwnedIdx :this.state.nftOwnedIdx+1})
-            //console.log("inc :: ", this.state.nftOwnedIdx);
+            this.setState({nftForsaleIdx :this.state.nftForsaleIdx+1})
+            console.log("inc nftForsaleIdx :: ", this.state.nftForsaleIdx);
             }
         }
         decIdx(){
-          if (this.state.nftOwnedIdx > 1)
+          if (this.state.nftForsaleIdx > 1)
             {
-            this.setState({nftOwnedIdx :this.state.nftOwnedIdx-1})
-            //console.log("dec :: ", this.state.nftOwnedIdx);
+            this.setState({nftForsaleIdx :this.state.nftForsaleIdx-1})
+            console.log("dec nftForsaleIdx :: ", this.state.nftForsaleIdx);
             }
         }
 
@@ -1258,7 +1272,7 @@ class NFTForm extends Component {
           alignItems: "center"
             }}>
               <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
-              <NftMarketCard nftOwnedIdx = {this.state.nftOwnedIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftOwnedIdx]} nftImageName = {this.state.idOwned[this.state.nftOwnedIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
+              <NftMarketCard nftForsaleIdx = {this.state.nftForsaleIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftForsaleIdx]} nftImageName = {this.state.idForsale[this.state.nftForsaleIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
               <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
           </div>
           <div>

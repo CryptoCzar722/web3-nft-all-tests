@@ -28,7 +28,7 @@ contract ShelbyNft is ERC721{
     }
             // ID   => price
     //mapping(uint256 => uint256) forsale2; 
-    //forsale(sold)_id {nft_id : "uint256" , price : "uint256"}
+    //forsale_id {nft_id : "uint256" , price : "uint256"}
     mapping(uint256 => sale) public forsale;
     mapping(uint256 => sale) public sold;
     //nft_id {forsale_id : "uint256"}
@@ -97,19 +97,12 @@ contract ShelbyNft is ERC721{
     function nftsMinted() public view returns(uint256){
         return Nft_Id - 1;
     }
-    
-    function ReturnForsaleList() public view returns(uint256[] memory){
-        //return forSalelist;
-    }
-
-    function ReturnForsalePrices() public view returns(uint256[] memory){
-        //return forSaleprices;
-    }
 
     function ListSale(uint256 id, uint256 price) public {
         require(ownerOf(id) == msg.sender, "Only the owner can list");
         require(price > 0 ether, "Must add price");
-        require(forsale[forsaleIdtracker[id]].nft_id == id, "item already listed");
+        //broken
+        //require(forsale[forsaleIdtracker[id]].nft_id == id, "item already listed");
         approve(address(this), id);
 
         sale memory newList;
@@ -121,7 +114,8 @@ contract ShelbyNft is ERC721{
     }
     function RemoveSale(uint256 id) public {
         require(ownerOf(id) == msg.sender, "Only the owner can de-list");
-        require(forsale[forsaleIdtracker[id]].nft_id != id, "item not listed");
+        //assuming broken
+        //require(forsale[forsaleIdtracker[id]].nft_id != id, "item not listed");
         delete forsale[forsaleIdtracker[id]];
         delete forsaleIdtracker[id];
         forsale_Count--;

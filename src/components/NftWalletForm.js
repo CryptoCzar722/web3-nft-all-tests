@@ -38,7 +38,7 @@ class NftWalletForm extends Component {
             ipfsByteCount : "0",
             pinataConnection : false,
             //nft contract       
-            nftMintAddress : "0xB30dAf287933EA6763617ee8614806A0144dA28f",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
+            nftMintAddress : "0xF260B394ec88A037751032A4d072eBa6aB64fA82",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
             nftMintAbi:[
               {
                 "inputs": [],
@@ -1262,7 +1262,7 @@ class NftWalletForm extends Component {
           alignItems: "center"
             }}>
               <button style = {{'width': '50px'}} type="submit" onClick={() => (state.button = "dec")} className="btn btn-primary btn-block btn-lg" > {"<"} </button>
-              <NftWalletCard nftMintContract = {this.state.nftMintContract} nftOwnedIdx = {this.state.nftOwnedIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftOwnedIdx]} nftImageName = {this.state.idOwned[this.state.nftOwnedIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
+              <NftWalletCard nftOwnedIdx = {this.state.nftOwnedIdx} account = {this.props.account} nftImageUri = {this.state.uriOwned[this.state.nftOwnedIdx]} nftImageName = {this.state.idOwned[this.state.nftOwnedIdx-1]}  nftMintAddress = {this.state.nftMintAddress}/>
               <button style = {{'width': '50px'}}  type="submit" onClick={() => (state.button = "inc")} className="btn btn-primary btn-block btn-lg" > {">"} </button>
           </div>
           </form>
