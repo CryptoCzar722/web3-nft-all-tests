@@ -1112,20 +1112,23 @@ class NFTForm extends Component {
         }
 
         async findForsaleUri(){
-          for (let i = 1 ; i <= this.state.nftsForsaleCount; i++){
+          for (let i = 1 ; i <= this.state.nftsForsaleCount + 1; i++){
           let forsale = await this.state.nftMintContract.methods.forsale(i).call();
-          console.log(window.web3.utils.fromWei(forsale.price.toString(),"ether"), "<= forsale")
           let id = forsale.nft_id.toNumber()
+          console.log("[",id, "] forsale",window.web3.utils.fromWei(forsale.price.toString(),"ether"))
           //const price = window.web3.utils.fromWei(forsale.price.toNumber(),'ether');
-          let URI = await this.state.nftMintContract.methods.tokenURI(id).call();
-          URI = await axios.get(URI);
-          this.state.idForsale.push(id);
-          //this.state.listhistory.push();
-          this.state.idForsalePrice.push(window.web3.utils.fromWei(forsale.price.toString())) 
-          this.state.uriForsale.push(URI.data.image); 
-          if (this.state.nftsForsaleCount > 0){
-            this.setState({nftForsaleIdx : 1});
-          }
+          if (id != 0){
+            let URI = await this.state.nftMintContract.methods.tokenURI(id).call();
+            URI = await axios.get(URI);
+            this.state.idForsale.push(id);
+            //this.state.listhistory.push();
+            this.state.idForsalePrice.push(window.web3.utils.fromWei(forsale.price.toString())) 
+            this.state.listhistory.push({"nft_id": id, "price" : window.web3.utils.fromWei(forsale.price.toString())})
+            this.state.uriForsale.push(URI.data.image); 
+            if (this.state.nftsForsaleCount > 0){
+              this.setState({nftForsaleIdx : 1});
+            }
+           }
           }
           /*let i = 0
           for (i = 1 ; i <= 999; i++){
