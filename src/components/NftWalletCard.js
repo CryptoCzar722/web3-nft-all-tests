@@ -14,8 +14,8 @@ class NftWalletCard extends Component {
               test: "",
               bnbPrice : 0.00,
               salePrice : "--",
-              nftMintAddress : "0xF260B394ec88A037751032A4d072eBa6aB64fA82",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
-            nftMintAbi:[
+              nftMintAddress : "0x7cD0DBbb58050D57Ecd197a0c399e0Cb56beBA00",//"0xF260B394ec88A037751032A4d072eBa6aB64fA82",
+            nftMintAbi : [
               {
                 "inputs": [],
                 "stateMutability": "nonpayable",
@@ -102,9 +102,14 @@ class NftWalletCard extends Component {
                     "internalType": "uint256",
                     "name": "id",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerId",
+                    "type": "uint256"
                   }
                 ],
-                "name": "BuyNow",
+                "name": "AcceptOffer",
                 "outputs": [],
                 "stateMutability": "payable",
                 "type": "function"
@@ -125,6 +130,19 @@ class NftWalletCard extends Component {
                 "name": "ListSale",
                 "outputs": [],
                 "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "MakeOffer",
+                "outputs": [],
+                "stateMutability": "payable",
                 "type": "function"
               },
               {
@@ -154,29 +172,21 @@ class NftWalletCard extends Component {
                 "type": "function"
               },
               {
-                "inputs": [],
-                "name": "ReturnForsaleList",
-                "outputs": [
+                "inputs": [
                   {
-                    "internalType": "uint256[]",
-                    "name": "",
-                    "type": "uint256[]"
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerId",
+                    "type": "uint256"
                   }
                 ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [],
-                "name": "ReturnForsalePrices",
-                "outputs": [
-                  {
-                    "internalType": "uint256[]",
-                    "name": "",
-                    "type": "uint256[]"
-                  }
-                ],
-                "stateMutability": "view",
+                "name": "WithDrawMakeOffer",
+                "outputs": [],
+                "stateMutability": "payable",
                 "type": "function"
               },
               {
@@ -235,6 +245,16 @@ class NftWalletCard extends Component {
                     "internalType": "uint256",
                     "name": "price",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "listTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
                   }
                 ],
                 "stateMutability": "view",
@@ -371,6 +391,50 @@ class NftWalletCard extends Component {
                 "inputs": [
                   {
                     "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "offerList",
+                "outputs": [
+                  {
+                    "internalType": "bool",
+                    "name": "returnInProgress",
+                    "type": "bool"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "nft_id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offer",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
                     "name": "tokenId",
                     "type": "uint256"
                   }
@@ -395,13 +459,13 @@ class NftWalletCard extends Component {
                   },
                   {
                     "internalType": "uint256",
-                    "name": "amount",
+                    "name": "value",
                     "type": "uint256"
                   }
                 ],
                 "name": "payOut",
                 "outputs": [],
-                "stateMutability": "payable",
+                "stateMutability": "nonpayable",
                 "type": "function"
               },
               {
@@ -484,14 +548,29 @@ class NftWalletCard extends Component {
                 "name": "sold",
                 "outputs": [
                   {
+                    "internalType": "bool",
+                    "name": "returnInProgress",
+                    "type": "bool"
+                  },
+                  {
                     "internalType": "uint256",
                     "name": "nft_id",
                     "type": "uint256"
                   },
                   {
                     "internalType": "uint256",
-                    "name": "price",
+                    "name": "offer",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
                   }
                 ],
                 "stateMutability": "view",
@@ -612,9 +691,13 @@ class NftWalletCard extends Component {
               }
             ],
             nftMintContract : "",
+            offers: [
+              {id: '0', name: 'NFT_ID : -- Offer : -0 '},
+            ]
             };
         this.postListing = this.postListing.bind(this);
-        this.removeListing = this.removeListing.bind(this); 
+        this.removeListing = this.removeListing.bind(this);
+        this.loadOffers = this.loadOffers.bind(this); 
         }
         componentDidMount() {
           this.loadMintContract();
@@ -636,6 +719,7 @@ class NftWalletCard extends Component {
             const nftMintContract = new bsChain.Contract(this.state.nftMintAbi, this.state.nftMintAddress);
             this.setState({nftMintContract});
             console.log(nftMintContract);
+            console.log("this.props.nftImageName --",this.props.nftImageName);
             }
         async postListing(saleDetails){
           //saleDetails.price = window.web3.utils.toWei(saleDetails.price, "ether");
@@ -645,12 +729,39 @@ class NftWalletCard extends Component {
         async removeListing(saleDetails){
           await this.state.nftMintContract.methods.RemoveSale(saleDetails.nft_id).send({from : this.props.account});
        }
+       async removeListing(saleDetails){
+        await this.state.nftMintContract.methods.RemoveSale(saleDetails.nft_id).send({from : this.props.account});
+     }
+       async loadOffers(){
+         console.log("loading offers");
+          for (let i = 0 ; i < 5 ; i++){
+            let offer  =  await this.state.nftMintContract.methods.offerList(this.props.nftImageName, i).call();
+            if (window.web3.utils.fromWei(offer.offer.toString(),"ether") > 0){
+              console.log("offer price -", offer.offer)
+              let OfferX = 
+                "NFT_ID : " + this.props.nftImageName +
+                "Offer : " + window.web3.utils.fromWei(offer.offer.toString(),"ether");
+              let allOffer = {id: offer.buyer.toString(), name: OfferX}
+              this.state.offers.push(allOffer);
+            }
+            console.log(i,"- offer - ",window.web3.utils.fromWei(offer.offer.toString(),"ether"));
+          }
+       }
 
         //<p className='card-content_details-title'>Smart Peeps</p>
         render() {
           const state = {
             button: ""
           };
+
+          const { offers } = this.state;
+
+          let offersList = offers.length > 0
+            && offers.map((item, i) => {
+            return (
+              <option key={i} value={item.id}>{item.name}</option>
+            )
+          }, this);
           return (
             <form className="mb-3" onSubmit={(event) => {
                 event.preventDefault();
@@ -708,7 +819,7 @@ class NftWalletCard extends Component {
                     </div>
                     <div className="input-group mb-4">
                     <input
-                        type= "number"
+                        type= "number" 
                         value = {this.state.bnbPrice}
                         ref={(input2) => { this.input2 = input2 }}
                         onChange={(event) => {
@@ -722,6 +833,10 @@ class NftWalletCard extends Component {
                     required />
                       <button type="submit" onClick={() => (state.button = "list")}  className="btn btn-primary btn-block btn-lg">List Sale</button>
                       <button type="submit" onClick={() => (state.button = "delist")}  className="btn btn-primary btn-block btn-lg">De-List Sale</button>
+                      <select style = {{'width': '500px'}} onClick={() => this.loadOffers()} >
+                        {offersList}
+                      </select>
+                      <button type="submit" onClick={() => (state.button = "acceptOffer")}  className="btn btn-primary btn-block btn-lg">Accept Offer</button>
                     </div>
             </div>
            </form>

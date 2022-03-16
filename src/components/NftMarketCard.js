@@ -11,8 +11,8 @@ class NftMarketCard extends Component {
               test: "",
               bnbPrice : 0.00,
               salePrice : 0.02,
-              nftMintAddress : "0xF260B394ec88A037751032A4d072eBa6aB64fA82",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
-            nftMintAbi:[
+              nftMintAddress : "0x7cD0DBbb58050D57Ecd197a0c399e0Cb56beBA00",//"0xF260B394ec88A037751032A4d072eBa6aB64fA82",
+            nftMintAbi : [
               {
                 "inputs": [],
                 "stateMutability": "nonpayable",
@@ -99,9 +99,14 @@ class NftMarketCard extends Component {
                     "internalType": "uint256",
                     "name": "id",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerId",
+                    "type": "uint256"
                   }
                 ],
-                "name": "BuyNow",
+                "name": "AcceptOffer",
                 "outputs": [],
                 "stateMutability": "payable",
                 "type": "function"
@@ -122,6 +127,19 @@ class NftMarketCard extends Component {
                 "name": "ListSale",
                 "outputs": [],
                 "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "MakeOffer",
+                "outputs": [],
+                "stateMutability": "payable",
                 "type": "function"
               },
               {
@@ -151,29 +169,21 @@ class NftMarketCard extends Component {
                 "type": "function"
               },
               {
-                "inputs": [],
-                "name": "ReturnForsaleList",
-                "outputs": [
+                "inputs": [
                   {
-                    "internalType": "uint256[]",
-                    "name": "",
-                    "type": "uint256[]"
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerId",
+                    "type": "uint256"
                   }
                 ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [],
-                "name": "ReturnForsalePrices",
-                "outputs": [
-                  {
-                    "internalType": "uint256[]",
-                    "name": "",
-                    "type": "uint256[]"
-                  }
-                ],
-                "stateMutability": "view",
+                "name": "WithDrawMakeOffer",
+                "outputs": [],
+                "stateMutability": "payable",
                 "type": "function"
               },
               {
@@ -232,6 +242,16 @@ class NftMarketCard extends Component {
                     "internalType": "uint256",
                     "name": "price",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "listTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
                   }
                 ],
                 "stateMutability": "view",
@@ -368,6 +388,50 @@ class NftMarketCard extends Component {
                 "inputs": [
                   {
                     "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "offerList",
+                "outputs": [
+                  {
+                    "internalType": "bool",
+                    "name": "returnInProgress",
+                    "type": "bool"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "nft_id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offer",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
                     "name": "tokenId",
                     "type": "uint256"
                   }
@@ -392,13 +456,13 @@ class NftMarketCard extends Component {
                   },
                   {
                     "internalType": "uint256",
-                    "name": "amount",
+                    "name": "value",
                     "type": "uint256"
                   }
                 ],
                 "name": "payOut",
                 "outputs": [],
-                "stateMutability": "payable",
+                "stateMutability": "nonpayable",
                 "type": "function"
               },
               {
@@ -481,14 +545,29 @@ class NftMarketCard extends Component {
                 "name": "sold",
                 "outputs": [
                   {
+                    "internalType": "bool",
+                    "name": "returnInProgress",
+                    "type": "bool"
+                  },
+                  {
                     "internalType": "uint256",
                     "name": "nft_id",
                     "type": "uint256"
                   },
                   {
                     "internalType": "uint256",
-                    "name": "price",
+                    "name": "offer",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
                   }
                 ],
                 "stateMutability": "view",
@@ -612,7 +691,7 @@ class NftMarketCard extends Component {
             };
           //  this.rollDoneCallback1 = this.rollDoneCallback1.bind(this);
         //this.postSale = this.postSale.bind(this);
-        this.BuyNow = this.BuyNow.bind(this);
+        this.MakeOffer = this.MakeOffer.bind(this);
           
         }
         async loadMintContract()
@@ -633,8 +712,8 @@ class NftMarketCard extends Component {
             this.setState({nftsForsaleCount: nftsForsaleCount.toNumber()}); 
             }
 
-        async BuyNow(nft_id, price){
-          await await this.state.nftMintContract.methods.BuyNow(nft_id).send({from : this.props.account, value : price});
+        async MakeOffer(nft_id, price){
+          await await this.state.nftMintContract.methods.MakeOffer(nft_id).send({from : this.props.account, value : price});
         }
 
         componentDidMount() {
@@ -650,7 +729,7 @@ class NftMarketCard extends Component {
         }
 
         next(){}
-        
+
         //<p className='card-content_details-title'>Smart Peeps</p>
         render() {
           return (
@@ -672,7 +751,7 @@ class NftMarketCard extends Component {
                       //set sale in database / smart contract
                       console.log("confirmation :: ",confirmation);
                       let wei = window.web3.utils.toWei(this.state.bnbPrice,"ether");
-                      this.BuyNow(this.props.nftImageName,wei);
+                      this.MakeOffer(this.props.nftImageName,wei);
                       }
                 }
                 else{
@@ -709,8 +788,8 @@ class NftMarketCard extends Component {
                         style ={{overflow: "hidden"}} 
                         placeholder=""
                     required />
-                      <button type="submit" className="btn btn-primary btn-block btn-lg">Buy Now</button>
-                      <button disabled type="submit" className="btn btn-primary btn-block btn-lg">Make Offer</button>
+                      <button type="submit" className="btn btn-primary btn-block btn-lg">Maker Offer</button>
+                      <button disabled type="submit" className="btn btn-primary btn-block btn-lg">Withdraw Offer</button>
                     </div>
             </div>
            </form>

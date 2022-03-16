@@ -38,8 +38,8 @@ class NftWalletForm extends Component {
             ipfsByteCount : "0",
             pinataConnection : false,
             //nft contract       
-            nftMintAddress : "0xF260B394ec88A037751032A4d072eBa6aB64fA82",//"0xFD3413e732D8b7BEb843b4eAd1589e248EC94C22",//"0x0F2DC6a9Bf491c7eB9f36267b0ec6173423a0BDA",//"0x96C742592c5b55C17c86B6a996c91C8A812BB91C",
-            nftMintAbi:[
+            nftMintAddress : "0x7cD0DBbb58050D57Ecd197a0c399e0Cb56beBA00",//"0xF260B394ec88A037751032A4d072eBa6aB64fA82",
+            nftMintAbi : [
               {
                 "inputs": [],
                 "stateMutability": "nonpayable",
@@ -126,9 +126,14 @@ class NftWalletForm extends Component {
                     "internalType": "uint256",
                     "name": "id",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerId",
+                    "type": "uint256"
                   }
                 ],
-                "name": "BuyNow",
+                "name": "AcceptOffer",
                 "outputs": [],
                 "stateMutability": "payable",
                 "type": "function"
@@ -149,6 +154,19 @@ class NftWalletForm extends Component {
                 "name": "ListSale",
                 "outputs": [],
                 "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "MakeOffer",
+                "outputs": [],
+                "stateMutability": "payable",
                 "type": "function"
               },
               {
@@ -178,29 +196,21 @@ class NftWalletForm extends Component {
                 "type": "function"
               },
               {
-                "inputs": [],
-                "name": "ReturnForsaleList",
-                "outputs": [
+                "inputs": [
                   {
-                    "internalType": "uint256[]",
-                    "name": "",
-                    "type": "uint256[]"
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerId",
+                    "type": "uint256"
                   }
                 ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [],
-                "name": "ReturnForsalePrices",
-                "outputs": [
-                  {
-                    "internalType": "uint256[]",
-                    "name": "",
-                    "type": "uint256[]"
-                  }
-                ],
-                "stateMutability": "view",
+                "name": "WithDrawMakeOffer",
+                "outputs": [],
+                "stateMutability": "payable",
                 "type": "function"
               },
               {
@@ -259,6 +269,16 @@ class NftWalletForm extends Component {
                     "internalType": "uint256",
                     "name": "price",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "listTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
                   }
                 ],
                 "stateMutability": "view",
@@ -395,6 +415,50 @@ class NftWalletForm extends Component {
                 "inputs": [
                   {
                     "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "offerList",
+                "outputs": [
+                  {
+                    "internalType": "bool",
+                    "name": "returnInProgress",
+                    "type": "bool"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "nft_id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offer",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
                     "name": "tokenId",
                     "type": "uint256"
                   }
@@ -419,13 +483,13 @@ class NftWalletForm extends Component {
                   },
                   {
                     "internalType": "uint256",
-                    "name": "amount",
+                    "name": "value",
                     "type": "uint256"
                   }
                 ],
                 "name": "payOut",
                 "outputs": [],
-                "stateMutability": "payable",
+                "stateMutability": "nonpayable",
                 "type": "function"
               },
               {
@@ -508,14 +572,29 @@ class NftWalletForm extends Component {
                 "name": "sold",
                 "outputs": [
                   {
+                    "internalType": "bool",
+                    "name": "returnInProgress",
+                    "type": "bool"
+                  },
+                  {
                     "internalType": "uint256",
                     "name": "nft_id",
                     "type": "uint256"
                   },
                   {
                     "internalType": "uint256",
-                    "name": "price",
+                    "name": "offer",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "offerTime",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
                   }
                 ],
                 "stateMutability": "view",
