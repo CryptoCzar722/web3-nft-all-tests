@@ -147,7 +147,8 @@ async handleWallet(){
                 secondTitle='Seconds'
                 theme = 'dark'
                 size='small' // Options (Default: medium): large, medium, small, extra-small.
-                endAt={'2022-3-18 12:00:00'} // Date/Time
+                //add end date to smart contract
+                endAt={'2022-4-18 12:00:00'} // Date/Time
             />
 
         </div>

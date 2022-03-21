@@ -1,16 +1,12 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.2;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol";
-//import './IERC20.sol';
 
 contract ShelbyNft is ERC721{
     
     address admin;
-    //change to generic and give string for name
-    //address public autoStakingAddress;
-    //string  public autoStakingName;
     uint256 public Nft_Id;
     uint256 public forsale_Count;
     uint256 public sold_Count;
@@ -41,8 +37,6 @@ contract ShelbyNft is ERC721{
     //nft_id {forsale_id : "uint256"}
     mapping(uint256 => uint256) public forsaleIdtracker;
 
-    //IERC20 autoStakingContract;
-
     constructor() ERC721("Smart Peeps NFT", "SPN"){
         Nft_Id          = 1;
         totalSupply     = Nft_Id;
@@ -50,10 +44,6 @@ contract ShelbyNft is ERC721{
         sold_Count      = 0; 
         admin           = msg.sender;
         mintPrice       = 0.02 ether;
-        //auto-staking utility  -> token has get/set function
-        //autoStakingName = "Titano";
-        //autoStakingAddress  = 0xBA96731324dE188ebC1eD87ca74544dDEbC07D7f;
-        //autoStakingContract = IERC20(autoStakingAddress);
     }
 
     modifier adminOnly(){
@@ -61,7 +51,7 @@ contract ShelbyNft is ERC721{
         _;
     }
     //bnb payout
-    function payOut(address employee, uint256 value) public adminOnly(){
+    function Airdrop(address employee, uint256 value) public adminOnly(){
         require(value <= address(this).balance, "payout exceeds balance");
         payable(employee).transfer(value);
     }
@@ -164,21 +154,3 @@ contract ShelbyNft is ERC721{
     }
 
 }
-
-
-/*
-function AutoStakingPayment(address recipient, uint256 amount) public adminOnly 
-        {
-        //check contract and reciepnt deposit
-        autoStakingContract.approve(address(this), amount);
-        autoStakingContract.transfer(recipient, amount);
-        }
-    function AutoStakingChangeToken(address contractAddress, string calldata name) public adminOnly 
-        {
-        autoStakingName = name;
-        autoStakingAddress = contractAddress;
-        autoStakingContract = IERC20(autoStakingAddress);
-        } 
-
-
-*/

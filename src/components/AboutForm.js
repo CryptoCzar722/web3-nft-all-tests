@@ -121,6 +121,7 @@ class AboutForm extends Component {
                 console.log("rollTime - ",this.state.rollTime);
                 //this.props.sendTokens(this.state.tokenAmount, this.state.gameAddress)
                 }}>
+               <head><script src="https://unpkg.com/embeddable-nfts/dist/nft-card.min.js"></script> </head>
             <div style={{
               display: "flex",
               justifyContent: "center",
@@ -134,12 +135,14 @@ class AboutForm extends Component {
               alignItems: "center"
             }}>  
             <ul>
-              <li> NFT Mint & Marketplace coming in March 2022</li>
-              <li> SIBM Token presale coming with NFT drop</li>
-              <li> NFT dividends are in developement</li>
-              <li> For now Mint your Own Image and Add it to your MetaMask wallet!</li>
+              <li> NFT Mint & Marketplace coming in April 2022</li>
+              <li> NFT dividends are in developement (auto-staking XX% of mint price)</li>
             </ul> 
             </div>
+            <nft-card
+          contractAddress="0x89c9c2e4ebeff6903223b062458e11e56636f838"
+          tokenId="8962">
+          </nft-card>
             <div style={{
               display: "flex",
               justifyContent: "center",

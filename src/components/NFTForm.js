@@ -35,7 +35,7 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : true,
+            mint_market : false,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
