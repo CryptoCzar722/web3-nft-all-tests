@@ -28,6 +28,7 @@ class NFTForm extends Component {
         constructor(props) {
           super(props);
           this.state = { 
+            chainID : 0,
             account : "",
             seconds : 0,
             imgBuffer : "",
@@ -35,7 +36,7 @@ class NFTForm extends Component {
             revealImg2: false,
             image: sibmLogo,
             imageName: null,
-            mint_market : false,
+            mint_market : true,
             //IPFS
             ipfsByteCount : "0",
             pinataConnection : false,
@@ -1402,7 +1403,18 @@ class NFTForm extends Component {
             {
             const web3 = window.web3
             const bsChain = web3.eth
+            bsChain.getNodeInfo().then(out =>{ 
+              console.log("bsChain.getNodeInfo ::",out);
+            });
 
+            let chainID = 0;
+            bsChain.getChainId().then(out =>{ 
+              chainID = out;
+              this.setState({chainID});
+              console.log("bsChain.getChainId ::",chainID);
+            });
+            //if (this.state.chainID == '97') { //(chainID == 56)
+              console.log("passed");
             const accounts = await bsChain.getAccounts()
             //console.log("accounts :: ", accounts[0]);
             this.setState({account : accounts[0]});
@@ -1420,6 +1432,8 @@ class NFTForm extends Component {
             this.setState({nftsForsaleCount: nftsForsaleCount.toNumber()}); 
             
             this.updateMintData();
+            this.findForsaleUri();
+            //}
             
               //TAG call the keys from .env
             const API_KEY = '0f3f630bec73946940bd';
@@ -1442,7 +1456,6 @@ class NFTForm extends Component {
           this.setState({ipfsByteCount : response.data.pin_size_total / 1000})
           //now
           this.setState({nftSizeAvg : this.state.ipfsByteCount / 1000});
-          this.findForsaleUri()
             }
 
         async updateMintData(){
@@ -1476,7 +1489,9 @@ class NFTForm extends Component {
       
         componentDidMount() {
           this.loadMintContract(); 
-          this.interval = setInterval(() => this.updateMintData(), 3000);
+        //  if (this.state.chainID == '97'){
+            this.interval = setInterval(() => this.updateMintData(), 3000);
+        //  }
 
           pinata.testAuthentication().then((result) => {
             //handle successful authentication here

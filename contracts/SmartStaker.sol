@@ -7,98 +7,113 @@ import './IUniswapV2Factory.sol';
 import './IERC20.sol';
 import './ShelbyNft.sol';
 
-contract AutoStakeNFT {//is ShelbyNft{
+contract SmartStaker is ShelbyNft{
     using SafeMath for uint256;
     using SafeMathInt for int256;
     
     mapping(address => bool) IsAutoStakeEnabled;
-
-    address public pancakeFactoryAddress;
-    address public pancakeRouterAddress;
+    
     address public autoStakingAddress0;
     string  public autoStakingName0;
     address public autoStakingAddress1;
     string  public autoStakingName1;
     address public adminWallet;
+    /////////////////////////////////////
+    address public pancakeFactoryAddress;
+    address public pancakeRouterAddress;
+
     address mintAddress;
-    uint constant deadline = 10 minutes;  //10 days;
     //Monetary % breakdown
-    uint constant TREASURY_FEE    = 200;
-    uint constant MARKETING_FEE   = 100;
-    uint constant AUTO_STAKED_FEE = 500;
-    uint constant PRICE_FEE       = 200;
+    uint constant TREASURY_FEE           = 200;
+    uint constant MARKETING_FEE          = 100;
+    //titano/libero and other auto stakers can have up to 20% fee
+    uint constant PRICE_FEE              = 200;
+    uint constant AUTO_STAKED_ALLOCATION = 500;
     uint256 constant feeDenominator = 1000;
 
     IERC20 autoStakingContract0;
     IERC20 autoStakingContract1;
     IUniswapV2Router02 public pancakeRouter;
-    ShelbyNft autoNft;
     //IUniswapV2Factory public pancakeFactory;
     constructor() {
         adminWallet = msg.sender;
-       // auto-staking utility  -> token has get/set function
-        mintAddress = 0x7cD0DBbb58050D57Ecd197a0c399e0Cb56beBA00;
-        autoStakingName0 = "Stake insured NFT"; //"Titano";
-        //Stake test
-        autoStakingAddress0  = 0x6E2B7421F1eaAFB590caf0A4fEa2E575f67cd4a3; //0xBA96731324dE188ebC1eD87ca74544dDEbC07D7f;
-        //Stable test
-        autoStakingAddress1 = 0x35851AA5aE1cC5c9E9B59727DECf8d57DFB71a06;
-        //pair address
-        //0x898dC09BeE42aa81169c2866eCb5d938230946cc
+        ///////////////////////////////////////////////////////////////////
+        //auto-staking utility  -> token has get/set function
+        autoStakingName0 = "Titano";
+        autoStakingAddress0  = 0xBA96731324dE188ebC1eD87ca74544dDEbC07D7f;
         autoStakingContract0 = IERC20(autoStakingAddress0);
+        ///////////////////////////////////////////////////////////////////
+        autoStakingName1 = "Libero";
+        autoStakingAddress1  = 0x0DFCb45EAE071B3b846E220560Bbcdd958414d78;
         autoStakingContract1 = IERC20(autoStakingAddress1);
-        //autoStakingName1 = "Libero";
-        //autoStakingAddress1  = ;//0x0DFCb45EAE071B3b846E220560Bbcdd958414d78;
-        //autoStakingContract1 = IERC20(autoStakingAddress1);
         ///////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////
         //mainnet
-        //pancakeFactoryAddress = 0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73;
-        //pancakeRouterAddress  = 0x10ED43C718714eb63d5aA57B78B54704E256024E; 
+        pancakeFactoryAddress = 0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73;
+        pancakeRouterAddress  = 0x10ED43C718714eb63d5aA57B78B54704E256024E; 
         //testnet
-        pancakeFactoryAddress = 0x6725F303b657a9451d8BA641348b6761A6CC7a17;  
-        pancakeRouterAddress = 0xD99D1c33F9fC3444f8101754aBC46c52416550D1;
+        //pancakeFactoryAddress = 0x6725F303b657a9451d8BA641348b6761A6CC7a17;  
+        //pancakeRouterAddress = 0xD99D1c33F9fC3444f8101754aBC46c52416550D1;
         pancakeRouter = IUniswapV2Router02(pancakeRouterAddress); 
-        autoNft = ShelbyNft(mintAddress); 
     }
 
     function SetupAutoStake()internal{
-        require(autoNft.balanceOf(msg.sender) > 0, "You are not in the Group");
+        require(balanceOf(msg.sender) > 0, "You are not in the Group");
         IsAutoStakeEnabled[msg.sender] = true;
     }
     
-
-   /* function mintNft() override public payable returns (uint256){
+   function mintNft(uint256 deadline) override public payable returns (uint256){
+        require(block.timestamp <= deadline, "Expired");
         require(msg.value >=  mintPrice, "Not enough BNB. Minting Costs 0.02 BNB");
         require(Nft_Id < 1001, "MINT SOLD OUT");
         totalSupply = Nft_Id;
         _mint(msg.sender,Nft_Id++);
         
-        uint256 amountInX = msg.value * AUTO_STAKED_FEE / feeDenominator;
-        uint256 amountIn0 = amountInX.div(2);
-        
+        /*
+        #	Name	        Type	    Data
+        0	amountOutMin	uint256	    16531380036092891379574 (wei)
+        1	path	        address[]	0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c      WETH
+                                        0xBA96731324dE188ebC1eD87ca74544dDEbC07D7f      TITANO
+        2	to	            address	    addres(this)                                    Contract
+        3	deadline	    uint256	    1640617736
+        //////////////////////////////////////////////////////////////////////////////////////////
+        0	amountOutMin	uint256	    16531380036092891379574 (wei)
+        1	path	        address[]	0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c      WETH
+                                        0x0dfcb45eae071b3b846e220560bbcdd958414d78      LIBERO
+        2	to	            address	    addres(this)                                    Contract
+        3	deadline	    uint256	    1640617736
+        */
+        uint256 amountInX = msg.value.mul(AUTO_STAKED_ALLOCATION).div(feeDenominator);
+        uint256 amountInSwap = amountInX.div(2);
+        ///////////////////////////////////////////////////////////////////////////////
         address[] memory path0;
         path0[0] = pancakeRouter.WETH();
         path0[1] = autoStakingAddress0;
-        uint256 amountOutMin0;
-        pancakeRouter.swapExactETHForTokens(amountOutMin0, path0, address(this), deadline);
-        //pancakeRouter.swapExactETHForTokensSupportingFeeOnTransferTokens(amountOutMin0, path0, address(this), deadline);
-
+        ///////////////////////////////////////////////////////////////////////////////
+        address[] memory path1;
+        path1[0] = pancakeRouter.WETH();
+        path1[1] = autoStakingAddress1;
+        ///////////////////////////////////////////////////////////////////////////////
+        uint256 [] memory amountOutMin0 = pancakeRouter.getAmountsOut(amountInSwap,path0);  
+        uint256 [] memory amountOutMin1 = pancakeRouter.getAmountsOut(amountInSwap,path1);
+        ///////////////////////////////////////////////////////////////////////////////
+        pancakeRouter.swapExactETHForTokens{value: amountInSwap}(amountOutMin0[0], path0, address(this), deadline);
+        pancakeRouter.swapExactETHForTokens{value: amountInSwap}(amountOutMin1[0], path1, address(this), deadline);
         return Nft_Id;
-    }*/
+    }
 
-    /*function AutoStakingPayment(address recipient, uint256 amount) public 
+    function AutoStakingPayment(address recipient, uint256 amount) public 
         {
         //require(msg.sender== adminWallet, "Only admin can autopay");
         //check contract and reciepnt deposit
         autoStakingContract0.approve(address(this), amount);
         autoStakingContract0.transfer(recipient, amount);
-        }*/
+        }
     
     function AutoStakingClaim() public
         {
-        require(autoNft.balanceOf(msg.sender) > 0, "Only admin can autopay");
-        uint256 payout = autoStakingContract0.balanceOf(address(this))/ autoNft.nftsMinted();
+        require(balanceOf(msg.sender) > 0, "Only admin can autopay");
+        uint256 payout = autoStakingContract0.balanceOf(address(this)) / nftsMinted();
         autoStakingContract0.approve(address(this), payout);
         autoStakingContract0.transfer(msg.sender, payout);
         }

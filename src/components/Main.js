@@ -32,7 +32,7 @@ class Main extends Component {
     let content
     //change buy sell to limit and market order pages.
     /*if(this.state.currentForm === 'swap') {
-      //content = <SwapForm
+      content = <SwapForm
        updateBasePrice = {this.props.updateBaseTokenPrice}
         swapPairPrice = {this.props.swapPairPrice}
         setSwapPair= {this.props.setSwapPair}    
@@ -62,7 +62,7 @@ class Main extends Component {
         ltcBalance={this.props.ltcBalance}
         sibmBalance={this.props.sibmBalance}
 
-      ///>
+      />
     } */
     /*else if (this.state.currentForm === 'send') {
       content = <SendForm
@@ -306,7 +306,7 @@ class Main extends Component {
     return (
       <div id="content" className="mt-3">
     <div className="d-flex justify-content-between mb-3">
-        <a>  <button
+          <a><button
               className="btn btn-outline-dark"
               onClick={(event) => {
                 this.setState({ currentForm: 'nft' })
@@ -384,14 +384,6 @@ export default Main;
               }}
             >
             Dashboard
-          </button>
-          <button
-              className="btn btn-outline-dark"
-              onClick={(event) => {
-                this.setState({ currentForm: 'swap' })
-              }}
-            >
-            Swap
           </button>
 
           <button

@@ -66,6 +66,25 @@ stats = {[
 ]}
 />
 
+export const Founder2 = () => <UserCard
+float
+href =''
+header = {sibmLogo}
+avatar = {drago}    
+name = 'Joseph Kasneci'
+positionName = 'Digital intern'
+stats = {[
+  {
+    name: 'Insurance',
+    value: "Field"
+  },
+  {
+      name: 'Years',
+      value: '3'
+  }
+]}
+/>
+
 //
 //<RoadmapProgress milestones={milestones} />
 
@@ -136,7 +155,7 @@ class AboutForm extends Component {
             }}>  
             <ul>
               <li> NFT Mint & Marketplace coming in April 2022</li>
-              <li> NFT dividends are in developement (auto-staking XX% of mint price)</li>
+              <li> NFT dividends are in developement (auto-staking 50% of mint price)</li>
             </ul> 
             </div>
             <nft-card
@@ -149,6 +168,7 @@ class AboutForm extends Component {
               alignItems: "left"
             }}>
             <Founder/>
+            <Founder2/>
             </div>
            </form>
           );

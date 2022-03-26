@@ -401,8 +401,9 @@ class App extends Component {
       //let btcbBalance = await btcbContract.methods.balanceOf(this.state.account).call()
       //let daiBalance = await daiContract.methods.balanceOf(this.state.account).call()
       //tag logout was breaking this page
-      let busdBalance = this.state.account == "" ? 0 : await busdContract.methods.balanceOf(this.state.account).call()
-      let sibmBalance = this.state.account == "" ? 0 : await sibmContract.methods.balanceOf(this.state.account).call()
+      //TAG 3-20
+      //let busdBalance = this.state.account == "" ? 0 : await busdContract.methods.balanceOf(this.state.account).call()
+      //let sibmBalance = this.state.account == "" ? 0 : await sibmContract.methods.balanceOf(this.state.account).call()
       //console.log("busdBalance", busdBalance);
       //console.log("sibmBalance", sibmBalance);
       //let adaBalance = await adaContract.methods.balanceOf(this.state.account).call()
@@ -416,14 +417,17 @@ class App extends Component {
       //this.setState({ ethBalance : window.web3.utils.fromWei(ethBalance.toString(), 'ether')})
       //this.setState({ btcbBalance : window.web3.utils.fromWei(btcbBalance.toString(), 'ether')})
       //this.setState({ daiBalance : window.web3.utils.fromWei(daiBalance.toString(), 'ether')})
-      this.setState({ busdBalance : window.web3.utils.fromWei(busdBalance.toString(), 'ether')})
-      this.setState({ sibmBalance : window.web3.utils.fromWei(sibmBalance.toString(),'ether')})
+      
+      //TAG 3-20
+      //this.setState({ busdBalance : window.web3.utils.fromWei(busdBalance.toString(), 'ether')})
+      //this.setState({ sibmBalance : window.web3.utils.fromWei(sibmBalance.toString(),'ether')})
       //console.log("this.state.busdBalance", this.state.busdBalance);
       //console.log("this.state.sibmBalance", this.state.sibmBalance);
-      console.log("balances loaded");
-      console.log("sibmBalance :: ", sibmBalance.toString());
-      console.log("busdBalance :: ", busdBalance.toString());
-      console.log("balances loaded");
+      //TAG 3-20
+      //console.log("balances loaded");
+      //console.log("sibmBalance :: ", sibmBalance.toString());
+      //console.log("busdBalance :: ", busdBalance.toString());
+      //console.log("balances loaded");
      // }
   }
 

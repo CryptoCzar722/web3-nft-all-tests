@@ -9,8 +9,10 @@ class NftMarketCard extends Component {
           super(props);
           this.state = { 
               test: "",
+              offers :[],
               bnbPrice : 0.00,
               salePrice : 0.02,
+              account : "",
               nftMintAddress : "0x7cD0DBbb58050D57Ecd197a0c399e0Cb56beBA00",//"0xF260B394ec88A037751032A4d072eBa6aB64fA82",
             nftMintAbi : [
               {
@@ -694,6 +696,25 @@ class NftMarketCard extends Component {
         this.MakeOffer = this.MakeOffer.bind(this);
           
         }
+        async loadOffers(){
+          console.log("loading offers -> ",this.props.nftImageName);
+           for (let i = 0 ; i < 5 ; i++){
+             let offer  =  await this.state.nftMintContract.methods.offerList(this.props.nftImageName, i).call();
+             if (window.web3.utils.fromWei(offer.offer.toString(),"ether") > 0){
+               //console.log("offer price -", offer.offer)
+               let OfferX = 
+                 "NFT_ID : " + this.props.nftImageName +
+                 "Offer : " + window.web3.utils.fromWei(offer.offer.toString(),"ether");
+               let allOffer = {id: offer.buyer.toString(), name: OfferX}
+               //console.log(i,"- offer - ",window.web3.utils.fromWei(offer.offer.toString(),"ether"));
+               if (offer.buyer == this.state.account)
+                {
+                console.log("allOffer :",allOffer);
+                this.state.offers.push(allOffer);
+                }
+              }
+           }
+        }
         async loadMintContract()
             {
             const web3 = window.web3
@@ -709,15 +730,19 @@ class NftMarketCard extends Component {
 
             let nftsForsaleCount = await nftMintContract.methods.forsale_Count().call();
             console.log("nftsForsaleCount :: ",nftsForsaleCount.toNumber());
-            this.setState({nftsForsaleCount: nftsForsaleCount.toNumber()}); 
+            this.setState({nftsForsaleCount: nftsForsaleCount.toNumber()});
             }
 
         async MakeOffer(nft_id, price){
           await await this.state.nftMintContract.methods.MakeOffer(nft_id).send({from : this.props.account, value : price});
         }
 
+        async RemoveOffer(nft_id,offer_id){
+          await await this.state.nftMintContract.methods.WithdrawMakeOffer(nft_id, offer_id).send({from : this.props.account});
+        }
+
         componentDidMount() {
-          this.loadMintContract()
+          this.loadMintContract();
             //this.mintButton = this.mintButton.bind(this);
         }
         
@@ -732,9 +757,13 @@ class NftMarketCard extends Component {
 
         //<p className='card-content_details-title'>Smart Peeps</p>
         render() {
+          const state = {
+            button: ""
+          };
           return (
             <form className="mb-3" onSubmit={(event) => {
                 event.preventDefault();
+                if (state.button == "mk"){
                 let offerDetails = {
                     account : this.props.account,
                     nft_id : this.props.nftImageName,
@@ -757,6 +786,13 @@ class NftMarketCard extends Component {
                 else{
                 console.log("con fail :: ",confirmation);
                 }
+              }
+              else if (state.button == "rm"){
+                //this.RemoveOffer(this.props.nftImageName);
+                this.loadOffers();
+                console.log("Removing offer");
+              }
+              state.button = 0;
                 }}>
             <div className='card'>
                 <div className='card-content'>
@@ -770,8 +806,11 @@ class NftMarketCard extends Component {
                     </div>
                     <div>
                     <label className="float-left"><b>BNB Sale Price:</b></label>
+                    <span className="float-left text-muted">
+                        Price: {this.props.nftImagePrice} BNB
+                    </span>
                     <span className="float-right text-muted">
-                        BNB: {this.props.nftImagePrice}
+                        Your offer:  BNB
                     </span>
                     </div>
                     <div className="input-group mb-4">
@@ -788,8 +827,8 @@ class NftMarketCard extends Component {
                         style ={{overflow: "hidden"}} 
                         placeholder=""
                     required />
-                      <button type="submit" className="btn btn-primary btn-block btn-lg">Maker Offer</button>
-                      <button disabled type="submit" className="btn btn-primary btn-block btn-lg">Withdraw Offer</button>
+                      <button type="submit" onClick={() => (state.button = "mk")} className="btn btn-primary btn-block btn-lg">Maker Offer</button>
+                      <button type="submit" onClick={() => (state.button = "rm")} className="btn btn-primary btn-block btn-lg">Withdraw Offer</button>
                     </div>
             </div>
            </form>
