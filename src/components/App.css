@@ -13,6 +13,22 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.color-nav{
+  background-color :#941ff3;
+}
+.color-but{
+  background-color :#ae77db;
+  border-radius: 50px;
+}
+
+.hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:#111110;
+  height: 1px;
+}
 
 #whitelist {
   width: 180px;
@@ -110,6 +126,14 @@ table, th, td {
       box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.7);
       padding: 1em;
       width: 275px;
+    }
+    .cardWide {
+      background-color: #941ff3;
+      border-radius: 12px;
+      box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.7);
+      padding: 1em;
+      width: 420px;
+      margin-bottom: 20px;
     }
     
     .card-content {

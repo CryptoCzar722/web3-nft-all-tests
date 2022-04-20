@@ -23,7 +23,7 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentForm: 'nft'
+      currentForm: 'compound'
     }
   }
 
@@ -135,7 +135,7 @@ class Main extends Component {
       //account={this.props.account} 
       />*/ 
      }
-     /*else if(this.state.currentForm === 'presale') {
+     else if(this.state.currentForm === 'compound') {
       content = <InvestorForm
         account={this.props.account}
        updateBasePrice = {this.props.updateBaseTokenPrice}
@@ -145,6 +145,7 @@ class Main extends Component {
         //buyTokens={this.props.buyTokens}
         //ethPrice = {this.props.ethPrice}
         gasPrice = {this.props.gasPrice}
+        bnbBalance={this.props.bnbBalance}
 
         //
         //PancakeArbPrice ={this.props.PancakeArbPrice}
@@ -164,7 +165,7 @@ class Main extends Component {
         sibmAddress={this.props.sibmAddress}
 
       />
-    }*/
+    }
     else if (this.state.currentForm === 'nft') {
       content = <NFTForm
        account={this.props.account}
@@ -301,6 +302,15 @@ class Main extends Component {
               >
               Presale
     </button>
+
+    <a>  <button
+              className="btn btn-outline-dark"
+              onClick={(event) => {
+                this.setState({ currentForm: 'wallet' })
+              }}
+            >
+            Wallet
+          </button></a>
     */
     
     return (
@@ -314,14 +324,14 @@ class Main extends Component {
             >
             NFT's
           </button></a>
-          <a>  <button
-              className="btn btn-outline-dark"
-              onClick={(event) => {
-                this.setState({ currentForm: 'wallet' })
-              }}
-            >
-            Wallet
-          </button></a>
+          <button
+                className="btn btn-outline-dark"
+                onClick={(event) => {
+                  this.setState({ currentForm: 'compound' })
+                }}
+              >
+              Compounder
+          </button>
           <a> <button
                 className= "btn btn-outline-dark" //"btn btn-outline-dark"
                 onClick={(event) => {
@@ -331,6 +341,7 @@ class Main extends Component {
               >
               About
           </button></a>
+          
           </div>
         <div className="mb-4" >
 

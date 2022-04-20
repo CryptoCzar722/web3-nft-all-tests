@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import ProgressBar from "@ramonak/react-progress-bar";
 //import { AwesomeButtonProgress } from 'react-awesome-button';
 //import AwesomeButtonProgress from 'react-awesome-button/src/components/AwesomeButtonProgress';
-import "./Swap.css"
+//import "./Swap.css"
 //import AwesomeButtonStyles from 'react-awesome-button/src/styles/styles.css'
  
 //TAG FIRST $10 investment
@@ -541,58 +541,21 @@ class InvestorForm extends Component {
           event.preventDefault()
           this.executeInvestment();
         }}>
+        
+        <div className='cardWide'>
+                <div className='card-content'>
+
          <div style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center"
           }}>
-            <h5>{this.state.contractName}</h5>
-        </div>
-        <table>
-               <thead>
-                <tr>
-                  <th width="10" >BUSD pending</th>
-                  <th>BUSD Approved </th>
-                  <th>SIBM Pending </th>
-                  <th>SIBM Received </th>
-                </tr>
-               </thead>
-            <tbody>
-            <tr>
-              <td><font color={"red"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)  > 0 ? 0.00 : parseFloat(this.state.deposited).toFixed(2)} </font></td>   
-              <td> <font color={"green"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)} </font> </td>
-              <td><font color={"red"}> {parseFloat(window.web3.utils.fromWei(this.state.pending)).toFixed(2)} </font> </td>
-              <td> <font color={"green"}> {parseFloat(window.web3.utils.fromWei(this.state.received)).toFixed(2)} </font></td>
-              </tr>
-            </tbody>
-            </table>  
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-          }}>
-          <select name="Exchanges" id="Exchanges" ref={(select) => { this.select = select }} onChange ={ (event) => {
-                  if (this.select.value === "PCS"){
-                    //this.setState({imgsrc : ethLogo})
-                    //this.setState({tokenCount : window.web3.utils.fromWei(this.props.ethBalance, 'Ether')})
-                  }
-                  else if (this.select.value  === "SIBM"){
-                    //this.setState({imgsrc : tokenLogo});
-                    //this.setState({tokenCount : window.web3.utils.fromWei(this.props.tokenBalance, 'Ether')})
-                  }
-
-              }}>
-                <option value="SIBM">SIBM Presale</option>
-                
-                
-                
-              </select>
-          </div>     
+            <h1>SS BNB Compounder {/*this.state.contractName*/}</h1>
+        </div>   
+        <hr className='hr'/>
         <div>
-          <label className="float-left"><b>Token0</b></label>
-          <span className="float-right text-muted">
-            Balance: {parseFloat(this.props.busdBalance).toFixed(2)}
-          </span>
+          <span><h2>Contract :{} 0 BNB </h2></span>
+          <span><h2>Wallet :{parseFloat(this.props.bnbBalance).toFixed(2)} BNB </h2></span>
         </div>
         <div className="input-group mb-4">
           <input
@@ -612,40 +575,52 @@ class InvestorForm extends Component {
               <img src={this.state.token0Img} height='34' alt=""/>
               &nbsp;&nbsp;&nbsp; 
               <select name="sellToken" id="sellToken" ref={(select3) => { this.select3 = select3 }}>
-              <option value="BUSD">BUSD</option>
+                <option value="BNB">BNB</option>
+                <option value="BUSD">BUSD</option>
             </select>
             </div>
           </div>
         </div>
-        <div>
-          <label className="float-left"><b>Token1</b></label>
-          <span className="float-right text-muted">
-            Balance: {parseFloat(this.props.sibmBalance).toFixed(2)}
-          </span>
-        </div>
-        <div className="input-group mb-2">
-          <input type="text" className="form-control form-control-lg" placeholder="0"
-            value= {this.state.output != '0'  ? this.state.output / this.state.tokenPrice : 0}
-            disabled
-          />
-          <div className="input-group-append">
-            <div className="input-group-text">
-              <img src={this.state.token1Img} height='34' alt=""/>
-              &nbsp;
-              <select name="buyToken" id="buyToken" ref={(select4) => { this.select4 = select4 }}>
-                <option value="SIBM">SIBM</option>
-            </select>
-            </div>
-          </div>
-        </div>        
-        <div className="mb-5">
-          <span className="float-left text-muted">Exchange Rate</span>
-          <span className="float-right text-muted">1 token0 = { parseFloat(1 / parseFloat(this.state.tokenPrice).toFixed(10)).toFixed(2)} token1 </span>
-        </div>
-        
-        <button type="submit" className="btn btn-primary btn-block btn-lg">Request Presale Tokens </button> 
+        <button type="submit" className="btn color-but btn-block btn-lg"> Start Compounding!</button> 
         <ProgressBar completed={0} maxCompleted={100}/>
-        <div style={{
+        <h1>Your Rewards :{} 0 bnb </h1>
+        <button type="submit" className="btn color-but btn-block btn-lg"> Claim</button> 
+        <button type="submit" className="btn color-but btn-block btn-lg"> Re-Compound</button> 
+    </div>
+</div>  
+
+          <div className='cardWide'>
+                <div className='card-content'>
+                <h2>Breakdown : </h2>
+                <hr
+                    className='hr'
+                />
+                <h5>Daily Return    7%</h5>
+                <h5>Dev Fee     2,555%</h5>
+                <h5>Dev Fee         3%</h5>
+                </div>
+          </div>  
+
+      </form>
+
+
+
+    );
+  }
+}
+
+export default InvestorForm;
+
+
+/*
+ <span className="float-right text-muted">
+            Balance: {parseFloat(this.props.busdBalance).toFixed(2)}
+          </span>
+
+
+
+
+<div style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center"
@@ -665,14 +640,31 @@ class InvestorForm extends Component {
               <td><font color={"green"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)} </font></td>   
               </tr>
             </tbody>
+            </table> 
+
+
+<table>
+               <thead>
+                <tr>
+                  <th width="10" >BUSD pending</th>
+                  <th>BUSD Approved </th>
+                  <th>SIBM Pending </th>
+                  <th>SIBM Received </th>
+                </tr>
+               </thead>
+            <tbody>
+            <tr>
+              <td><font color={"red"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)  > 0 ? 0.00 : parseFloat(this.state.deposited).toFixed(2)} </font></td>   
+              <td> <font color={"green"}> ${parseFloat(window.web3.utils.fromWei(this.state.approved)).toFixed(2)} </font> </td>
+              <td><font color={"red"}> {parseFloat(window.web3.utils.fromWei(this.state.pending)).toFixed(2)} </font> </td>
+              <td> <font color={"green"}> {parseFloat(window.web3.utils.fromWei(this.state.received)).toFixed(2)} </font></td>
+              </tr>
+            </tbody>
             </table>  
-            
-      </form>
 
 
 
-    );
-  }
-}
 
-export default InvestorForm;
+
+
+*/

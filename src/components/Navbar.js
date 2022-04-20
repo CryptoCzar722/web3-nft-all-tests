@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react'
-import FlipCountdown from '@rumess/react-flip-countdown';
+//import FlipCountdown from '@rumess/react-flip-countdown';
 import './App.css'
 
 import BackendService from "../Services/backend-service";
@@ -52,6 +52,27 @@ class Navbar extends Component {
 // <button className="btn btn-primary btn-block centered" style ={{width : '150px', height : '35px'}} type="button" onClick = {this.props.connectWallet} >{this.props.connectionString}</button>
 // <button onClick = {() => (state.button = "wllt")}  type="submit" value = "wllt" id = "connect-wallet">{ !this.props.account? 'Connect Wallet' : this.props.account }</button>
 //
+/*
+<div style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  alignItems: "right"
+                }}>
+          <FlipCountdown
+                hideYear
+                //hideMonth
+                monthTitle='Months'
+                dayTitle='Days'
+                hourTitle='Hours'
+                minuteTitle='Minutes'
+                secondTitle='Seconds'
+                theme = 'dark'
+                size='small' // Options (Default: medium): large, medium, small, extra-small.
+                //add end date to smart contract
+                endAt={'2022-4-28 12:00:00'} // Date/Time
+            />
+        </div>
+*/
 
 async handleWallet(){
   if (this.props.account)
@@ -121,7 +142,7 @@ async handleWallet(){
           }*/
   render() {
     return (
-      <nav className="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow" onSubmit={event =>
+      <nav className="navbar navbar-dark fixed-top flex-md-nowrap p-2 shadow color-nav" style = {{color : "#941ff3"}} onSubmit={event =>
         event.preventDefault()
         }>
         <a
@@ -130,28 +151,8 @@ async handleWallet(){
           target="_blank"
           rel="noopener noreferrer"
         >
-         Shelby Peeps NFT Mint        
+        Smart Staker Compounder        
         </a>
-        <div style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  alignItems: "right"
-                }}>
-          <FlipCountdown
-                hideYear
-                //hideMonth
-                monthTitle='Months'
-                dayTitle='Days'
-                hourTitle='Hours'
-                minuteTitle='Minutes'
-                secondTitle='Seconds'
-                theme = 'dark'
-                size='small' // Options (Default: medium): large, medium, small, extra-small.
-                //add end date to smart contract
-                endAt={'2022-4-18 12:00:00'} // Date/Time
-            />
-
-        </div>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
             { /*this.state.account
