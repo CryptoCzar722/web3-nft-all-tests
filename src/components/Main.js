@@ -127,15 +127,15 @@ class Main extends Component {
     // }
     // else 
      
-     if (this.state.currentForm === 'about') {
+     /*if (this.state.currentForm === 'about') {
       content = 
        <AboutForm/>
       /*<BlackjackForm
       //bnbBalance={this.props.bnbBalance}
       //account={this.props.account} 
       />*/ 
-     }
-     else if(this.state.currentForm === 'compound') {
+     //}
+      if(this.state.currentForm === 'compound') {
       content = <InvestorForm
         account={this.props.account}
        updateBasePrice = {this.props.updateBaseTokenPrice}
@@ -166,7 +166,7 @@ class Main extends Component {
 
       />
     }
-    else if (this.state.currentForm === 'nft') {
+   /* else if (this.state.currentForm === 'nft') {
       content = <NFTForm
        account={this.props.account}
        />
@@ -175,7 +175,7 @@ class Main extends Component {
       content = <NftWalletForm
        account={this.props.account}
        />
-     }
+     }*/
     /* else if (this.state.currentForm === 'bet') {
       content = <BetForm
        account={this.props.account}
@@ -311,11 +311,8 @@ class Main extends Component {
             >
             Wallet
           </button></a>
-    */
-    
-    return (
-      <div id="content" className="mt-3">
-    <div className="d-flex justify-content-between mb-3">
+
+          <div className="d-flex justify-content-between mb-3">
           <a><button
               className="btn btn-outline-dark"
               onClick={(event) => {
@@ -341,16 +338,16 @@ class Main extends Component {
               >
               About
           </button></a>
-          
           </div>
+    */
+    
+    return (
+      <div id="content" className="mt-3">
         <div className="mb-4" >
-
           <div className="card-body">
             {content}
           </div>
-
         </div>
-
       </div>
     );
   }
