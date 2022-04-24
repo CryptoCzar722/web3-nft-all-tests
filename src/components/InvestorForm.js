@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 //import ProgressButton from 'react-progress-button'
 import ProgressBar from "@ramonak/react-progress-bar";
+import FlipCountdown from '@rumess/react-flip-countdown';
+
 //import { AwesomeButtonProgress } from 'react-awesome-button';
 //import AwesomeButtonProgress from 'react-awesome-button/src/components/AwesomeButtonProgress';
 //import "./Swap.css"
@@ -465,46 +467,17 @@ class InvestorForm extends Component {
     const accounts = await bsChain.getAccounts()
     //console.log("accounts :: ", accounts[0]);
     this.setState({account : accounts[0]});
+    //console.log("accounts :: ", this.state.account);
 
     this.state.presaleAddress = web3.utils.toChecksumAddress(this.state.presaleAddress);
-    const PresaleContract = new bsChain.Contract(this.state.ps_ABI, this.state.presaleAddress);
-    this.setState({PresaleContract});
-    
-    let uinsuranceContract = await PresaleContract.methods.insuranceContracts(this.state.account).call();
-    this.setState({uinsuranceContract});
-
-    this.state.busdAddress = web3.utils.toChecksumAddress(this.state.busdAddress);
-    const BusdContract = new bsChain.Contract(this.state.busd_ABI, this.state.busdAddress);
-    this.setState({BusdContract});
-
-    let approved = await PresaleContract.methods.confirmedOrders(this.state.account).call();
-    this.setState({approved : approved.toString()});
-
-    let deposited = await BusdContract.methods.balanceOf(uinsuranceContract).call();
-    this.setState({deposited : window.web3.utils.fromWei(deposited.toString(), 'ether')});
-
-    let pending = await PresaleContract.methods.pendingTokenPayment(this.state.account).call();
-    this.setState({pending : pending.toString()});
-
-    let received = await PresaleContract.methods.TokenBalance().call();
-    this.setState({received : received.toString()});
-    
-    //console.log("accounts :: ", this.state.account);
-    
-
-    let contractName = await PresaleContract.methods.name().call();
-    this.setState({contractName});  
-    
-    let tokenPrice = await PresaleContract.methods.orderBook().call();
-    
+    //const PresaleContract = new bsChain.Contract(this.state.ps_ABI, this.state.presaleAddress);
+    //this.setState({PresaleContract});
+    //let contractName = await PresaleContract.methods.name().call();
+    //this.setState({contractName});  
+    //let tokenPrice = await PresaleContract.methods.orderBook().call();
     //let insuranceContract = await PresaleContract.methods.orderBook.insuranceContract(this.state.account).call();
     //console.log("insuranceContract ",insuranceContract);
-
-    let price = tokenPrice.price;
-    let supply = tokenPrice.TokenSupply;
-    this.setState({tokenPrice : window.web3.utils.fromWei(price.toString(),'ether')}); 
     //console.log("tokenPrice ",this.state.tokenPrice);
-    console.log("token supply ",supply);
     } 
 
   async executeInvestment(){
@@ -541,65 +514,85 @@ class InvestorForm extends Component {
           event.preventDefault()
           this.executeInvestment();
         }}>
-        
         <div className='cardWide'>
-                <div className='card-content'>
-
-         <div style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-          }}>
-            <h1>SS BNB Compounder {/*this.state.contractName*/}</h1>
-        </div>   
+                <div className='card-content'>   
+                <div style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                  }}>
+                    <h1>🆂🆂 🅱🅽🅱 🅲🅾🅼🅿🅾🆄🅽🅳🅴🆁 {/*this.state.contractName*/}</h1>
+                </div>
         <hr className='hr'/>
-        <div>
-          <span><h2>Contract :{} 0 BNB </h2></span>
-          <hr className='hr'/>
-          <span><h2>Wallet :{parseFloat(this.props.bnbBalance).toFixed(2)} BNB </h2></span>
-        </div>
-        <div className="input-group mb-4">
-          <input
-            type="text"
-            onChange={(event) => {
-              const tokenAmount = this.input.value.toString()
-              this.setState({
-                output: tokenAmount // * this.props.swapPairPrice
-              })   
-            }}
-            ref={(input) => { this.input = input }}
-            className="form-control form-control-lg"
-            placeholder="1.0"
-            required />
-          <div className="input-group-append">
-            <div className="input-group-text">
-              <img src={this.state.token0Img} height='34' alt=""/>
-              &nbsp;&nbsp;&nbsp; 
-              <select name="sellToken" id="sellToken" ref={(select3) => { this.select3 = select3 }}>
-                <option value="BNB">BNB</option>
-            </select>
-            </div>
+          <div className='DivSpace'>
+            <h4 className='tLeft'>Contract</h4> 
+            <h4 className='tRight' >xxxxxx BNB </h4>
           </div>
-        </div>
-        <button type="submit" className="btn color-but btn-block btn-lg"> Start Compounding!</button> 
         <hr className='hr'/>
-        <ProgressBar completed={0} maxCompleted={100}/>
-        <h1>Your Rewards :{} 0 bnb </h1>
+          <div className='DivSpace'>
+            <h4 className='tLeft'>Wallet </h4>
+            <h4 className='tRight' > {this.props.bnbBalance < 1 ? parseFloat(this.props.bnbBalance).toFixed(4) : this.props.bnbBalance >= 1 ?  parseFloat(this.props.bnbBalance).toFixed(2) :  "NaN"} BNB </h4>
+          </div>
+        <hr className='hr'/>
+          <div className="input-group mb-4">
+            <input
+                type="text"
+                onChange={(event) => {
+                  const tokenAmount = this.input.value.toString()
+                  this.setState({
+                    output: tokenAmount // * this.props.swapPairPrice
+                  })   
+                }}
+                ref={(input) => { this.input = input }}
+                className="form-control form-control-lg"
+                placeholder="1.0"
+                required />
+              <div className="input-group-append">
+                <div className="input-group-text">
+                  <img src={this.state.token0Img} height='34' alt=""/>
+                  &nbsp;&nbsp;&nbsp; 
+                  <select name="sellToken" id="sellToken" ref={(select3) => { this.select3 = select3 }}>
+                    <option value="BNB">BNB</option>
+                </select>
+                </div>
+              </div>
+            </div>
+            <button type="submit" className="btn color-but btn-block btn-lg"> Start Compounding!</button> 
+        <FlipCountdown
+                hideYear
+                hideMonth
+                //monthTitle='Months'
+                //dayTitle='Days'
+                hideDay
+                hourTitle='Hours'
+                minuteTitle='Minutes'
+                secondTitle='Seconds'
+                theme = 'dark'
+                size='small' // Options (Default: medium): large, medium, small, extra-small.
+                //add end date to smart contract
+                endAt={'2022-4-24 23:00:00'} // Date/Time
+            />
+      <hr className='hr'/>
+        <div className='DivSpace'>
+            <h4 className='tLeft'>Rewards </h4>
+            <h4 className='tRight' > {}0 BNB</h4>
+          </div>
+      <hr className='hr'/>
         <div>
-          <button type="submit" className="butInline btn color-but butInline"> Claim Rewards</button> 
-          <button type="submit" className="butInline btn color-but butInline"> Re-Compound</button> 
+          <button type="submit" className="butInline btn color-but" > Claim Rewards</button> 
+          <button type="submit" className="butInline btn color-but"> Re-Compound</button> 
         </div>
     </div>
 </div>  
 
           <div className='cardWide'>
                 <div className='card-content'>
-                <h2>Breakdown : </h2>
+                <h2>Breakdown</h2>
                 <hr
                     className='hr'
                 />
                 <text style={{textAlign: 'center'}}>Daily Return    X%</text>
-                <h5>Yearly Reurn X,XXX%</h5>
+                <h5>Yearly Reurn                   X,XXX%</h5>
                 <h5>Dev Fee         X%</h5>
                 </div>
           </div>  
