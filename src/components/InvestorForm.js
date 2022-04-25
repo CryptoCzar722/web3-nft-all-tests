@@ -521,7 +521,7 @@ class InvestorForm extends Component {
                   justifyContent: "center",
                   alignItems: "center"
                   }}>
-                    <h1>🆂🆂 🅱🅽🅱 🅲🅾🅼🅿🅾🆄🅽🅳🅴🆁 {/*this.state.contractName*/}</h1>
+                    <h1> SS BNB Compunder{/*this.state.contractName*/}</h1>
                 </div>
         <hr className='hr'/>
           <div className='DivSpace'>
