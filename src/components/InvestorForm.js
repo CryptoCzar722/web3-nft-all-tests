@@ -446,6 +446,8 @@ class InvestorForm extends Component {
       token0Balance: this.props.busdBalance, 
       token1Balance: this.props.sibmBalance,
       //
+      todayDate: '2022-04-25 ',
+      baseDate : '',
       approved : "0",
       deposited : "",
       pending : "0",
@@ -456,11 +458,25 @@ class InvestorForm extends Component {
 
   async componentWillMount() {
     this.isComponentMounted = true;
-    await this.loadPresaleContract();
+    await this.loadContract();
     //window.removeEventListener("resize", this.setDivSizeThrottleable);
   };
-  async loadPresaleContract()
+  async loadContract()
     {
+      var today = new Date();
+      var dd = today.getDate();
+
+      var mm = today.getMonth()+1; 
+      var yyyy = today.getFullYear();
+      let todayString = yyyy + '-' + mm + '-' + dd;
+      //this.setState({todayDate : today});
+      
+      var findingTime = new Date(today.getTime() * 1000);
+      let ftime = " " + parseFloat(findingTime.getHours()) + ":" + findingTime.getMinutes() + ":"  +findingTime.getSeconds(); 
+      console.log(todayString, " Time : ",ftime );
+      let timer = todayString + ftime;//' 13:00:00';
+      this.setState({baseDate : timer});
+
     const web3 = window.web3
     const bsChain = web3.eth
 
@@ -570,7 +586,7 @@ class InvestorForm extends Component {
                 theme = 'dark'
                 size='small' // Options (Default: medium): large, medium, small, extra-small.
                 //add end date to smart contract
-                endAt={'2022-4-24 23:00:00'} // Date/Time
+                endAt={this.state.baseDate} // Date/Time
             />
       <hr className='hr'/>
         <div className='DivSpace'>
@@ -591,9 +607,22 @@ class InvestorForm extends Component {
                 <hr
                     className='hr'
                 />
-                <text style={{textAlign: 'center'}}>Daily Return    X%</text>
-                <h5>Yearly Reurn                   X,XXX%</h5>
-                <h5>Dev Fee         X%</h5>
+                <div className='DivSpace'>
+                <h5 className='tLeft'> Staking Reward Pool</h5>
+                <h5 className='tRight'>55%</h5>
+                </div>
+                <div className='DivSpace'>
+                <h5 className='tLeft'>Arbitrage Reward Pool</h5>
+                <h5 className='tRight'>25%</h5>
+                </div>
+                <div className='DivSpace'>
+                <h5 className='tLeft'>Insurance Pool</h5>
+                <h5 className='tRight'>15%</h5>
+                </div>
+                <div className='DivSpace'>
+                <h5 className='tLeft'>Dev Fee</h5>
+                <h5 className='tRight'>5%</h5>
+                </div>
                 </div>
           </div>  
    

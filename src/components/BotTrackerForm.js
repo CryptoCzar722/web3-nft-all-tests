@@ -1,270 +1,13 @@
-import React, { Component } from 'react';   
+import React, { Component } from 'react';  
+import TradingViewWidget from 'react-tradingview-widget';
+//import { MoralisProvider } from "react-moralis";
+
 //
 
-class ArbForm extends Component {   
+class BotTrackerForm extends Component {   
   constructor(props) {
     super(props)
     this.state = {
-    ArbActive : false,
-    ArbContract : "",
-    arb_ABI : [
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "internalType": "string",
-            "name": "msg",
-            "type": "string"
-          },
-          {
-            "indexed": false,
-            "internalType": "address",
-            "name": "val",
-            "type": "address"
-          }
-        ],
-        "name": "Log",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "internalType": "string",
-            "name": "msg",
-            "type": "string"
-          },
-          {
-            "indexed": false,
-            "internalType": "bytes",
-            "name": "val",
-            "type": "bytes"
-          }
-        ],
-        "name": "Log",
-        "type": "event"
-      },
-      {
-        "inputs": [],
-        "name": "biswapRouter",
-        "outputs": [
-          {
-            "internalType": "contract IUniswapV2Router02",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "name",
-        "outputs": [
-          {
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_sender",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "_amount0",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "_amount1",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "_data",
-            "type": "bytes"
-          }
-        ],
-        "name": "pancakeCall",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "pancakeFactory",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "token0",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "token1",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount0",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount1",
-            "type": "uint256"
-          }
-        ],
-        "name": "startArbitrage",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }
-    ],
-    /*[
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "inputs": [],
-        "name": "biswapRouter",
-        "outputs": [
-          {
-            "internalType": "contract IUniswapV2Router02",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "name",
-        "outputs": [
-          {
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_sender",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "_amount0",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "_amount1",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "_data",
-            "type": "bytes"
-          }
-        ],
-        "name": "pancakeCall",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "pancakeFactory",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "factory",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "router",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "token0",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "token1",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount0",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount1",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "_authorize",
-            "type": "bool"
-          }
-        ],
-        "name": "startArbitrage",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }
-    ],  */                                                      //  NEW                                      //  OLD
-    arbAddress : "0x58817f0799c55CF5B0d32629b0C4793715399B8a",//"0x0da74d1406De5a3Fb04faA2230FE544E3A92eDf9",
     time : 0,
     timeStart : 0,
     timeEnd : 0,
@@ -456,10 +199,7 @@ class ArbForm extends Component {
           justifyContent: "center",
           alignItems: "center"
         }}>
-
-
-
-          
+ 
           <h2><strong>Sniper Bot</strong></h2>
           </div>  
              <table>
@@ -485,8 +225,9 @@ class ArbForm extends Component {
             }}>
           <button onClick={() => (state.button = "Sniper" )} type="submit" name="btn"  value = "Sniper" className="btn btn-primary btn-block btn-lg" style={{ maxWidth: '200px', justifyContent:'center'}}>{!this.props.BotActive ? "Start Sniper Bot" : "Stop Sniper Bot"}</button>
           </div>
+          <TradingViewWidget symbol="BINANCE:BNBUSD" />
         </form>
     )  
     }  
 }  
-export default ArbForm; 
+export default BotTrackerForm; 

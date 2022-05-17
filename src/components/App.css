@@ -39,6 +39,14 @@
   border-radius: 50px;
   height: 60px;
 }
+.color-butTab{
+  background-color: #100f0f;
+  color: #f8f8f8e7;
+  border-radius: 50px;
+  height: 60px;
+  outline: #941ff3;
+
+}
 .butInline {
   display:inline-block;
   margin-right: 15px;
