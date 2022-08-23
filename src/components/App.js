@@ -47,8 +47,8 @@ class App extends Component {
       console.log("loading");
       //this.setState({ loading: true })
       await this.loadWeb3()
-      await this.loadBlockchainData();
-      await this.LoadTokens();
+      //await this.loadBlockchainData();
+      //await this.LoadTokens();
       //await this.checkWalletChanged()
       //this.setState({ loading: false })  
       console.log("done");
@@ -811,7 +811,7 @@ async updateBaseTokenPrice()
 
   componentDidMount() 
   {
-  this.interval = setInterval(() => this.updateBaseTokenPrice(), 3000);
+  //this.interval = setInterval(() => this.updateBaseTokenPrice(), 3000);
    //this.interval = setInterval(() => this.UpdateSwapPrices(), 100);
    this.interval = setInterval(() => this.checkWalletChanged(), 2000);
   }

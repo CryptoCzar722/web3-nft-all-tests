@@ -36,7 +36,7 @@ class InvestorForm extends Component {
     //this.onSubmit = this.onSubmit.bind(this)
     this.state = {
     //TAG
-    account : "",      //V3.1                                           //V3.0
+      account : "",      //V3.1                                           //V3.0
       presaleAddress : "0x509739e0bb661F3b97ceF75d0552c45b9dc23c3F",      //"0x1532e8FDB5348c630593051E8D1B37d97383AEEE", //"0x60423E74c25c266F03736F23afC0b817880d7275"
       busdAddress : "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
       BusdContract : "",

@@ -15,7 +15,6 @@ class Navbar extends Component {
     this.state = {
       imgRef : 'idc'
     }
-    
   }
   /*changeImg(){
     //this.setState({revealImg : !this.state.revealImg});
@@ -151,7 +150,7 @@ async handleWallet(){
           target="_blank"
           rel="noopener noreferrer"
         >
-        Sniper Bot Tracker      
+        SMRT-NFT  
         </a>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
